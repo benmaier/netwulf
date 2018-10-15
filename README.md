@@ -1,6 +1,6 @@
-# netwulf
-
 ![logo](https://github.com/benmaier/netwulf/raw/master/img/logo_small.png)
+
+# netwulf
 
 This package provides an interface between [networkx](https://networkx.github.io/) Graph objects and
 [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) for simple
