@@ -21,6 +21,8 @@ setup(
     setup_requires = [
             ],
     install_requires = [
+                'networkx>=2.0',
+                'webbrowser',
             ],
     include_package_data = True,
     zip_safe = False,

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Contains a bunch of information about this package
+Contains a bunch of information about this package.
 """
 
 __version__ = "0.0.1"
