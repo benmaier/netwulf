@@ -3,4 +3,5 @@ include setup.py
 include README.md
 include LICENSE
 include netwulf/js/*
+include setup.cfg
 include netwulf/js/libs/*
