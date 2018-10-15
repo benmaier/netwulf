@@ -1,5 +1,3 @@
-#This file is forked from https://github.com/pybind/pbtest, original author: Sylvain Corlay
-
 from setuptools import setup, Extension
 import setuptools
 import os, sys
