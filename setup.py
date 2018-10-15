@@ -8,21 +8,19 @@ import os, sys
 exec(open("./netwulf/metadata.py").read())
 
 setup(
-    name = 'tacoma',
+    name = 'netwulf',
     version = __version__,
     author = __author__,
     author_email = __email__,
     url = 'https://github.com/benmaier/netwulf',
     license = __license__,
-    description = "Interactively visualize networks with Ulf Aslak's d3-tool from Python."
+    description = "Interactively visualize networks with Ulf Aslak's d3-tool from Python.",
     long_description = '',
     packages = setuptools.find_packages(),
-    ext_modules = ext_modules,
     setup_requires = [
             ],
     install_requires = [
                 'networkx>=2.0',
-                'webbrowser',
             ],
     include_package_data = True,
     zip_safe = False,
