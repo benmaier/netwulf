@@ -10,6 +10,8 @@ and better network visualizations.
 
     pip install netwulf
 
+Beware: `netwulf` only works with Python 3!
+
 ## Example
 
 ### Standard
