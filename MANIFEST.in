@@ -1,6 +1,6 @@
 include MANIFEST.in
 include setup.py
-include README.md
+include README.rst
 include LICENSE
 include netwulf/js/*
 include setup.cfg
