@@ -2,6 +2,7 @@
    :alt: logo
 
    logo
+
 netwulf
 =======
 
@@ -40,6 +41,7 @@ Create a network and look at it
    :alt: visualization example
 
    visualization example
+
 Config
 ~~~~~~
 

@@ -17,3 +17,11 @@ pyclean:
 
 python:
 	pip install -e ../netwulf --no-binary :all:
+
+checkdocs:
+	python setup.py checkdocs
+
+pypi:
+	rm dist/*
+	python setup.py sdist
+	twine upload dist/*
