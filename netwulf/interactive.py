@@ -218,7 +218,7 @@ def visualize(network,
         node[1].clear()
 
     with open(filepath,'w') as f:
-        json.dump(nx.node_link_data(net), f)
+        json.dump(nx.node_link_data(network), f)
 
     with open(configpath,'w') as f:
         json.dump(this_config, f)
