@@ -196,9 +196,9 @@ def visualize(network,
 
     network = network.copy()
 
-    for n1, n2, d in network.edges(data=True):
-        keep_value = d[edge_weight]
-        d.clear()
+    for n1, n2, edge in network.edges(data=True):
+        keep_value = edge[edge_weight]
+        edge.clear()
         network[n1][n2]['weight'] = keep_value
 
     if node_color is not None:
@@ -215,7 +215,8 @@ def visualize(network,
                 node[1].clear()
                 node[1]['group'] = keep_value
     else:
-        node[1].clear()
+        for node in network.nodes(data=True):
+            node[1].clear()
 
     with open(filepath,'w') as f:
         json.dump(nx.node_link_data(network), f)
