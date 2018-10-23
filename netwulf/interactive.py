@@ -105,7 +105,7 @@ default_config = {
   'Link distance': 10,
   'Link width': 2,
   'Link alpha': 0.5,
-  'Node size': 10, 
+  'Node size': 10,
   'Node stroke size': 0.5,
   'Node size exponent': 0.5,
   'Link strength exponent': 0.1,
@@ -123,17 +123,27 @@ default_config = {
 
 
 def visualize(network,
+              edge_weight='weight',
+              node_color=None,
               port=9853,
               config=None):
     """
     Visualize a network interactively using Ulf Aslak's d3 web app.
-    Saves the network as json, saves the passed config and runs 
+    Saves the network as json, saves the passed config and runs
     a local HTTP server which then runs the web app.
-    
+
     Parameters
     ==========
     network : networkx.Graph or networkx.DiGraph
         The network to visualize
+    edge_weight: string, default: 'weight'
+        The edge attribute that should be exported as the numerical weight of the network
+    node_color: string, default None, special case 'color'
+        The node attribute to be used as a color. If not None the attribute must exist in every
+        node and the nodes will be colored according to the value of the attribute with colors choosen by the tool.
+        If the special keyword 'color' is chosen the nodes must have the attribute
+        color with a valid hex color as the value, in this case these colors will be used
+        in the visualization.
     port : int, default : 9853
         The port at which to run the server locally.
     config : dict, default : None,
@@ -148,7 +158,7 @@ def visualize(network,
               'Link distance': 10,
               'Link width': 2,
               'Link alpha': 0.5,
-              'Node size': 5, 
+              'Node size': 5,
               'Node stroke size': 0.5,
               'Node size exponent': 0.5,
               'Link strength exponent': 0.1,
@@ -184,8 +194,31 @@ def visualize(network,
     filepath = os.path.join(web_dir, filename)
     configpath = os.path.join(web_dir, configname)
 
+    network = network.copy()
+
+    for n1, n2, d in network.edges(data=True):
+        keep_value = d[edge_weight]
+        d.clear()
+        network[n1][n2]['weight'] = keep_value
+
+    if node_color is not None:
+        if node_color is 'color':
+            for node in network.nodes(data=True):
+                keep_value = node[1]['color']
+                node[1].clear()
+                node[1]['group'] = keep_value
+        else:
+            groups = [node[1][node_color] for node in network.nodes(data=True)]
+            groups_enum = {v: k for k,v in enumerate(groups)}
+            for node in network.nodes(data=True):
+                keep_value = groups_enum[node[1][node_color]]
+                node[1].clear()
+                node[1]['group'] = keep_value
+    else:
+        node[1].clear()
+
     with open(filepath,'w') as f:
-        json.dump(nx.node_link_data(network), f)
+        json.dump(nx.node_link_data(net), f)
 
     with open(configpath,'w') as f:
         json.dump(this_config, f)
