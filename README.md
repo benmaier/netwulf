@@ -74,3 +74,21 @@ visualize(G,config={
 ```
 
 ![visualization example](https://github.com/benmaier/netwulf/raw/master/img/BA_2.png)
+
+
+### Attributes
+Node attributes such as 'group' or 'size' that you define in your `networkx.Graph` are automatically visualized.
+
+```Python
+import networkx as nx
+import community
+from netwulf import visualize
+
+G = nx.random_partition_graph([10,10,10],.25,.01)
+bb = community.best_partition(G)  # dict of node-community pairs
+nx.set_node_attributes(G, bb, 'group')
+
+visualize(G)
+```
+
+![visualization example](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
