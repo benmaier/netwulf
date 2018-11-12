@@ -12,6 +12,7 @@ import http.server
 import webbrowser
 import time
 import threading
+from copy import deepcopy
 
 import shutil
 
@@ -165,7 +166,7 @@ def visualize(network,
         ```
     """
 
-    this_config = dict(default_config)
+    this_config = deepcopy(default_config)
     if config is not None:
         this_config.update(config)
 
@@ -211,15 +212,12 @@ def visualize(network,
         while True:
             time.sleep(2)
     except KeyboardInterrupt:
-        # thread.join()
         print('stopping server ...')
         server.stop_this()
-        # thread.join()
+        thread.join()
 
-    # time.sleep(1)
 
     print('changing directory back to', cwd)
-    #os.rmdir(os.path.join(web_dir, filename))
 
     os.chdir(cwd)
 
