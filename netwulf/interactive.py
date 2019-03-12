@@ -101,7 +101,7 @@ class StoppableHTTPServer(http.server.HTTPServer):
 
 default_config = {
   'Apply heat (wiggle)': False,
-  'Charge strength': -10,
+  'Charge strength': -30,
   'Center gravity': 0.1,
   'Link distance': 10,
   'Link width': 2,
@@ -109,7 +109,6 @@ default_config = {
   'Node size': 10, 
   'Node stroke size': 0.5,
   'Node size exponent': 0.5,
-  'Link strength exponent': 0.1,
   'Link width exponent': 0.5,
   'Collision': False,
   'Node fill': '#16a085',
@@ -117,6 +116,8 @@ default_config = {
   'Link stroke': '#7c7c7c',
   'Label stroke': '#000000',
   'Show labels': False,
+  'Show singleton nodes': False,
+  'Node size by strength': False,
   'Zoom': 1.5,
   'Min. link weight %': 0,
   'Max. link weight %': 100
