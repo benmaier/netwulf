@@ -100,8 +100,7 @@ The JS base code in `/netwulf/js/` is a fork of
 is updated, change to `/netwulf/js/`, then do
 
 ```bash
-git fetch upstream/master
-git pull upstream/master
+git fetch upstream
 git merge upstream/master
 git commit -m "merged"
 git push
