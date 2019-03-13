@@ -92,3 +92,17 @@ visualize(G)
 ```
 
 ![visualization example](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
+
+## Dev notes
+
+The JS base code in `/netwulf/js/` is a fork of 
+[Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository
+is updated, change to `/netwulf/js/`, then do
+
+```bash
+git fetch upstream/master
+git pull upstream/master
+git merge upstream/master
+git commit -m "merged"
+git push
+```
