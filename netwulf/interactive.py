@@ -22,6 +22,7 @@ import json
 from distutils.dir_util import copy_tree
 
 import networkx as nx
+from io import BytesIO
 
 def mkdirp_customdir(directory='~/.netwulf/'):
     """simulate `mkdir -p` functionality"""
@@ -53,19 +54,14 @@ def prepare_visualization_directory():
 
 
 class StoppableHTTPServer(http.server.HTTPServer):
-    """Taken from https://stackoverflow.com/questions/268629/how-to-stop-basehttpserver-serve-forever-in-a-basehttprequesthandler-subclass """
+    """Adapted from https://stackoverflow.com/questions/268629/how-to-stop-basehttpserver-serve-forever-in-a-basehttprequesthandler-subclass """
+
+    # The handler will write in this attribute
+    posted_data = None
 
     def __init__(self, server_address, handler, subjson):
         http.server.HTTPServer.__init__(self, server_address, handler)
         self.subjson = subjson
-        """
-        self.webfolder = webfolder
-
-        while webfolder.endswith('/'):
-            subfolder = subfolder[:-1]
-
-        self.subjson = subfolder + '_config.json'
-        """
 
     def run(self):
         try:
@@ -82,21 +78,30 @@ class StoppableHTTPServer(http.server.HTTPServer):
         for f in self.subjson:
             if os.path.exists(f):
                 os.remove(f)
-        """
-        # except
-        if os.path.exists(self.subfolder):
-            try:
-                # os.rmdir(self.subfolder)
-                shutil.rmtree(self.subfolder)
-            except FileNotFoundError as e:
-                raise e
-        """
 
-        # os.chdir(self.cwd)
         print('deleted all files')
 
-    # def __del__(self):
-    #    self.stop_this()
+
+class customHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    """A custom handler class adapted from
+    https://stackoverflow.com/questions/6204029/extending-basehttprequesthandler-getting-the-posted-data
+    and
+    https://blog.anvileight.com/posts/simple-python-http-server/#do-post
+    """
+
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+        self.send_response(200)
+        self.end_headers()
+        response = BytesIO()
+        response.write(b'Successful POST request.')
+        self.wfile.write(response.getvalue())
+
+        # Save this posted data to the server object so it can be retrieved later on
+        print("Successfully posted network data to Python!")
+        self.server.posted_data = json.loads(body)
+
 
 
 default_config = {
@@ -199,7 +204,7 @@ def visualize(network,
     os.chdir(web_dir)
 
     server = StoppableHTTPServer(("127.0.0.1", port),
-                                 http.server.SimpleHTTPRequestHandler,
+                                 customHTTPRequestHandler,
                                  [filepath, configpath],
                                  )
 
@@ -217,13 +222,18 @@ def visualize(network,
         server.stop_this()
         thread.join()
 
+    posted_data = server.posted_data
 
     print('changing directory back to', cwd)
 
     os.chdir(cwd)
 
+    return posted_data
+
 
 if __name__ == "__main__":
     # download_d3()
     G = nx.fast_gnp_random_graph(100,0.1)
-    visualize(G,config={'Node size':5})
+    posted_data = visualize(G,config={'Node size':5})
+    if posted_data is not None:
+        print("received posted data:", posted_data)
