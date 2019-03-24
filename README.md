@@ -157,3 +157,23 @@ git merge upstream/master
 git commit -m "merged"
 git push
 ```
+
+If you want to upload to PyPI, first convert the new `README.md` to `README.rst`
+
+```bash
+make readme
+```
+
+It will give you warnings about bad `.rst`-syntax. Fix those errors in `README.rst`.
+Then wrap the whole thing 
+
+```bash
+make pypi
+```
+
+It will probably give you more warnings about `.rst`-syntax. Fix those until 
+the warnings disappear. Then do
+
+```bash
+make upload
+```

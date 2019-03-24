@@ -24,6 +24,9 @@ checkdocs:
 pypi:
 	rm dist/*
 	python setup.py sdist
+	twine check dist/*
+
+upload:
 	twine upload dist/*
 
 readme:
