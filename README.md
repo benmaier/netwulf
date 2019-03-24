@@ -2,9 +2,11 @@
 
 # netwulf
 
-This package provides an interface between [networkx](https://networkx.github.io/) Graph objects and
-[Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) for simple
-and better network visualizations.
+This package provides an interface between 
+[networkx](https://networkx.github.io/) 
+Graph objects and
+[Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) 
+for simple and better network visualizations.
 
 ## Install
 
@@ -26,7 +28,7 @@ G = nx.barabasi_albert_graph(100,m=1)
 visualize(G)
 ```
 
-![visualization example](https://github.com/benmaier/netwulf/raw/master/img/BA_1.png)
+![visualization example0](https://github.com/benmaier/netwulf/raw/master/img/BA_1.png)
 
 When the visualization was posted to Python in the Browser, the function actually returns
 a dictionary containing all style information of the stylized network. For instance,
@@ -123,7 +125,7 @@ visualize(G,config={
     })
 ```
 
-![visualization example](https://github.com/benmaier/netwulf/raw/master/img/BA_2.png)
+![visualization example1](https://github.com/benmaier/netwulf/raw/master/img/BA_2.png)
 
 
 ### Attributes
@@ -141,7 +143,7 @@ nx.set_node_attributes(G, bb, 'group')
 visualize(G)
 ```
 
-![visualization example](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
+![visualization example2](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
 
 ## Dev notes
 

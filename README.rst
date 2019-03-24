@@ -4,10 +4,10 @@ netwulf
 =======
 
 | This package provides an interface between
-`networkx <https://networkx.github.io/>`__ Graph objects and
-| `Ulf Aslak's interactive web
-app <https://github.com/ulfaslak/network_styling_with_d3>`__ for simple
-| and better network visualizations.
+| `networkx <https://networkx.github.io/>`__
+| Graph objects and
+| `Ulf Aslak's interactive webapp <https://github.com/ulfaslak/network_styling_with_d3>`__
+| for simple and better network visualizations.
 
 Install
 -------
@@ -34,11 +34,11 @@ Create a network and look at it
     G = nx.barabasi_albert_graph(100,m=1)
     visualize(G)
 
-|visualization example|
+|visualization example0|
 
-| When the visualization was posted to Python in the Browser, the
+When the visualization was posted to Python in the Browser, the
 function actually returns
-| a dictionary containing all style information of the stylized network.
+a dictionary containing all style information of the stylized network.
 For instance,
 
 .. code:: python
@@ -133,7 +133,7 @@ It's done like so:
             'Collision' : True,
         })
 
-|visualization example|
+|visualization example1|
 
 Attributes
 ~~~~~~~~~~
@@ -153,16 +153,15 @@ Node attributes such as 'group' or 'size' that you define in your
 
     visualize(G)
 
-|visualization example|
+|visualization example2|
 
 Dev notes
 ---------
 
-| The JS base code in ``/netwulf/js/`` is a fork of
-| `Ulf Aslak's interactive web
-app <https://github.com/ulfaslak/network_styling_with_d3>`__. If this
+The JS base code in ``/netwulf/js/`` is a fork of
+`Ulf Aslak's interactive web app <https://github.com/ulfaslak/network_styling_with_d3>`__. If this
 repository
-| is updated, change to ``/netwulf/js/``, then do
+is updated, change to ``/netwulf/js/``, then do
 
 .. code:: bash
 
@@ -172,6 +171,6 @@ repository
     git push
 
 .. |logo| image:: https://github.com/benmaier/netwulf/raw/master/img/logo_small.png
-.. |visualization example| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
-.. |visualization example| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_2.png
-.. |visualization example| image:: https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png
+.. |visualization example0| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
+.. |visualization example1| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_2.png
+.. |visualization example2| image:: https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png
