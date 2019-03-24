@@ -24,8 +24,12 @@ from distutils.dir_util import copy_tree
 import networkx as nx
 from io import BytesIO
 
-def mkdirp_customdir(directory='~/.netwulf/'):
+netwulf_user_folder = os.path.join(os.path.abspath(os.path.expanduser('~')), '.netwulf')
+
+def mkdirp_customdir(directory=None):
     """simulate `mkdir -p` functionality"""
+    if directory is None:
+        directory = netwulf_user_folder
 
     directory = os.path.abspath(os.path.expanduser(directory))
     if not os.path.exists(directory):
@@ -47,7 +51,7 @@ def _make_and_get_directory(path):
 def prepare_visualization_directory():
     """Move all files from the netwulf/js directory to ~/.netwulf"""
     src = html_source_path
-    dst = os.path.abspath(os.path.expanduser("~/.netwulf/"))
+    dst = os.path.abspath(os.path.expanduser(netwulf_user_folder))
 
     # always copy source files to the subdirectory
     copy_tree(src, dst)
@@ -176,7 +180,7 @@ def visualize(network,
     if config is not None:
         this_config.update(config)
 
-    path = "~/.netwulf/"
+    path = netwulf_user_folder
     mkdirp_customdir()
     web_dir = os.path.abspath(os.path.expanduser(path))
 
