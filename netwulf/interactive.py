@@ -61,7 +61,10 @@ class StoppableHTTPServer(http.server.HTTPServer):
     """Adapted from https://stackoverflow.com/questions/268629/how-to-stop-basehttpserver-serve-forever-in-a-basehttprequesthandler-subclass """
 
     # The handler will write in this attribute
-    posted_data = None
+    posted_network_properties = None
+    posted_config = None
+
+    end_requested = False
 
     def __init__(self, server_address, handler, subjson):
         http.server.HTTPServer.__init__(self, server_address, handler)
@@ -95,16 +98,27 @@ class customHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        self.send_response(200)
-        self.end_headers()
-        response = BytesIO()
-        response.write(b'Successful POST request.')
-        self.wfile.write(response.getvalue())
+        if content_length == 0:
+            body = self.rfile.read(content_length)
+            self.send_response(200)
+            self.end_headers()
+            response = BytesIO()
+            response.write(b'Closing now.')
+            self.wfile.write(response.getvalue())
+            self.server.end_requested = True
+        else:
+            body = self.rfile.read(content_length)
+            self.send_response(200)
+            self.end_headers()
+            response = BytesIO()
+            response.write(b'Successful POST request.')
+            self.wfile.write(response.getvalue())
 
-        # Save this posted data to the server object so it can be retrieved later on
-        print("Successfully posted network data to Python!")
-        self.server.posted_data = json.loads(body)
+            # Save this posted data to the server object so it can be retrieved later on
+            print("Successfully posted network data to Python!")
+            received_data = json.loads(body)
+            self.server.posted_network_properties = received_data['network']
+            self.server.posted_config = received_data['config']
 
 
 
@@ -219,25 +233,28 @@ def visualize(network,
     webbrowser.open("http://localhost:"+str(port)+"/?data=" + filename + "&config=" + configname)
 
     try:
-        while True:
-            time.sleep(2)
+        while not server.end_requested:
+            time.sleep(0.1)
     except KeyboardInterrupt:
-        print('stopping server ...')
-        server.stop_this()
-        thread.join()
+        pass
 
-    posted_data = server.posted_data
+    print('stopping server ...')
+    server.stop_this()
+    thread.join()
+
+    posted_network_properties = server.posted_network_properties
+    posted_config = server.posted_config
 
     print('changing directory back to', cwd)
 
     os.chdir(cwd)
 
-    return posted_data
+    return posted_network_properties, posted_config
 
 
 if __name__ == "__main__":
     # download_d3()
-    G = nx.fast_gnp_random_graph(100,0.1)
+    G = nx.fast_gnp_random_graph(5,0.1)
     posted_data = visualize(G,config={'Node size':5})
     if posted_data is not None:
         print("received posted data:", posted_data)
