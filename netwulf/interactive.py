@@ -57,8 +57,9 @@ def prepare_visualization_directory():
     copy_tree(src, dst)
 
 
-class StoppableHTTPServer(http.server.HTTPServer):
-    """Adapted from https://stackoverflow.com/questions/268629/how-to-stop-basehttpserver-serve-forever-in-a-basehttprequesthandler-subclass """
+class NetwulfHTTPServer(http.server.HTTPServer):
+    """Custom netwulf server class adapted from 
+    https://stackoverflow.com/questions/268629/how-to-stop-basehttpserver-serve-forever-in-a-basehttprequesthandler-subclass """
 
     # The handler will write in this attribute
     posted_network_properties = None
@@ -66,9 +67,10 @@ class StoppableHTTPServer(http.server.HTTPServer):
 
     end_requested = False
 
-    def __init__(self, server_address, handler, subjson):
+    def __init__(self, server_address, handler, subjson, verbose=False):
         http.server.HTTPServer.__init__(self, server_address, handler)
         self.subjson = subjson
+        self.verbose = verbose
 
     def run(self):
         try:
@@ -78,7 +80,8 @@ class StoppableHTTPServer(http.server.HTTPServer):
 
     def stop_this(self):
         # Clean-up server (close socket, etc.)
-        print('was asked to stop the server')
+        if self.verbose:
+            print('was asked to stop the server')
         self.server_close()
 
         # try:
@@ -86,10 +89,11 @@ class StoppableHTTPServer(http.server.HTTPServer):
             if os.path.exists(f):
                 os.remove(f)
 
-        print('deleted all files')
+        if self.verbose:
+            print('deleted all files')
 
 
-class customHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     """A custom handler class adapted from
     https://stackoverflow.com/questions/6204029/extending-basehttprequesthandler-getting-the-posted-data
     and
@@ -98,6 +102,8 @@ class customHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
+
+        # an empty POST means the server should be stopped
         if content_length == 0:
             body = self.rfile.read(content_length)
             self.send_response(200)
@@ -115,10 +121,15 @@ class customHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(response.getvalue())
 
             # Save this posted data to the server object so it can be retrieved later on
-            print("Successfully posted network data to Python!")
+            if self.server.verbose:
+                print("Successfully posted network data to Python!")
             received_data = json.loads(body)
             self.server.posted_network_properties = received_data['network']
             self.server.posted_config = received_data['config']
+
+    def log_message(self, format, *args):
+        if self.server.verbose:
+            print(self.address_string(), self.log_date_time_string(), *args)
 
 
 
@@ -149,6 +160,7 @@ default_config = {
 
 def visualize(network,
               port=9853,
+              verbose=False,
               config=None):
     """
     Visualize a network interactively using Ulf Aslak's d3 web app.
@@ -161,6 +173,8 @@ def visualize(network,
         The network to visualize
     port : int, default : 9853
         The port at which to run the server locally.
+    verbose : bool, default : False
+        Be chatty.
     config : dict, default : None,
         In the default configuration, each key-value-pair will
         be overwritten with the key-value-pair provided in `config`.
@@ -188,6 +202,15 @@ def visualize(network,
               'Min. link weight %': 0,
               'Max. link weight %': 100
         ```
+
+    Returns
+    =======
+    network_properties : dict
+        contains all necessary information to redraw the figure which
+        was created in the interactive visualization
+    config : dict
+        contains all configurational values of the interactive
+        visualization
     """
 
     this_config = deepcopy(default_config)
@@ -216,14 +239,16 @@ def visualize(network,
         json.dump(this_config, f)
 
     # change directory to this directory
-    print("changing directory to", web_dir)
-    print("starting server here ...", web_dir)
+    if verbose:
+        print("changing directory to", web_dir)
+        print("starting server here ...", web_dir)
     cwd = os.getcwd()
     os.chdir(web_dir)
 
-    server = StoppableHTTPServer(("127.0.0.1", port),
-                                 customHTTPRequestHandler,
+    server = NetwulfHTTPServer(("127.0.0.1", port),
+                                 NetwulfHTTPRequestHandler,
                                  [filepath, configpath],
+                                 verbose=verbose,
                                  )
 
     # ========= start server ============
@@ -238,14 +263,16 @@ def visualize(network,
     except KeyboardInterrupt:
         pass
 
-    print('stopping server ...')
+    if verbose:
+        print('stopping server ...')
     server.stop_this()
     thread.join()
 
     posted_network_properties = server.posted_network_properties
     posted_config = server.posted_config
 
-    print('changing directory back to', cwd)
+    if verbose:
+        print('changing directory back to', cwd)
 
     os.chdir(cwd)
 
@@ -255,6 +282,6 @@ def visualize(network,
 if __name__ == "__main__":
     # download_d3()
     G = nx.fast_gnp_random_graph(5,0.1)
-    posted_data = visualize(G,config={'Node size':5})
+    posted_data = visualize(G,config={'Node size':5},verbose=False)
     if posted_data is not None:
         print("received posted data:", posted_data)
