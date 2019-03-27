@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# _tacoma documentation build configuration file, created by
+# _netwulf documentation build configuration file, created by
 # sphinx-quickstart on Fri Feb 26 00:29:33 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -261,7 +261,7 @@ html_show_sourcelink = True
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'tacomadoc'
+htmlhelp_basename = 'netwulfdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -283,7 +283,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'tacoma.tex', u'tacoma Documentation',
+    (master_doc, 'netwulf.tex', u'netwulf Documentation',
      u'Benjamin F. Maier', 'manual'),
 ]
 
@@ -313,7 +313,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tacoma', u'tacoma Documentation',
+    (master_doc, 'netwulf', u'netwulf Documentation',
      [author], 1)
 ]
 
@@ -327,8 +327,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'tacoma', u'tacoma Documentation',
-     author, __author__, 'One line description of project.',
+    (master_doc, 'netwulf', u'netwulf Documentation',
+     author, __author__, 'An interactive network visualization tool for Python.',
      'Miscellaneous'),
 ]
 
