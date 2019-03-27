@@ -30,13 +30,13 @@ will be grouped and colored in the visualization. Here's an example
     nx.set_node_attributes(G, grp, 'wum')
 
     # filter the Graph to visualize one where the weight is determined by 'foo'
-    new_G = get_filtered_network(G,edge_weight_key='foo')
-    visualize(new_G)
+    new_G = wulf.get_filtered_network(G,edge_weight_key='foo')
+    wulf.visualize(new_G)
 
     # filter the Graph to visualize one where the weight is determined by 'bar'
     # and the node group (coloring) is determined by the node attribute 'wum'
-    new_G = get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
-    visualize(new_G)
+    new_G = wulf.get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
+    wulf.visualize(new_G)
 
 Binding positions
 ~~~~~~~~~~~~~~~~~
