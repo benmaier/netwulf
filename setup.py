@@ -19,6 +19,9 @@ setup(
             ],
     install_requires = [
                 'networkx>=2.0',
+                'numpy>=0.14',
+                'matplotlib>=3.0',
+                'simplejson>=3.0',
             ],
     include_package_data = True,
     zip_safe = False,
