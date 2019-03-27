@@ -27,6 +27,48 @@ def bind_positions_to_network(network, network_properties):
     nx.set_node_attributes(network, x, 'x')
     nx.set_node_attributes(network, y, 'y')
 
+def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
+    """
+    Get a copy of a network where the edge attribute ``'weight'`` is
+    set to the attribute given by the keyword ``edge_weight_key`` and the
+    nodes are regrouped according to their node attribute provided by
+    ``node_group_key``. 
+
+    Parameters
+    ----------
+    network : networkx.Graph or alike
+        The network object which is about to be filtered
+    edge_weight_key : str, default : None
+        If provided, set the edge weight to the edge attribute
+        given by ``edge_weight_key`` and delete all other edge attributes
+    node_group_key : str, default : None
+        If provided, set the node ``'group'`` attribute according to a
+        new grouping provided by the node attribute ``node_group_key``.
+
+    Returns
+    -------
+    G : networkx.Graph or alike
+        A filtered copy of the original network.
+    """
+
+    G = network.copy()
+
+    if edge_weight_key is not None:
+        for u, v, d in G.edges(data=True):
+            keep_value = d[edge_weight_key]
+            d.clear()
+            G[u][v]['weight'] = keep_value
+
+    if node_group_key is not None:
+        groups = { node[1][node_group_key] for node in network.nodes(data=True) }
+        groups_enum = {v: k for k,v in enumerate(groups)}
+        for u in network.nodes():
+            grp = G.node[u].pop(node_group_key)
+            keep_value = groups_enum[grp]
+            G.node[u]['group'] = keep_value
+
+    return G
+
 def draw_netwulf(network_properties, fig = None, ax=None):
     """
     Redraw the visualization using matplotlib. Creates
