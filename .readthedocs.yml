@@ -20,6 +20,6 @@ python:
     - requirements: docs/requirements.txt
 
 submodules:
-  include: all
+  exclude: all
   recursive: true
 
