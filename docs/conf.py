@@ -32,7 +32,7 @@ MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'matplotlib
                 'scipy.optimize', 'scipy.stats', 'scipy.special', 'scipy.integrate',
                 'scipy.sparse', 'scipy.sparse.linalg', 'scipy.linalg',
                 'numpy.polynomial', 'numpy.polynomial.polynomial', 'wget',
-                'lmfit',
+                'lmfit','simplejson',
                ]
 
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)

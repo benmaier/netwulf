@@ -15,19 +15,22 @@ Netwulf - Interactive Network Visualization
    :maxdepth: 2
    :caption: Python API
 
-   python_api/test
+   python_api/start
+   python_api/post_back
+   python_api/drawing
+   python_api/network_manipulation
 
 .. toctree::
    :maxdepth: 2
    :caption: Visualization
 
-   visualization/test
+   visualization/init
 
 .. toctree::
    :maxdepth: 2
    :caption: Cookbook
 
-   cookbook/test
+   cookbook/groups
 
 .. toctree::
    :maxdepth: 2

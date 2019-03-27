@@ -1,4 +1,0 @@
-Interactive Visualization
-=========================
-
-Awesome thingy
