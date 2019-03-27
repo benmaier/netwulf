@@ -275,6 +275,14 @@ def visualize(network,
         print('changing directory back to', cwd)
 
     os.chdir(cwd)
+    
+    # see whether or not the whole thing was started from a jupyter notebook and if yes,
+    # actually re-draw the figure and display it
+    env = os.environ
+    program = os.path.basename(env['_'])
+    if 'jupyter' in program:        
+        fig, ax = wulf.draw_netwulf(posted_network_properties)
+
 
     return posted_network_properties, posted_config
 
