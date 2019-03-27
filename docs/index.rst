@@ -1,4 +1,5 @@
 .. image:: img/logo.png
+    :scale: 50 %
 
 
 
