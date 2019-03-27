@@ -69,7 +69,7 @@ def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
 
     return G
 
-def draw_netwulf(network_properties, fig = None, ax=None):
+def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     """
     Redraw the visualization using matplotlib. Creates
     figure and axes if None provided.
@@ -92,6 +92,10 @@ def draw_netwulf(network_properties, fig = None, ax=None):
         The figure in which to draw
     ax : matplotlib.Axes, default : None
         The Axes in which to draw
+    figsize : float, default : None
+        the size of the figure in inches (sidelength of a square)
+        if None, will be taken as the minimum of the values in 
+        ``matplotlib.rcParams['figure.figsize']``.
     
     Returns
     -------
@@ -103,7 +107,11 @@ def draw_netwulf(network_properties, fig = None, ax=None):
 
     # if no figure given, create a square one
     if ax is None or fig is None:
-        size = min(mpl.rcParams['figure.figsize'])
+        if figsize is None:
+            size = min(mpl.rcParams['figure.figsize'])
+        else:
+            size = figsize
+
         fig = pl.figure(figsize=(size,size))
         ax = fig.add_axes([0, 0, 1, 1])
         # Customize the axis

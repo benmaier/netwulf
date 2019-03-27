@@ -7,7 +7,7 @@ from __future__ import print_function
 
 import os
 import sys
-import json
+import simplejson as json
 from distutils.dir_util import copy_tree
 import base64
 import http.server
@@ -235,7 +235,7 @@ def visualize(network,
     configpath = os.path.join(web_dir, configname)
 
     with open(filepath,'w') as f:
-        json.dump(nx.node_link_data(network), f)
+        json.dump(nx.node_link_data(network), f, iterable_as_array=True)
 
     with open(configpath,'w') as f:
         json.dump(this_config, f)
