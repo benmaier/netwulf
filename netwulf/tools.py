@@ -7,7 +7,7 @@ import networkx as nx
 
 import matplotlib as mpl
 import matplotlib.pyplot as pl
-from matplotlib.collections import LineCollection
+from matplotlib.collections import LineCollection, EllipseCollection
 
 def bind_positions_to_network(network, network_properties):
     """
@@ -61,12 +61,24 @@ def draw_netwulf(network_properties, fig = None, ax=None):
     # if no figure given, create a square one
     if ax is None or fig is None:
         size = min(mpl.rcParams['figure.figsize'])
-        fig, ax = pl.subplots(1,1,figsize=(size,size))
+        fig = pl.figure(figsize=(size,size))
+        ax = fig.add_axes([0, 0, 1, 1])
+        # Customize the axis
+        # remove top and right spines
+        ax.spines['right'].set_color('none')
+        ax.spines['left'].set_color('none')
+        ax.spines['top'].set_color('none')
+        ax.spines['bottom'].set_color('none')
+        # turn off ticks
+        ax.xaxis.set_ticks_position('none')
+        ax.yaxis.set_ticks_position('none')
+        ax.xaxis.set_ticklabels([])
+        ax.yaxis.set_ticklabels([])
 
 
     # for conversion of inches to points
     # (important for markersize and linewidths)
-    points_in_inches = 72
+    dpi = fig.dpi
 
     # set everything square and get the axis size in points
     ax.axis('square')
@@ -75,7 +87,7 @@ def draw_netwulf(network_properties, fig = None, ax=None):
     ax.set_xlim(network_properties['xlim'])
     ax.set_ylim(network_properties['ylim'])
     bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
-    axwidth, axheight = bbox.width*points_in_inches, bbox.height*points_in_inches
+    axwidth, axheight = bbox.width*dpi, bbox.height*dpi
 
 
 
@@ -107,26 +119,27 @@ def draw_netwulf(network_properties, fig = None, ax=None):
                                      ))
 
     # compute node positions and properties
-    X, Y = [], []
+    XY = []
     size = []
     node_colors = []
 
     for node in network_properties['nodes']:
-        X.append( node['pos'][0] )
-        Y.append( node['pos'][1] )
+        XY.append( node['pos'] )
         # size has to be given in points**2
-        size.append( (node['radius'] / width*axwidth)**2 )
+        size.append( 2*node['radius'] )
         node_colors.append(node['color'])
 
-
-
-    # plot nodes
-    ax.scatter(X,Y,
-               s=size,
-               c=node_colors,
-               linewidth=network_properties['nodeStrokeWidth']/width*axwidth,
-               edgecolor=network_properties['nodeStrokeColor']
-               )
+    XY = np.array(XY)
+    size = np.array(size)
+    circles = EllipseCollection(size,size,np.zeros_like(size),
+                                offsets=XY,
+                                units='x',
+                                transOffset=ax.transData,
+                                facecolors=node_colors,
+                                linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
+                                edgecolors=network_properties['nodeStrokeColor'],
+                                )
+    ax.add_collection(circles)
 
     return fig, ax
 

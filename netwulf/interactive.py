@@ -7,22 +7,19 @@ from __future__ import print_function
 
 import os
 import sys
-
+import json
+from distutils.dir_util import copy_tree
+import base64
 import http.server
 import webbrowser
 import time
 import threading
 from copy import deepcopy
-
 import shutil
-
-import netwulf as wulf
-
-import json
-from distutils.dir_util import copy_tree
+from io import BytesIO
 
 import networkx as nx
-from io import BytesIO
+import netwulf as wulf
 
 netwulf_user_folder = os.path.join(os.path.abspath(os.path.expanduser('~')), '.netwulf')
 
@@ -64,7 +61,8 @@ class NetwulfHTTPServer(http.server.HTTPServer):
     # The handler will write in this attribute
     posted_network_properties = None
     posted_config = None
-
+    posted_image_base64 = None
+ 
     end_requested = False
 
     def __init__(self, server_address, handler, subjson, verbose=False):
@@ -126,6 +124,8 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             received_data = json.loads(body)
             self.server.posted_network_properties = received_data['network']
             self.server.posted_config = received_data['config']
+            img = received_data['image'].split(',')[1]
+            self.server.posted_image_base64 = base64.decodebytes(img.encode())
 
     def log_message(self, format, *args):
         if self.server.verbose:
