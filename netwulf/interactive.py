@@ -168,7 +168,7 @@ def visualize(network,
     a local HTTP server which then runs the web app.
     
     Parameters
-    ==========
+    ----------
     network : networkx.Graph or networkx.DiGraph
         The network to visualize
     port : int, default : 9853
@@ -179,7 +179,7 @@ def visualize(network,
         In the default configuration, each key-value-pair will
         be overwritten with the key-value-pair provided in `config`.
         The default configuration is
-        ```
+        .. code:: python
             default_config = {
               'Apply heat (wiggle)': false,
               'Charge strength': -10,
@@ -201,10 +201,10 @@ def visualize(network,
               'Zoom': 1.5,
               'Min. link weight %': 0,
               'Max. link weight %': 100
-        ```
+            }  
 
     Returns
-    =======
+    -------
     network_properties : dict
         contains all necessary information to redraw the figure which
         was created in the interactive visualization
