@@ -179,7 +179,9 @@ def visualize(network,
         In the default configuration, each key-value-pair will
         be overwritten with the key-value-pair provided in `config`.
         The default configuration is
+
         .. code:: python
+
             default_config = {
               'Apply heat (wiggle)': false,
               'Charge strength': -10,

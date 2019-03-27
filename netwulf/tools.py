@@ -76,6 +76,7 @@ def draw_netwulf(network_properties, fig = None, ax=None):
     In order to add labels, do for instance
 
     .. code:: python
+
         ax.text(
                 network_properties['nodes'][0]['pos'][0],
                 network_properties['nodes'][0]['pos'][1],
