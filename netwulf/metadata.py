@@ -3,7 +3,7 @@
 Contains a bunch of information about this package.
 """
 
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
 __author__ = "Ulf Aslak, Benjamin F. Maier"
 __copyright__ = "Copyright 2018, Ulf Aslak, Benjamin F. Maier"
