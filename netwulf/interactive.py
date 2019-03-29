@@ -103,12 +103,15 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # an empty POST means the server should be stopped
         if content_length == 0:
-            body = self.rfile.read(content_length)
-            self.send_response(200)
-            self.end_headers()
-            response = BytesIO()
-            response.write(b'Closing now.')
-            self.wfile.write(response.getvalue())
+            try:
+                body = self.rfile.read(content_length)
+                self.send_response(200)
+                self.end_headers()
+                response = BytesIO()
+                response.write(b'Closing now.')
+                self.wfile.write(response.getvalue())
+            except: #this should actually catch a ConnectionError for windows or firefox
+                pass
             self.server.end_requested = True
         else:
             body = self.rfile.read(content_length)
@@ -281,8 +284,13 @@ def visualize(network,
     # see whether or not the whole thing was started from a jupyter notebook and if yes,
     # actually re-draw the figure and display it
     env = os.environ
-    program = os.path.basename(env['_'])
-    if 'jupyter' in program:        
+    try:
+        is_jupyter = 'jupyter' in os.path.basename(env['_'])
+    except: # this should actually be a key error
+        # apparently this is how it has to be on Windows
+        is_jupyter = 'JPY_PARENT_PID' in env
+
+    if is_jupyter:
         fig, ax = wulf.draw_netwulf(posted_network_properties)
 
 
