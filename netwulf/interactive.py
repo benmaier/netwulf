@@ -275,8 +275,6 @@ def visualize(network,
     except KeyboardInterrupt:
         pass
 
-    server.end_requested = True
-
     if verbose:
         print('stopping server ...')
     server.stop_this()
@@ -299,7 +297,7 @@ def visualize(network,
         # apparently this is how it has to be on Windows
         is_jupyter = 'JPY_PARENT_PID' in env
 
-    if is_jupyter:
+    if is_jupyter and server.end_requested:
         fig, ax = wulf.draw_netwulf(posted_network_properties)
 
 
