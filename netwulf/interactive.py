@@ -266,12 +266,12 @@ def visualize(network,
         while not server.end_requested:
             time.sleep(0.1)
     except KeyboardInterrupt:
-        time.sleep(0.2)
+        pass
 
     if verbose:
         print('stopping server ...')
     server.stop_this()
-    thread.join()
+    thread.join(0.2)
 
     posted_network_properties = server.posted_network_properties
     posted_config = server.posted_config
