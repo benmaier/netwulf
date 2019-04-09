@@ -133,14 +133,13 @@ Node attributes such as 'group' or 'size' that you define in your `networkx.Grap
 
 ```Python
 import networkx as nx
-import community
 from netwulf import visualize
 
-G = nx.random_partition_graph([10,10,10],.25,.01)
-bb = community.best_partition(G)  # dict of node-community pairs
-nx.set_node_attributes(G, bb, 'group')
+G = nx.random_partition_graph([10, 10, 10], .25, .01)
+for k, v in G.nodes(data=True):
+    v['group'] = v['block']; del v['block']
 
-visualize(G)
+data = visualize(G)
 ```
 
 ![visualization example2](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
