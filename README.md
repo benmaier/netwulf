@@ -2,11 +2,7 @@
 
 # netwulf
 
-This package provides an interface between 
-[networkx](https://networkx.github.io/) 
-Graph objects and
-[Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) 
-for simple and better network visualizations.
+This package provides an interface between [networkx](https://networkx.github.io/)  Graph objects and [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) for simple and better network visualizations.
 
 ## Install
 
@@ -30,8 +26,7 @@ visualize(G)
 
 ![visualization example0](https://github.com/benmaier/netwulf/raw/master/img/BA_1.png)
 
-When the visualization was posted to Python in the Browser, the function actually returns
-a dictionary containing all style information of the stylized network. For instance,
+When the visualization was posted to Python in the Browser, the function actually returns a dictionary containing all style information of the stylized network. For instance,
 
 ```python
 import networkx as nx
@@ -39,7 +34,7 @@ from netwulf import visualize
 
 G = nx.barabasi_albert_graph(5,m=1)
 # the following only works if the user clicked "Post to Python" in the visualization.
-network_properties = visualize(G)
+network_properties, config = visualize(G)
 print(network_properties)
 ```
 
@@ -147,9 +142,7 @@ visualize(G)
 
 ## Dev notes
 
-The JS base code in `/netwulf/js/` is a fork of 
-[Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository
-is updated, change to `/netwulf/js/`, then do
+The JS base code in `/netwulf/js/` is a fork of [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository is updated, change to `/netwulf/js/`, then do
 
 ```bash
 git fetch upstream
@@ -164,15 +157,13 @@ If you want to upload to PyPI, first convert the new `README.md` to `README.rst`
 make readme
 ```
 
-It will give you warnings about bad `.rst`-syntax. Fix those errors in `README.rst`.
-Then wrap the whole thing 
+It will give you warnings about bad `.rst`-syntax. Fix those errors in `README.rst`. Then wrap the whole thing 
 
 ```bash
 make pypi
 ```
 
-It will probably give you more warnings about `.rst`-syntax. Fix those until 
-the warnings disappear. Then do
+It will probably give you more warnings about `.rst`-syntax. Fix those until the warnings disappear. Then do
 
 ```bash
 make upload
