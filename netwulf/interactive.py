@@ -266,7 +266,7 @@ def visualize(network,
         while not server.end_requested:
             time.sleep(0.1)
     except KeyboardInterrupt:
-        pass
+        time.sleep(0.2)
 
     if verbose:
         print('stopping server ...')
