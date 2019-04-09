@@ -76,6 +76,13 @@ class NetwulfHTTPServer(http.server.HTTPServer):
         except OSError:
             pass
 
+    def serve_forever(self):
+        """Handle one request at a time until doomsday."""
+        while not self.end_requested:
+            self.handle_request()
+        if self.verbose:
+            print("serve_forever() terminated")
+
     def stop_this(self):
         # Clean-up server (close socket, etc.)
         if self.verbose:
@@ -268,6 +275,8 @@ def visualize(network,
     except KeyboardInterrupt:
         pass
 
+    server.end_requested = True
+
     if verbose:
         print('stopping server ...')
     server.stop_this()
@@ -299,7 +308,7 @@ def visualize(network,
 
 if __name__ == "__main__":
     # download_d3()
-    G = nx.fast_gnp_random_graph(5,0.1)
-    posted_data = visualize(G,config={'Node size':5},verbose=False)
+    G = nx.fast_gnp_random_graph(5,0.3)
+    posted_data = visualize(G,config={'Node size':5},verbose=True)
     if posted_data is not None:
         print("received posted data:", posted_data)
