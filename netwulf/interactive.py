@@ -272,9 +272,11 @@ def visualize(network,
     try:
         while not server.end_requested:
             time.sleep(0.1)
+        is_keyboard_interrupted = False
     except KeyboardInterrupt:
+        is_keyboard_interrupted = True
         pass
-
+    
     server.end_requested = True
 
     if verbose:
@@ -299,9 +301,8 @@ def visualize(network,
         # apparently this is how it has to be on Windows
         is_jupyter = 'JPY_PARENT_PID' in env
 
-    if is_jupyter:
+    if is_jupyter and not is_keyboard_interrupted:
         fig, ax = wulf.draw_netwulf(posted_network_properties)
-
 
     return posted_network_properties, posted_config
 
