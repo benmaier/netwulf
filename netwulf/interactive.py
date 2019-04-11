@@ -180,7 +180,7 @@ def visualize(network,
     
     Parameters
     ----------
-    network : networkx.Graph or networkx.DiGraph
+    network : networkx.Graph or networkx.DiGraph or node-link dictionary
         The network to visualize
     port : int, default : 9853
         The port at which to run the server locally.
@@ -246,7 +246,10 @@ def visualize(network,
     configpath = os.path.join(web_dir, configname)
 
     with open(filepath,'w') as f:
-        json.dump(nx.node_link_data(network), f, iterable_as_array=True)
+        if type(network) is nx.Graph:
+            json.dump(nx.node_link_data(network), f, iterable_as_array=True)
+        else:
+            json.dump(network, f, iterable_as_array=True)
 
     with open(configpath,'w') as f:
         json.dump(this_config, f)
