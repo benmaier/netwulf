@@ -171,7 +171,8 @@ default_config = {
 def visualize(network,
               port=9853,
               verbose=False,
-              config=None):
+              config=None,
+              plot_in_cell_below=True):
     """
     Visualize a network interactively using Ulf Aslak's d3 web app.
     Saves the network as json, saves the passed config and runs 
@@ -301,7 +302,7 @@ def visualize(network,
         # apparently this is how it has to be on Windows
         is_jupyter = 'JPY_PARENT_PID' in env
 
-    if is_jupyter and not is_keyboard_interrupted:
+    if is_jupyter and plot_in_cell_below and not is_keyboard_interrupted:
         fig, ax = wulf.draw_netwulf(posted_network_properties)
 
     return posted_network_properties, posted_config
