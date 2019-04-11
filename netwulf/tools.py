@@ -149,7 +149,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     lines = []
     linewidths = []
     for link in network_properties['links']:
-        u, v = link['link']
+        u, v = link['source'], link['target']
         lines.append([ 
             [pos[u][0], pos[v][0]], 
             [pos[u][1], pos[v][1]]
