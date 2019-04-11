@@ -144,12 +144,13 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
 
     # filter out node positions for links
     width = network_properties['xlim'][1] - network_properties['xlim'][0]
-    pos = { node['id']: np.array([node['x'], node['y']]) for node in network_properties['nodes'] }
+    height = network_properties['ylim'][1] - network_properties['ylim'][0]
+    pos = { node['id']: np.array([node['x'], height - node['y']]) for node in network_properties['nodes'] }
 
     lines = []
     linewidths = []
     for link in network_properties['links']:
-        u, v = link['link']
+        u, v = link['source'], link['target']
         lines.append([ 
             [pos[u][0], pos[v][0]], 
             [pos[u][1], pos[v][1]]
@@ -175,7 +176,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     node_colors = []
 
     for node in network_properties['nodes']:
-        XY.append([node['x'], node['y']])
+        XY.append([node['x'], height - node['y']])
         # size has to be given in points**2
         size.append( 2*node['radius'] )
         node_colors.append(node['color'])
