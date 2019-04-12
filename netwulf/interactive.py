@@ -144,27 +144,33 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
 default_config = {
-  'Apply heat (wiggle)': False,
-  'Charge strength': -30,
-  'Center gravity': 0.1,
-  'Link distance': 10,
-  'Link width': 2,
-  'Link alpha': 0.5,
-  'Node size': 10, 
-  'Node stroke size': 0.5,
-  'Node size exponent': 0.5,
-  'Link width exponent': 0.5,
-  'Collision': False,
-  'Node fill': '#16a085',
-  'Node stroke': '#000000',
-  'Link stroke': '#7c7c7c',
-  'Label stroke': '#000000',
-  'Show labels': False,
-  'Show singleton nodes': False,
-  'Node size by strength': False,
-  'Zoom': 1.5,
-  'Min. link weight %': 0,
-  'Max. link weight %': 100
+    # Input/output
+    'zoom': 1.5,
+    # Physics
+    'node_charge': -30,
+    'node_gravity': 0.1,
+    'link_distance': 10,
+    'node_collision': False,
+    'wiggle_nodes': False,
+    'freeze_nodes': False,
+    # Nodes
+    'node_fill_color': '#16a085',
+    'node_stroke_color': '#000000',
+    'node_label_color': '#000000',
+    'display_node_labels': False,
+    'scale_node_size_by_strength': False,
+    'node_size': 10,
+    'node_stroke_width': 0.5,
+    'node_size_unevenness': 0.5,
+    # Links
+    'link_color': '#7c7c7c',
+    'link_width': 5,
+    'link_alpha': 0.5,
+    'link_width_unevenness': 0.5,
+    # Thresholding
+    'display_singleton_nodes': False,
+    'min_link_weight_percentile': 0,
+    'max_link_weight_percentile': 100
 }
 
 
@@ -194,27 +200,34 @@ def visualize(network,
         .. code:: python
 
             default_config = {
-              'Apply heat (wiggle)': false,
-              'Charge strength': -10,
-              'Center gravity': 0.1,
-              'Link distance': 10,
-              'Link width': 2,
-              'Link alpha': 0.5,
-              'Node size': 5, 
-              'Node stroke size': 0.5,
-              'Node size exponent': 0.5,
-              'Link strength exponent': 0.1,
-              'Link width exponent': 0.5,
-              'Collision': False,
-              'Node fill': '#16a085',
-              'Node stroke': '#000000',
-              'Link stroke': '#7c7c7c',
-              'Label stroke': '#000000',
-              'Show labels': False,
-              'Zoom': 1.5,
-              'Min. link weight %': 0,
-              'Max. link weight %': 100
-            }  
+                # Input/output
+                'zoom': 1.5,
+                # Physics
+                'node_charge': -30,
+                'node_gravity': 0.1,
+                'link_distance': 10,
+                'node_collision': False,
+                'wiggle_nodes': False,
+                'freeze_nodes': False,
+                # Nodes
+                'node_fill_color': '#16a085',
+                'node_stroke_color': '#000000',
+                'node_label_color': '#000000',
+                'display_node_labels': False,
+                'scale_node_size_by_strength': False,
+                'node_size': 10,
+                'node_stroke_width': 0.5,
+                'node_size_unevenness': 0.5,
+                # Links
+                'link_color': '#7c7c7c',
+                'link_width': 5,
+                'link_alpha': 0.5,
+                'link_width_unevenness': 0.5,
+                # Thresholding
+                'display_singleton_nodes': False,
+                'min_link_weight_percentile': 0,
+                'max_link_weight_percentile': 100
+            }
 
     Returns
     -------
