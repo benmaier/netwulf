@@ -327,6 +327,6 @@ def visualize(network,
 if __name__ == "__main__":
     # download_d3()
     G = nx.fast_gnp_random_graph(5,0.3)
-    posted_data = visualize(G,config={'Node size':5},verbose=True)
+    posted_data = visualize(G,config={'node_size':5,'collision':True,'link_color':'#3b9'},verbose=True)
     if posted_data is not None:
         print("received posted data:", posted_data)
