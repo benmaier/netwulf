@@ -23,8 +23,7 @@ A visualization window is opened and the network can be stylized.
 Once you're done, press the button `Post to Python`.
 
 .. figure:: img/post_to_python.png
-
-    Post to Python
+    :width: 500
 
 Pressing this button will pipe the data back to Python and close the browser
 The Python kernel is busy until either `Post to Python` is clicked or a

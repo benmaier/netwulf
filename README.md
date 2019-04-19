@@ -4,6 +4,8 @@
 
 This package provides an interface between [networkx](https://networkx.github.io/)  Graph objects and [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) for simple and better network visualizations.
 
+![example](https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif)
+
 ## Install
 
     pip install netwulf
