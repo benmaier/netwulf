@@ -26,10 +26,9 @@ Once you're done, press the button `Post to Python`.
 
     Post to Python
 
-Pressing this button will lead the data to be posted back to Python. 
-Subsequently the browser window will be closed. The Python kernel will
-not be responding until either the `Post to Python`-button is pressed
-or the ``KeyboardInterrupt`` signal is send (manually or using the `Stop`-Button 
+Pressing this button will pipe the data back to Python and close the browser
+The Python kernel is busy until either `Post to Python` is clicked or a
+``KeyboardInterrupt`` signal is send (manually or using the `Stop`-Button 
 in a Jupyter notebook).
 
 The returned stylized network dictionary will contain all the necessary information
@@ -38,72 +37,87 @@ to reproduce the figure. It will look something like this.
 .. code:: python
 
     stylized_network = {
-         'xlim': [0, 833],
-         'ylim': [0, 833],
-         'linkColor': '#7c7c7c',
-         'linkAlpha': 0.5,
-         'nodeStrokeColor': '#000000',
-         'nodeStrokeWidth': 0.75,
-         'links': [{'link': [0, 2], 'width': 3},
-          {'link': [0, 3], 'width': 3},
-          {'link': [0, 4], 'width': 3},
-          {'link': [1, 2], 'width': 3},
-          {'link': [1, 3], 'width': 3},
-          {'link': [1, 4], 'width': 3}],
-         'nodes': [{'id': 0,
-           'pos': [436.0933431058901, 431.72418500564186],
-           'radius': 20,
-           'color': '#16a085'},
-          {'id': 1,
-           'pos': [404.62184898400426, 394.8158724310507],
-           'radius': 20,
-           'color': '#16a085'},
-          {'id': 2,
-           'pos': [409.15148692745356, 438.08415417584683],
-           'radius': 20,
-           'color': '#16a085'},
-          {'id': 3,
-           'pos': [439.27989436871223, 397.14932001193233],
-           'radius': 20,
-           'color': '#16a085'},
-          {'id': 4,
-           'pos': [393.4680683212157, 420.63184247673917],
-           'radius': 20,
-           'color': '#16a085'}]
-          }
+        'xlim': [0, 833],
+        'ylim': [0, 833],
+        'linkColor': '#7c7c7c',
+        'linkAlpha': 0.5,
+        'nodeStrokeColor': '#000000',
+        'nodeStrokeWidth': 0.75,
+        'links': [
+            {'source': 0, 'target': 2, 'width': 3},
+            {'source': 0, 'target': 3, 'width': 3},
+            {'source': 0, 'target': 4, 'width': 3},
+            {'source': 1, 'target': 2, 'width': 3},
+            {'source': 1, 'target': 3, 'width': 3},
+            {'source': 1, 'target': 4, 'width': 3}
+        ],
+        'nodes': [
+            {'id': 0,
+             'x': 436.0933431058901,
+             'y': 431.72418500564186,
+             'radius': 20,
+             'color': '#16a085'},
+            {'id': 1,
+             'x': 404.62184898400426,
+             'y': 394.8158724310507,
+             'radius': 20,
+             'color': '#16a085'},
+            {'id': 2,
+             'x': 409.15148692745356,
+             'y': 438.08415417584683,
+             'radius': 20,
+             'color': '#16a085'},
+            {'id': 3,
+             'x': 439.27989436871223,
+             'y': 397.14932001193233,
+             'radius': 20,
+             'color': '#16a085'},
+            {'id': 4,
+             'x': 393.4680683212157,
+             'y': 420.63184247673917,
+             'radius': 20,
+             'color': '#16a085'}
+        ]
+    }
 
 
-Furthermore, the configuration
+Furthermore, the configuration dictionary 
 which was used to generate this figure will resemble
 
 .. code:: python
 
-    config = {
-         'Apply heat (wiggle)': False,
-         'Charge strength': -30,
-         'Center gravity': 0.1,
-         'Link distance': 10,
-         'Link width': 2,
-         'Link alpha': 0.5,
-         'Node size': 10,
-         'Node stroke size': 0.5,
-         'Node size exponent': 0.5,
-         'Link width exponent': 0.5,
-         'Collision': False,
-         'Node fill': '#16a085',
-         'Node stroke': '#000000',
-         'Link stroke': '#7c7c7c',
-         'Label stroke': '#000000',
-         'Show labels': False,
-         'Show singleton nodes': False,
-         'Node size by strength': False,
-         'Zoom': 1.5,
-         'Min. link weight %': 0,
-         'Max. link weight %': 100
-         }
+    default_config = {
+        # Input/output
+        'zoom': 1.5,
+        # Physics
+        'node_charge': -30,
+        'node_gravity': 0.1,
+        'link_distance': 10,
+        'node_collision': False,
+        'wiggle_nodes': False,
+        'freeze_nodes': False,
+        # Nodes
+        'node_fill_color': '#16a085',
+        'node_stroke_color': '#000000',
+        'node_label_color': '#000000',
+        'display_node_labels': False,
+        'scale_node_size_by_strength': False,
+        'node_size': 10,
+        'node_stroke_width': 0.5,
+        'node_size_unevenness': 0.5,
+        # Links
+        'link_color': '#7c7c7c',
+        'link_width': 5,
+        'link_alpha': 0.5,
+        'link_width_unevenness': 0.5,
+        # Thresholding
+        'display_singleton_nodes': False,
+        'min_link_weight_percentage': 0,
+        'max_link_weight_percentage': 100
+    }
 
 If the visualization was started from a Jupyter notebook, a picture of the stylized
-network will appear additionally
+network will appear in the cell below.
 
 .. figure:: img/figure_in_jupyter.png
 

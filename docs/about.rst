@@ -1,12 +1,11 @@
 About this project
 ==================
 
-Netwulf is an interactive visualization engine for networkx_ Graph-objects.
-Unlike other visualization methods, it is neither slow, nor does it rely
-to install any crude dependencies. On top, fine-tuning visualizations 
-is made simple due to the interactive visualization nature and reproducing visualizations
-is made possible thanks to seamless communication between Python and the
-visualization tool.
+Netwulf is an interactive visualization tool for networkx_ Graph-objects,
+that allows you to produce beautiful looking network visualizations. Simply
+input a `networkx.Graph` object, style the network in the interactive console
+and either download the result as a PNG or pipe the layout back to Python for
+further processing. Netwulf is fast and relies on no crude dependencies.
 
 Quick example
 -------------
@@ -20,7 +19,7 @@ Quick example
 
     visualize(G)
 
-.. figure:: img/BA.png
+.. figure:: img/simple_example.gif
     
     started visualization
 
@@ -30,18 +29,18 @@ Why should I use netwulf
 Pros
 ~~~~
 
-- interactive styling of network visualizations in the browser, started from Python
-- no compiling needed
-- no external program needed 
-- cross-platform
-- seamlessly use the inferred style back in Python
-- redraw the visualization in Python using matplotlib
+- Interactive styling of network visualizations in the browser, started from Python
+- No compiling needed
+- No external program needed 
+- Cross-platform
+- Seamlessly use the inferred style back in Python
+- Redraw the visualization in Python using matplotlib
 
 Cons
 ~~~~
 
-- no multiedges yet
-- no rendering of directed edges
+- No multiedges yet
+- No rendering of directed edges
 
 
 Install
