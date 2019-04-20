@@ -42,18 +42,16 @@ I'm just collecting some thoughts here
   an automated view of a network which was previously manipulated in Python is not possbile
 * Webweb [@webweb] provides an interactive visualization for Python network objects based
   on the force layout of d3.js [@d3], however
-  its main purpose is exploration of network features
+  its main purpose is the interactive exploration of network features
   and single-time visualizations:
-  the stylized network and visualization parameters may not be saved to reproduce
-  Further, a variety of styling parameters are only accessible through its API
-  which again may provide difficulties when trying to find the optimal visualization.
+  the stylized network and visualization parameters may not be saved to be reproduced later.
 * Netwulf provides a simple interactive interface to stylize a network which was previously
   manipulated in Python. 
 * Its philosophy is that network manipulation should be done programmatically (i.e. in Python)
   but the efficient generation of a visually pleasing network representation should be
   done manually
 * Its main purpose is to easily generate both a network visualization
-  and find the optimal visualization parameters to reproduce the visualization. To this end, both are 
+  and find the optimal visualization parameters to reproduce this visualization. To this end, both are 
   saved to objects in the Python instance running Netwulf.
 * It further provides functionality to
   redraw the visualization in Python using matplotlib [@matplotlib] to save it as a vector graphic
