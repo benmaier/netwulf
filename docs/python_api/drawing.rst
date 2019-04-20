@@ -14,9 +14,9 @@ the function :mod:`netwulf.tools.draw_netwulf`.
 
     stylized_network, config = wulf.visualize(G)
 
-    import matplotlib.pyplot as pl
-    fig, ax = wulf.draw_netwulf(G)
-    pl.show()
+    import matplotlib.pyplot as plt
+    fig, ax = wulf.draw_netwulf(stylized_network)
+    plt.show()
 
 
 A visualization window is opened and the network can be stylized.
@@ -34,7 +34,7 @@ for the first node this might look like
 .. code:: python
 
     ax.text(
-            network_properties['nodes'][0]['pos'][0],
-            network_properties['nodes'][0]['pos'][1],
+            network_properties['nodes'][0]['x']
+            network_properties['nodes'][0]['y']
             network_properties['nodes'][0]['id']
            )
