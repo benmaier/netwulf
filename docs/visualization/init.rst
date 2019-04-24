@@ -72,7 +72,17 @@ An online version of the interactive visualization exists here_.
 It allows users to upload or specify a URL to a network in either JSON or CSV format.
 JSON formatted networks have at minimum two keys: "nodes" and "links".
 Each contains a list with nodes and links, respectively.
-See our example JSON_ and CSV_ files.
+See our example JSON_ and CSV_ files. An alternative CSV format is
+
+.. code::
+
+    source,target
+    node0,node1
+    node2,node2
+
+This data represents a network of three nodes with an edge between ``node0`` and ``node1``
+and an isolated node ``node2``.
+
 In the online version, users can save, export and reset parameter presets using the top bar control panel:
 
 .. figure:: img/control_panel.png
