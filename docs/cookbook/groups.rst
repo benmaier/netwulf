@@ -69,6 +69,25 @@ Example:
 Note: If 'group' is not a color (like "red" or "#4fba21") the group colors are assigned randomly.
 
 
+Initial node positions
+----------------------
+
+A network can be launched with initial node positions.
+If netwulf sees node-attributes 'x' and 'y' like:
+
+.. code:: python
+
+    list(G.nodes(data=True))[:3]
+    # [(0, {'x': 600, 'y': 400}),
+    #  (1, {'x': 550, 'y': 450}),
+    #  (2, {'x': 500, 'y': 500})]
+
+it freezes the nodes in these positions at launch.
+Nodes can be moved around in their frozen states.
+Positions are relaxed upon untoggling "Freeze", toggling "Wiggle" or changing any of the physics parameters.
+
+
+
 Save as PDF
 -----------
 

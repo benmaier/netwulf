@@ -1,4 +1,4 @@
-Interactive Visualization
+Interactive visualization
 -------------------------
 
 The interactive visualization gives the user an intuitive interface through which to manipulate and style their networks. Most of the parameters are intuitive, and each one has a short tooltip explanation that
