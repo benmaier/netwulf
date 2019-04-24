@@ -259,7 +259,7 @@ def visualize(network,
     configpath = os.path.join(web_dir, configname)
 
     with open(filepath,'w') as f:
-        if type(network) is nx.Graph:
+        if type(network) in [nx.Graph, nx.DiGraph]:
             json.dump(nx.node_link_data(network), f, iterable_as_array=True)
         else:
             json.dump(network, f, iterable_as_array=True)
