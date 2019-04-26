@@ -2,7 +2,7 @@
 
 ## About
 
-**Simple and better network visualization in Python.** Network visualization is an indispensable tool for exploring and communicating patterns in complex systems. Netwulf offers an ultra-simple API for **reproducible interactive visualization** of networks directly from a Python prompt or Jupyter notebook. As a research tool, its purpose is to allow hassle-free quick exploration of networks, and enable interactive layouting and styling for communication purposes.
+**Simple and interactive network visualization in Python.** Network visualization is an indispensable tool for exploring and communicating patterns in complex systems. Netwulf offers an ultra-simple API for **reproducible interactive visualization** of networks directly from a Python prompt or Jupyter notebook. As a research tool, its purpose is to allow hassle-free quick exploration of networks, and enable interactive layouting and styling for communication purposes.
 
 ![example](https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif)
 
