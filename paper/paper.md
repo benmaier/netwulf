@@ -1,5 +1,5 @@
 ---
-title: Netwulf: Interactive visualization of networks in Python # maybe you have a better title
+title: 'Netwulf: Interactive visualization of networks in Python'
 tags:
   - Python
   - JavaScript
@@ -9,7 +9,7 @@ tags:
 authors:
   - name: Ulf Aslak
     orcid: 0000-0003-4704-3609
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
+    affiliation: "1, 2"
   - name: Benjamin F. Maier
     orcid: 0000-0001-7414-8823
     affiliation: "3, 4"
@@ -22,7 +22,7 @@ affiliations:
    index: 3
  - name: Department of Physics, Humboldt-University of Berlin, Newtonstr. 15, D-12489 Berlin
    index: 4
-date: 20 April 2018
+date: 26 April 2019
 bibliography: paper.bib
 ---
 
@@ -37,13 +37,10 @@ For many users, these tools offer the necessary functionality to visualize netwo
 
 1. Users have a network object, `G`, in either dictionary or *networkx.Graph* format. They then launch a Netwulf visualization by calling `netwulf.visualize(G)`.
 2. The command opens a new browser window containing `G` as an interactive, manipulable, stylable network. Here, the user can, for instance, explore how different configurations of physics parameters like *node charge* and *gravity* influence the layout, they can change properties like node color and link opacity, and even threshold the network data for weak or strong links. When the user has finalized the layouting process, they may either:
-   1. Save the image directly from the interactive visualization as a PNG file.
-   2. Post the style and computed node positions back to Python in a dictionary format, which allows for further manipulation in the Python backend. Moreover, using the function `netwulf.draw_netwulf`, the network can be redrawn using the common Python drawing library *matplotlib* [@matplotlib], which further enables saving the visualization in any format.
+	1. Save the image directly from the interactive visualization as a PNG file.
+	2. Post the style and computed node positions back to Python in a dictionary format, which allows for further manipulation in the Python backend. Moreover, using the function `netwulf.draw_netwulf`, the network can be redrawn using the common Python drawing library *matplotlib* [@matplotlib], which further enables saving the visualization in any format.
 
 The interactive visualization is implemented in JavaScript, relies on d3.js [@d3] for computing layouts, and uses the HTML5-object `canvas` for rendering. This makes it, to our knowledge, the most performant tool for interactive network visualization in Python to date.
-
-
-# Figures
 
 ![Interactive visualization of a modular network in Netwulf.](random_partition_graph.png)
 
@@ -52,4 +49,3 @@ The interactive visualization is implemented in JavaScript, relies on d3.js [@d3
 Both authors contributed equally to the software, documentation, and manuscript. B. F. M. is financially supported as an *Add-On Fellow for Interdisciplinary Life Science* by the Joachim Herz Stiftung.
 
 # References
-
