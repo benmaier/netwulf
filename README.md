@@ -1,16 +1,22 @@
 ![logo](https://github.com/benmaier/netwulf/raw/master/img/logo_small.png)
 
-# netwulf
+## About
 
-This package provides an interface between [networkx](https://networkx.github.io/)  Graph objects and [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3) for simple and better network visualizations.
+**Simple and better network visualization in Python.** Network visualization is an indispensable tool for exploring and communicating patterns in complex systems. Netwulf offers an ultra-simple API for **reproducible interactive visualization** of networks directly from a Python prompt or Jupyter notebook. As a research tool, its purpose is to allow hassle-free quick exploration of networks, and enable interactive layouting and styling for communication purposes.
 
 ![example](https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif)
+
+
 
 ## Install
 
     pip install netwulf
 
 Beware: `netwulf` only works with Python 3!
+
+## Documentation
+
+The full documentation is available [here](https://netwulf.readthedocs.io/en/latest/python_api/start.html).
 
 ## Example
 
@@ -141,7 +147,7 @@ data = visualize(G)
 
 ![visualization example2](https://github.com/benmaier/netwulf/raw/master/img/attributes_1.png)
 
-## Dev notes
+### Dev notes
 
 The JS base code in `/netwulf/js/` is a fork of [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository is updated, change to `/netwulf/js/`, then do
 
