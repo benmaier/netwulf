@@ -177,7 +177,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
 
     for node in network_properties['nodes']:
         XY.append([node['x'], height - node['y']])
-        # size has to be given in points**2
+        # size has to be given in points*2
         size.append( 2*node['radius'] )
         node_colors.append(node['color'])
 
