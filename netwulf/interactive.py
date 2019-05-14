@@ -292,7 +292,6 @@ def visualize(network,
         is_keyboard_interrupted = False
     except KeyboardInterrupt:
         is_keyboard_interrupted = True
-        pass
     
     server.end_requested = True
 
@@ -319,6 +318,8 @@ def visualize(network,
         is_jupyter = 'JPY_PARENT_PID' in env
 
     if is_jupyter and plot_in_cell_below and not is_keyboard_interrupted:
+        if verbose:
+            print('recreating layout in matplotlib ...')
         fig, ax = wulf.draw_netwulf(posted_network_properties)
 
     return posted_network_properties, posted_config
