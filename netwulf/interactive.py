@@ -17,42 +17,29 @@ import threading
 from copy import deepcopy
 import shutil
 from io import BytesIO
+import pathlib
 
 import networkx as nx
 import netwulf as wulf
 
-netwulf_user_folder = os.path.join(os.path.abspath(os.path.expanduser('~')), '.netwulf')
+netwulf_user_folder = pathlib.Path('~/.netwulf/').expanduser()
+html_source_path = (pathlib.Path(wulf.__path__[0]) / 'js').expanduser()
 
 def mkdirp_customdir(directory=None):
     """simulate `mkdir -p` functionality"""
     if directory is None:
         directory = netwulf_user_folder
 
-    directory = os.path.abspath(os.path.expanduser(directory))
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-
-html_source_path = os.path.join(wulf.__path__[0], 'js')
-
-
-def _make_and_get_directory(path):
-    """Simulate ``mkdir -p`` and return the path of the repository"""
-    directory, _ = os.path.split(
-        os.path.abspath(os.path.expanduser(path))
-    )
-    mkdirp_customdir(directory)
-    return directory
-
+    directory = pathlib.Path(directory).expanduser().resolve()
+    directory.mkdir(parents=True, exist_ok=True)
 
 def prepare_visualization_directory():
     """Move all files from the netwulf/js directory to ~/.netwulf"""
     src = html_source_path
-    dst = os.path.abspath(os.path.expanduser(netwulf_user_folder))
+    dst = netwulf_user_folder
 
     # always copy source files to the subdirectory
-    copy_tree(src, dst)
-
+    copy_tree(str(src), str(dst))
 
 class NetwulfHTTPServer(http.server.HTTPServer):
     """Custom netwulf server class adapted from 
@@ -91,8 +78,9 @@ class NetwulfHTTPServer(http.server.HTTPServer):
 
         # try:
         for f in self.subjson:
-            if os.path.exists(f):
-                os.remove(f)
+            fPath = pathlib.Path(f)
+            if fPath.exists():
+                fPath.unlink()
 
         if self.verbose:
             print('deleted all files')
@@ -245,7 +233,7 @@ def visualize(network,
 
     path = netwulf_user_folder
     mkdirp_customdir()
-    web_dir = os.path.abspath(os.path.expanduser(path))
+    web_dir = pathlib.Path(path)
 
     # copy the html and js files for the visualizations
     prepare_visualization_directory()
@@ -255,8 +243,8 @@ def visualize(network,
     filename = file_id
     configname = "config_" + filename
 
-    filepath = os.path.join(web_dir, filename)
-    configpath = os.path.join(web_dir, configname)
+    filepath = str(web_dir / filename)
+    configpath = str(web_dir / configname)
 
     with open(filepath,'w') as f:
         if type(network) in [nx.Graph, nx.DiGraph]:
@@ -269,10 +257,10 @@ def visualize(network,
 
     # change directory to this directory
     if verbose:
-        print("changing directory to", web_dir)
-        print("starting server here ...", web_dir)
+        print("changing directory to", str(web_dir))
+        print("starting server here ...", str(web_dir))
     cwd = os.getcwd()
-    os.chdir(web_dir)
+    os.chdir(str(web_dir))
 
     server = NetwulfHTTPServer(("127.0.0.1", port),
                                  NetwulfHTTPRequestHandler,
@@ -312,7 +300,7 @@ def visualize(network,
     # actually re-draw the figure and display it
     env = os.environ
     try:
-        is_jupyter = 'jupyter' in os.path.basename(env['_'])
+        is_jupyter = 'jupyter' in pathlib.PurePath(env['_']).name
     except: # this should actually be a key error
         # apparently this is how it has to be on Windows
         is_jupyter = 'JPY_PARENT_PID' in env
