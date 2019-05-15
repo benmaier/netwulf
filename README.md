@@ -1,10 +1,10 @@
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
-
 ![logo](https://github.com/benmaier/netwulf/raw/master/img/logo_small.png)
 
 ## About
 
-**Simple and interactive network visualization in Python.** Network visualization is an indispensable tool for exploring and communicating patterns in complex systems. Netwulf offers an ultra-simple API for **reproducible interactive visualization** of networks directly from a Python prompt or Jupyter notebook. As a research tool, its purpose is to allow hassle-free quick exploration of networks, and enable interactive layouting and styling for communication purposes.
+**Simple and interactive network visualization in Python.** Network visualization is an indispensable tool for exploring and communicating patterns in complex systems. Netwulf offers an ultra-simple API for **reproducible interactive visualization** of networks directly from a Python prompt or Jupyter notebook. As a research tool, its purpose is to allow hassle-free quick interactive layouting/styling for communication purposes.
+
+The package is build around the philosophy that network manipulation and preprocessing should be done programmatically, but that the efficient generation of a visually appealing network is best done interactively, without code.
 
 ![example](https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif)
 
@@ -53,6 +53,8 @@ Changes are logged in a [separate file](https://github.com/benmaier/netwulf/blob
 ## Contributing
 
 If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md).
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
 
 ## Dev notes
 

@@ -2,10 +2,13 @@ About this project
 ==================
 
 Netwulf is an interactive visualization tool for networkx_ Graph-objects,
-that allows you to produce beautiful looking network visualizations. Simply
+that allows you to produce beautifully looking network visualizations. Simply
 input a `networkx.Graph` object, style the network in the interactive console
 and either download the result as a PNG or pipe the layout back to Python for
 further processing. Netwulf is fast and relies on no crude dependencies.
+It is build around the philosophy that network manipulation and preprocessing 
+should be done programmatically, but that the efficient generation of a visually 
+appealing network is best done interactively, without code.
 
 Quick example
 -------------
