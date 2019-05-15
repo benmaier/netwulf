@@ -93,13 +93,14 @@ Save as PDF
 
 .. code:: python
 
-	import networkx as nx
-	import netwulf as wulf
-
-	G = nx.barabasi_albert_graph(100, 2)
-
-	network, config = wulf.visualize(G, plot_in_cell_below=False)
-
-	fig, ax = plt.subplots(figsize=(10, 10))
-	wulf.draw_netwulf(network, fig, ax)
-	plt.savefig("myfigure.pdf")
+    import networkx as nx
+    import netwulf as wulf
+    import matplotlib.pyplot as plt
+    
+    G = nx.barabasi_albert_graph(100, 2)
+    
+    network, config = wulf.visualize(G, plot_in_cell_below=False)
+    
+    fig, ax = plt.subplots(figsize=(10, 10))
+    wulf.draw_netwulf(network, fig, ax)
+    plt.savefig("myfigure.pdf")

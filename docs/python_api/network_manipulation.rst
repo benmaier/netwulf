@@ -25,13 +25,13 @@ will be grouped and colored in the visualization. Here's an example
         G[u][v]['foo'] = np.random.rand()
         G[u][v]['bar'] = np.random.rand()
 
-    # assign node attributes according to some generic grouping 
-    grp = {u: 'ABCDE'[u%5]  for u in G.nodes() }
-    nx.set_node_attributes(G, grp, 'wum')
-
     # filter the Graph to visualize one where the weight is determined by 'foo'
     new_G = wulf.get_filtered_network(G,edge_weight_key='foo')
     wulf.visualize(new_G)
+
+    # assign node attributes according to some generic grouping 
+    grp = {u: 'ABCDE'[u%5]  for u in G.nodes() }
+    nx.set_node_attributes(G, grp, 'wum')
 
     # filter the Graph to visualize one where the weight is determined by 'bar'
     # and the node group (coloring) is determined by the node attribute 'wum'
