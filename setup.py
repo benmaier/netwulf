@@ -15,6 +15,7 @@ setup(
     description = "Interactively visualize networks with Ulf Aslak's d3-tool from Python.",
     long_description = '',
     packages = setuptools.find_packages(),
+    python_requires='~=3.5', 
     setup_requires = [
             ],
     install_requires = [
