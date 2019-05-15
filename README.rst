@@ -31,6 +31,10 @@ Install
 -  Python 3.6
 -  Python 3.7
 
+So far, the package's functionality was tested on Mac OS X, several
+Linux distributions and Windows NT. Windows support cannot be guaranteed
+as we do not have constant access to machines with this OS.
+
 Dependencies
 ------------
 
@@ -45,7 +49,7 @@ installed by ``pip`` during the installation process
 Documentation
 -------------
 
-The full documentation is available at https://netwulf.rtfd.io .
+The full documentation is available at https://netwulf.rtfd.io.
 
 Example
 -------
@@ -78,6 +82,12 @@ and the `contributing
 guidelines <https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md>`__.
 
 |Contributor Covenant|
+
+License
+-------
+
+This project is licensed under the `MIT
+License <https://github.com/benmaier/netwulf/blob/master/LICENSE>`__.
 
 Dev notes
 ---------
