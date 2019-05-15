@@ -50,13 +50,18 @@ Install
 
    pip install netwulf
 
+Make sure to read the ``README.md`` in the `public repository`_ for notes on dependencies and installation.
+
 
 Bug reports & contributing
 --------------------------
 
-You can contribute to the `public repository`_ and raise issues there.
+You can contribute to the `public repository`_ and `raise issues`_ there. Please also make sure to follow the `code of conduct`_ and to read the `contributing notes`_.
 
 
 .. _`public repository`: https://github.com/benmaier/netwulf
 .. _networkx: https://networkx.github.io/
+.. _`raise issues`: https://github.com/benmaier/netwulf/issues/new
+.. _`code of conduct`: https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md
+.. _`contributing notes`: https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md
 
