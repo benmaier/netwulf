@@ -2,7 +2,7 @@
 
 When contributing to this repository, please first discuss the change you wish to make via an [issue](https://github.com/benmaier/netwulf/issues/new).
 
-Please note we have a [code of conduct](https://github.com/benmaier/netwulf/raw/master/CONDE_OF_CONDUCT.md), please follow it in all your interactions with the project.
+Please note we have a [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
 
 ## Pull Request Process
 
@@ -17,5 +17,5 @@ Please note we have a [code of conduct](https://github.com/benmaier/netwulf/raw/
 
 ## Attribution
 
-This Contributing Statement is adapted from [this template](https://gist.github.com/PurpleBooth/b24679402957c63ec426) by @PurpleBooth.
+This Contributing Statement is adapted from [this template by @PurpleBooth](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 

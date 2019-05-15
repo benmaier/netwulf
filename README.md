@@ -48,11 +48,11 @@ visualize(G)
 
 ## Changelog
 
-Changes are logged in a [separate file](https://github.com/benmaier/netwulf/raw/master/CHANGELOG.md).
+Changes are logged in a [separate file](https://github.com/benmaier/netwulf/blob/master/CHANGELOG.md).
 
 ## Contributing
 
-If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/raw/master/CONDE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/raw/master/CONTRIBUTING.md).
+If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md).
 
 ## Dev notes
 
