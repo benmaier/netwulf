@@ -19,6 +19,8 @@ The package is build around the philosophy that network manipulation and preproc
 * Python 3.6
 * Python 3.7
 
+So far, the package's functionality was tested on Mac OS X, several Linux distributions and Windows NT. Windows support cannot be guaranteed as we do not have constant access to machines with this OS.
+
 ## Dependencies
 
 `netwulf` directly depends on the following packages which will be installed by `pip` during the installation process
@@ -30,7 +32,7 @@ The package is build around the philosophy that network manipulation and preproc
 
 ## Documentation
 
-The full documentation is available at https://netwulf.rtfd.io .
+The full documentation is available at https://netwulf.rtfd.io.
 
 ## Example
 
