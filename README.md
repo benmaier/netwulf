@@ -56,6 +56,10 @@ If you want to contribute to this project, please make sure to read the [code of
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
 
+## License
+
+This project is licensed under the [MIT License](https://github.com/benmaier/netwulf/blob/master/LICENSE).
+
 ## Dev notes
 
 The JS base code in `/netwulf/js/` is a fork of [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository is updated, change to `/netwulf/js/`, then do
