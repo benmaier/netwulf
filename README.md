@@ -1,4 +1,3 @@
-[![Documentation Status](https://readthedocs.org/projects/netwulf/badge/?version=latest)](https://netwulf.readthedocs.io/en/latest/?badge=latest)
 
 ![logo](https://github.com/benmaier/netwulf/raw/master/img/logo_small.png)
 
@@ -33,6 +32,8 @@ So far, the package's functionality was tested on Mac OS X, several Linux distri
 * `simplejson>=3.0`
 
 ## Documentation
+
+[![Documentation Status](https://readthedocs.org/projects/netwulf/badge/?version=latest)](https://netwulf.readthedocs.io/en/latest/?badge=latest)
 
 The full documentation is available at https://netwulf.rtfd.io.
 

@@ -1,5 +1,3 @@
-|Documentation Status|
-
 |logo|
 
 About
@@ -50,6 +48,8 @@ installed by ``pip`` during the installation process
 
 Documentation
 -------------
+
+|Documentation Status|
 
 The full documentation is available at https://netwulf.rtfd.io.
 
@@ -127,10 +127,10 @@ until the warnings disappear. Then do
 
     make upload
 
-.. |Documentation Status| image:: https://readthedocs.org/projects/netwulf/badge/?version=latest
-   :target: https://netwulf.readthedocs.io/en/latest/?badge=latest
 .. |logo| image:: https://github.com/benmaier/netwulf/raw/master/img/logo_small.png
 .. |example| image:: https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif
+.. |Documentation Status| image:: https://readthedocs.org/projects/netwulf/badge/?version=latest
+   :target: https://netwulf.readthedocs.io/en/latest/?badge=latest
 .. |visualization example0| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
 .. |Contributor Covenant| image:: https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg
    :target: code-of-conduct.md
