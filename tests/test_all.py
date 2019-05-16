@@ -12,8 +12,12 @@ def _get_test_network():
     G.add_nodes_from(range(2))
     G.add_nodes_from("ab")
     G.add_edges_from([("a","b")])
+    G.add_edges_from([("a",0)])
 
     return G
+
+def _get_test_config():
+    return {'node_size':2,'link_width':2}
 
 def _round_positions(props):
 
@@ -28,12 +32,12 @@ class Test(unittest.TestCase):
     def test_posting(self):
         """Test whether results are sucessfully posted to Python."""
         G = _get_test_network()
-        visualize(G,is_test=True)
+        visualize(G,is_test=True,config=_get_test_config())
 
     def test_reproducibility(self):
         """Test whether a restarted network visualization with binded positions results in the same visualization."""
         G = _get_test_network()
-        props, config = visualize(G,is_test=True)        
+        props, config = visualize(G,config=_get_test_config(),is_test=True)        
 
         bind_positions_to_network(G, props)
         newprops, newconfig = visualize(G, config=config,is_test=True)
@@ -55,21 +59,23 @@ class Test(unittest.TestCase):
         """Test whether filtering works the way it should."""
 
         G = _get_test_network()
-        for u, v in G.edges():
-            G[u][v]['foo'] = np.random.rand()
-            G[u][v]['bar'] = np.random.rand()
+        weights = [10,100]
+        for e, (u, v) in enumerate(G.edges()):
+            G[u][v]['foo'] = weights[e]
+            G[u][v]['bar'] = weights[(e+1)%2]
 
         grp = {u: 'AB'[i%2]  for i, u in enumerate(G.nodes()) }
 
         new_G = get_filtered_network(G,edge_weight_key='foo')
-        visualize(new_G,is_test=True)
+        visualize(new_G,is_test=True,config=_get_test_config())
 
         nx.set_node_attributes(G, grp, 'wum')
 
         new_G = get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
-        visualize(new_G,is_test=True)
+        visualize(new_G,is_test=True,config=_get_test_config())
 
     def test_matplotlib(self):
+        """Test how the produced figure looks"""
         stylized_network = {   'linkAlpha': 0.5,
                                'linkColor': '#7c7c7c',
                                'links': [   {'source': 0, 'target': 1, 'width': 8.067180430164552},
