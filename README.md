@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/netwulf/badge/?version=latest)](https://netwulf.readthedocs.io/en/latest/?badge=latest)
+
 ![logo](https://github.com/benmaier/netwulf/raw/master/img/logo_small.png)
 
 ## About

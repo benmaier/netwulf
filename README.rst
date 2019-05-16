@@ -1,3 +1,5 @@
+|Documentation Status|
+
 |logo|
 
 About
@@ -125,6 +127,8 @@ until the warnings disappear. Then do
 
     make upload
 
+.. |Documentation Status| image:: https://readthedocs.org/projects/netwulf/badge/?version=latest
+   :target: https://netwulf.readthedocs.io/en/latest/?badge=latest
 .. |logo| image:: https://github.com/benmaier/netwulf/raw/master/img/logo_small.png
 .. |example| image:: https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif
 .. |visualization example0| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
