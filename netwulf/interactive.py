@@ -30,7 +30,11 @@ def mkdirp_customdir(directory=None):
     if directory is None:
         directory = netwulf_user_folder
 
-    directory = pathlib.Path(directory).expanduser().resolve()
+    try:
+        directory = pathlib.Path(directory).expanduser().resolve()
+    except FileNotFoundError as e:
+        directory = pathlib.Path(directory).expanduser() # Python 3.5 compliant
+
     directory.mkdir(parents=True, exist_ok=True)
 
 def prepare_visualization_directory():
