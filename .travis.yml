@@ -9,27 +9,35 @@ notifications:
     on_failure: change
 
 after_success:
-- coveralls
+    - coveralls
 
 branches:
   except:
     - gh-pages
 
+dist: xenial
+
+env:
+  - MOZ_HEADLESS=1
+addons:
+  firefox: latest
+
+services:
+  - xvfb
+
 matrix:
     include:
         - python: 3.5
-          dist: trusty
           sudo: false
         - python: 3.6
-          dist: trusty
           sudo: false
         - python: 3.7
-          dist: xenial
           sudo: true
 
 # Handle git submodules yourself
 git:
     submodules: false
+
 # Use sed to replace the SSH URL with the public URL, then initialize submodules
 before_install:
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
