@@ -29,3 +29,5 @@ a.out
 
 __pycache__
 /.eggs/
+
+.coverage

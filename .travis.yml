@@ -27,3 +27,4 @@ git:
 before_install:
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
+    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
