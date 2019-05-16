@@ -55,6 +55,14 @@ Install
 
 Make sure to read the ``README.md`` in the `public repository`_ for notes on dependencies and installation.
 
+``netwulf`` directly depends on the following packages which will be
+installed by ``pip`` during the installation process
+
+-  ``networkx>=2.0``
+-  ``numpy>=0.14``
+-  ``matplotlib>=3.0``
+-  ``simplejson>=3.0``
+
 
 Bug reports & contributing
 --------------------------

@@ -12,7 +12,8 @@ Please note we have a [code of conduct](https://github.com/benmaier/netwulf/blob
    variables, exposed ports, useful file locations and container parameters.
 3. Increase the version number in [netwulf/metadata.py](https://github.com/benmaier/netwulf/blob/master/netwulf/metadata.py) and the README.md to the new version that this
    Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
-4. You may merge the Pull Request in once you have the sign-off of one other developer, or if you 
+4. Make sure [pytest](https://docs.pytest.org/en/latest/) is installed. Run ``make test`` to run all automated tests. Post the output as a comment in your Pull Request.
+5. You may merge the Pull Request in once you have the sign-off of one other developer, or if you 
    do not have permission to do that, you may request the reviewer to merge it for you.
 
 ## Attribution

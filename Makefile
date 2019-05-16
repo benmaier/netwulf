@@ -34,3 +34,6 @@ readme:
 	sed -e "s/^\:\:/\.\. code\:\: bash/g" _README.rst > README.rst
 	rm _README.rst
 	rstcheck README.rst
+
+test:
+	pytest --cov=netwulf tests/
