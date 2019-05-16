@@ -28,3 +28,4 @@ a.out
 /sandbox/.ipynb_checkpoints/
 
 __pycache__
+/.eggs/

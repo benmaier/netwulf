@@ -1,0 +1,4 @@
+networkx>=2.0
+numpy>=0.14
+matplotlib>=3.0
+simplejson>=3.0

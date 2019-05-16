@@ -16,8 +16,6 @@ setup(
     long_description = '',
     packages = setuptools.find_packages(),
     python_requires='~=3.5', 
-    setup_requires = [
-            ],
     install_requires = [
                 'networkx>=2.0',
                 'numpy>=0.14',
@@ -31,6 +29,13 @@ setup(
            'Programming Language :: Python :: 3.6',
            'Programming Language :: Python :: 3.7'
            ],
+    project_urls={
+    'Documentation': 'https://netwulf.rtfd.io',
+    'Contributing Statement': 'https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md',
+    'Bug Reports': 'https://github.com/benmaier/netwulf/issues',
+    'Source': 'https://github.com/benmaier/netwulf/',
+    'PyPI': 'https://pypi.org/project/netwulf/',
+    },
     include_package_data = True,
     zip_safe = False,
 )
