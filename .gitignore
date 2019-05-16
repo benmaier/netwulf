@@ -31,3 +31,4 @@ __pycache__
 /.eggs/
 
 .coverage
+.pytest_cache

@@ -9,6 +9,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as pl
 from matplotlib.collections import LineCollection, EllipseCollection
 
+
 def bind_positions_to_network(network, network_properties):
     """
     Binds calculated positional values to the network as node attributes `x` and `y`.
@@ -195,11 +196,4 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
 
     return fig, ax
 
-
-
-if __name__ == "__main__":
-    import pprint 
-    pp = pprint.PrettyPrinter(indent=4)
-
-    G = nx.barabasi_albert_graph(10,1)
 
