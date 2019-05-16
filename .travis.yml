@@ -1,0 +1,21 @@
+language: python
+
+script:
+    - python setup.py test
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+after_success:
+- coveralls
+
+branches:
+  except:
+    - gh-pages
+
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"

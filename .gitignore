@@ -26,3 +26,5 @@ a.out
 /.vscode/
 /_vscode/
 /sandbox/.ipynb_checkpoints/
+
+__pycache__

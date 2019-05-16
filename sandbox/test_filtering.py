@@ -12,10 +12,11 @@ for u, v in G.edges():
 
 grp = {u: 'ABCDE'[u%5]  for u in G.nodes() }
 
-nx.set_node_attributes(G, grp, 'wum')
 
 new_G = get_filtered_network(G,edge_weight_key='foo')
 visualize(new_G)
+
+nx.set_node_attributes(G, grp, 'wum')
 
 new_G = get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
 visualize(new_G)

@@ -166,7 +166,9 @@ def visualize(network,
               port=9853,
               verbose=False,
               config=None,
-              plot_in_cell_below=True):
+              plot_in_cell_below=True,
+              is_test=False,
+              ):
     """
     Visualize a network interactively using Ulf Aslak's d3 web app.
     Saves the network as json, saves the passed config and runs 
@@ -216,6 +218,13 @@ def visualize(network,
                 'min_link_weight_percentile': 0,
                 'max_link_weight_percentile': 100
             }
+    plot_in_cell_below : bool, default : True
+        When started from a Jupyter notebook, this will show a
+        reproduced matplotlib figure of the stylized network
+        in a cell below. Only works if ``verbose = False``.
+    is_test : bool, default : False
+        If ``True``, the interactive environment will post
+        its visualization to Python automatically after 5 seconds.
 
     Returns
     -------
@@ -272,7 +281,10 @@ def visualize(network,
     thread = threading.Thread(None, server.run)
     thread.start()
 
-    webbrowser.open("http://localhost:"+str(port)+"/?data=" + filename + "&config=" + configname)
+    url = "http://localhost:"+str(port)+"/?data=" + filename + "&config=" + configname
+    if is_test:
+        url += "&pytest"
+    webbrowser.open(url)
 
     try:
         while not server.end_requested:
