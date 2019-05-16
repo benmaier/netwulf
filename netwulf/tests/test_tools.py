@@ -51,5 +51,3 @@ class Test(unittest.TestCase):
 
         self.assertDictEqual(props, newprops)
         self.assertDictEqual(config, newconfig)
-
-    def 
