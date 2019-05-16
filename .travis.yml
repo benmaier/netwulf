@@ -15,10 +15,17 @@ branches:
   except:
     - gh-pages
 
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+matrix:
+    include:
+        - python: 3.5
+          dist: trusty
+          sudo: false
+        - python: 3.6
+          dist: trusty
+          sudo: false
+        - python: 3.7
+          dist: xenial
+          sudo: true
 
 # Handle git submodules yourself
 git:
