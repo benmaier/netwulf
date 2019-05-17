@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
     from netwulf import visualize
     props, config = visualize(G)
+    config['Zoom'] = 0.666
 
     pp.pprint(props)
     pp.pprint(config)
