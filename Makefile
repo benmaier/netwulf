@@ -36,4 +36,4 @@ readme:
 	rstcheck README.rst
 
 test:
-	pytest --cov=netwulf tests/
+	pytest --cov=netwulf netwulf/tests/test_all.py
