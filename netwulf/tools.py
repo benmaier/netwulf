@@ -10,23 +10,69 @@ import matplotlib.pyplot as pl
 from matplotlib.collections import LineCollection, EllipseCollection
 
 
-def bind_positions_to_network(network, network_properties):
+def bind_properties_to_network(G,
+                               network_properties,
+                               bind_node_positions=True,
+                               bind_node_color=True,
+                               bind_node_radius=True,
+                               bind_node_stroke_color=True,
+                               bind_node_stroke_width=True,
+                               bind_link_width=True,
+                               bind_link_color=True,
+                               bind_link_alpha=True):
     """
-    Binds calculated positional values to the network as node attributes `x` and `y`.
+    Binds properties from the interactive visualization to the `G` object.
 
     Parameters
     ----------
-    network : networkx.Graph or something alike
+    G : networkx.Graph or networkx.DiGraph
         The network object to which the position should be bound
     network_properties : dict
         The network properties which are returned from the
         interactive visualization.
-    """
+    bind_node_positions : bool (default: True)
+    bind_node_color : bool (default: True)
+    bind_node_radius : bool (default: True)
+    bind_node_stroke_color : bool (default: True)
+    bind_node_stroke_width : bool (default: True)
+    bind_link_width : bool (default: True)
+    bind_link_color : bool (default: True)
+    bind_link_alpha : bool (default: True)
 
-    x = { node['id']: node['x'] for node in network_properties['nodes'] }
-    y = { node['id']: node['y'] for node in network_properties['nodes'] }
-    nx.set_node_attributes(network, x, 'x')
-    nx.set_node_attributes(network, y, 'y')
+    Example
+    -------
+        >>> props, _ = visualize(G)
+        >>> bind_properties_to_network(G, props)
+    """
+    # Add individial node attributes
+    if bind_node_positions:
+        x = { node['id']: node['x'] for node in network_properties['nodes'] }
+        y = { node['id']: node['y'] for node in network_properties['nodes'] }
+        nx.set_node_attributes(G, x, 'x')
+        nx.set_node_attributes(G, y, 'y')
+        G.graph['xlim'] = network_properties['xlim']
+        G.graph['ylim'] = network_properties['ylim']
+    if bind_node_color:
+        color = { node['id']: node['color'] for node in network_properties['nodes'] }
+        nx.set_node_attributes(G, color, 'color')
+    if bind_node_radius:
+        radius = { node['id']: node['radius'] for node in network_properties['nodes'] }
+        nx.set_node_attributes(G, radius, 'radius')
+
+    # Add individual link attributes
+    if bind_link_width:
+        width = { (link['source'], link['target']): link['width'] for link in network_properties['links'] }
+        nx.set_edge_attributes(G, width, 'width')
+
+    # Add global style properties
+    if bind_node_stroke_color:
+        G.graph['nodeStrokeColor'] = network_properties['nodeStrokeColor']
+    if bind_node_stroke_width:
+        G.graph['nodeStrokeWidth'] = network_properties['nodeStrokeWidth']
+    if bind_link_color:
+        G.graph['linkColor'] = network_properties['linkColor']
+    if bind_link_alpha:
+        G.graph['linkAlpha'] = network_properties['linkAlpha']
 
 def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
     """

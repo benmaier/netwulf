@@ -261,9 +261,11 @@ def visualize(network,
 
     with open(filepath,'w') as f:
         if type(network) in [nx.Graph, nx.DiGraph]:
-            json.dump(nx.node_link_data(network), f, iterable_as_array=True)
-        else:
-            json.dump(network, f, iterable_as_array=True)
+            network = nx.node_link_data(network)
+            if 'graph' in network:
+                network.update(network['graph'])
+                del network['graph']
+        json.dump(network, f, iterable_as_array=True)
 
     with open(configpath,'w') as f:
         json.dump(this_config, f)
