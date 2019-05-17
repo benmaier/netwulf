@@ -145,7 +145,9 @@ class Test(unittest.TestCase):
 
 
         draw_netwulf(stylized_network)
-        pl.show()
+        pl.show(block=False)
+        pl.pause(5)
+        pl.close()
 
 
 if __name__ == "__main__":
