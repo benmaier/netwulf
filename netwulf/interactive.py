@@ -160,7 +160,7 @@ default_config = {
     'link_alpha': 0.5,
     'link_width_unevenness': 0.5,
     # Thresholding
-    'display_singleton_nodes': False,
+    'display_singleton_nodes': True,
     'min_link_weight_percentile': 0,
     'max_link_weight_percentile': 100
 }
