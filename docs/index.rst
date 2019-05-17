@@ -30,7 +30,14 @@ Netwulf - Interactive Network Visualization
    :maxdepth: 2
    :caption: Cookbook
 
-   cookbook/groups
+   cookbook/cookbook
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Dev notes
+
+   dev_notes/general_remarks
+   dev_notes/testing
 
 .. toctree::
    :maxdepth: 2
@@ -38,5 +45,4 @@ Netwulf - Interactive Network Visualization
 
    reference/interactive
    reference/tools
-
 

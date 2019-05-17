@@ -34,7 +34,7 @@ for the first node this might look like
 .. code:: python
 
     ax.text(
-            network_properties['nodes'][0]['x']
-            network_properties['nodes'][0]['y']
+            network_properties['nodes'][0]['x'],
+            network_properties['nodes'][0]['y'],
             network_properties['nodes'][0]['id']
            )
