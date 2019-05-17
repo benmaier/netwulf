@@ -55,7 +55,7 @@ Example:
 
     # Set node 'size' attributes
     for n, data in G.nodes(data=True):
-        n['size'] = np.random.random()
+        data['size'] = np.random.random()
 
     # Set link 'weight' attributes
     for n1, n2, data in G.edges(data=True):
