@@ -55,17 +55,26 @@ visualize(G)
 
 Changes are logged in a [separate file](https://github.com/benmaier/netwulf/blob/master/CHANGELOG.md).
 
+## License
+
+This project is licensed under the [MIT License](https://github.com/benmaier/netwulf/blob/master/LICENSE).
+
 ## Contributing
 
 If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md).
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
 
-## License
-
-This project is licensed under the [MIT License](https://github.com/benmaier/netwulf/blob/master/LICENSE).
-
 ## Dev notes
+
+Clone and install this repository as 
+
+```bash
+git clone --recurse-submodules -j8 git@github.com:benmaier/netwulf.git
+make
+```
+
+Note that `make` per default lets `pip` install a development version of the repository.
 
 The JS base code in `/netwulf/js/` is a fork of [Ulf Aslak's interactive web app](https://github.com/ulfaslak/network_styling_with_d3). If this repository is updated, change to `/netwulf/js/`, then do
 

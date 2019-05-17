@@ -74,6 +74,12 @@ Changelog
 Changes are logged in a `separate
 file <https://github.com/benmaier/netwulf/blob/master/CHANGELOG.md>`__.
 
+License
+-------
+
+This project is licensed under the `MIT
+License <https://github.com/benmaier/netwulf/blob/master/LICENSE>`__.
+
 Contributing
 ------------
 
@@ -85,14 +91,18 @@ guidelines <https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md>`__.
 
 |Contributor Covenant|
 
-License
--------
-
-This project is licensed under the `MIT
-License <https://github.com/benmaier/netwulf/blob/master/LICENSE>`__.
-
 Dev notes
 ---------
+
+Clone and install this repository as
+
+.. code:: bash
+
+    git clone --recurse-submodules -j8 git@github.com:benmaier/netwulf.git
+    make
+
+Note that ``make`` per default lets ``pip`` install a development
+version of the repository.
 
 The JS base code in ``/netwulf/js/`` is a fork of `Ulf Aslak's
 interactive web
