@@ -73,6 +73,7 @@ def bind_properties_to_network(G,
         G.graph['linkColor'] = network_properties['linkColor']
     if bind_link_alpha:
         G.graph['linkAlpha'] = network_properties['linkAlpha']
+        
 
 def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
     """
