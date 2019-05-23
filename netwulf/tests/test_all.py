@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 import networkx as nx
 
-from netwulf.tools import bind_positions_to_network, get_filtered_network, draw_netwulf
+from netwulf.tools import bind_properties_to_network, get_filtered_network, draw_netwulf
 from netwulf import visualize
 
 def _get_test_network():
@@ -19,11 +19,22 @@ def _get_test_network():
 def _get_test_config():
     return {'node_size':2,'link_width':2}
 
-def _round_positions(props):
+def _drastically_round_positions(props,nprec=-1):
 
     for i, n in enumerate(props['nodes']):
-        props['nodes'][i]['x'] = np.around(props['nodes'][i]['x'],2)
-        props['nodes'][i]['y'] = np.around(props['nodes'][i]['y'],2)
+        props['nodes'][i]['x'] = np.around(props['nodes'][i]['x'],nprec)
+        props['nodes'][i]['y'] = np.around(props['nodes'][i]['y'],nprec)
+        props['nodes'][i]['x_canvas'] = np.around(props['nodes'][i]['x_canvas'],nprec)
+        props['nodes'][i]['y_canvas'] = np.around(props['nodes'][i]['y_canvas'],nprec)
+
+def _assert_positions_within_one_percent(props1,props2):
+
+    for i, n in enumerate(props1['nodes']):
+        assert(np.isclose(props1['nodes'][i]['x'], props2['nodes'][i]['x'],rtol=1e-2))
+        assert(np.isclose(props1['nodes'][i]['y'], props2['nodes'][i]['y'],rtol=1e-2))
+        assert(np.isclose(props1['nodes'][i]['x_canvas'], props2['nodes'][i]['x_canvas'],rtol=1e-2))
+        assert(np.isclose(props1['nodes'][i]['y_canvas'], props2['nodes'][i]['y_canvas'],rtol=1e-2))
+
 
 class Test(unittest.TestCase):
 
@@ -39,15 +50,17 @@ class Test(unittest.TestCase):
         G = _get_test_network()
         props, config = visualize(G,config=_get_test_config(),is_test=True)        
 
-        bind_positions_to_network(G, props)
+        bind_properties_to_network(G, props)
         newprops, newconfig = visualize(G, config=config,is_test=True)
 
-        # round all positional values to their 4th decimal place
-        _round_positions(props)
-        _round_positions(newprops)
+        # test if node positions are close within 1% and subsequently 
+        # round all positional values to the 2nd positon (e.g. 451 => 450)
+        _assert_positions_within_one_percent(props,newprops)
+        _drastically_round_positions(props)
+        _drastically_round_positions(newprops)
 
         # the second visualization should have frozen the nodes
-        assert(newconfig['freeze_nodes'] == True)
+        assert(newconfig['freeze_nodes'])
 
         # change it so the dictionary-equal-assertion doesnt fail
         newconfig['freeze_nodes'] = False
@@ -76,72 +89,52 @@ class Test(unittest.TestCase):
 
     def test_matplotlib(self):
         """Test how the produced figure looks"""
-        stylized_network = {   'linkAlpha': 0.5,
-                               'linkColor': '#7c7c7c',
-                               'links': [   {'source': 0, 'target': 1, 'width': 8.067180430164552},
-                                            {'source': 0, 'target': 2, 'width': 8.067180430164552},
-                                            {'source': 0, 'target': 4, 'width': 8.067180430164552},
-                                            {'source': 0, 'target': 6, 'width': 8.067180430164552},
-                                            {'source': 1, 'target': 3, 'width': 8.067180430164552},
-                                            {'source': 1, 'target': 7, 'width': 8.067180430164552},
-                                            {'source': 4, 'target': 5, 'width': 8.067180430164552},
-                                            {'source': 4, 'target': 9, 'width': 8.067180430164552},
-                                            {'source': 6, 'target': 8, 'width': 8.067180430164552}],
-                               'nodeStrokeColor': '#000000',
-                               'nodeStrokeWidth': 2.898890104734921,
-                               'nodes': [   {   'color': '#16a085',
-                                                'id': 0,
-                                                'radius': 27.71774321528189,
-                                                'x': 425.30610641802105,
-                                                'y': 408.2306291226664},
-                                            {   'color': '#16a085',
-                                                'id': 1,
-                                                'radius': 24.004269760007883,
-                                                'x': 396.4745121676665,
-                                                'y': 501.4049104000019},
-                                            {   'color': '#16a085',
-                                                'id': 2,
-                                                'radius': 13.858871607640944,
-                                                'x': 473.08739238768067,
-                                                'y': 351.91545364057833},
-                                            {   'color': '#16a085',
-                                                'id': 3,
-                                                'radius': 13.858871607640944,
-                                                'x': 419.7726184875137,
-                                                'y': 569.8869495527006},
-                                            {   'color': '#16a085',
-                                                'id': 4,
-                                                'radius': 24.004269760007883,
-                                                'x': 357.7122249241811,
-                                                'y': 329.38938497349545},
-                                            {   'color': '#16a085',
-                                                'id': 5,
-                                                'radius': 13.858871607640944,
-                                                'x': 374.1221609268641,
-                                                'y': 257.68914701013045},
-                                            {   'color': '#16a085',
-                                                'id': 6,
-                                                'radius': 19.599404186713244,
-                                                'x': 516.4329698471261,
-                                                'y': 437.85889577403395},
-                                            {   'color': '#16a085',
-                                                'id': 7,
-                                                'radius': 13.858871607640944,
-                                                'x': 329.1977725136212,
-                                                'y': 531.0354125644326},
-                                            {   'color': '#16a085',
-                                                'id': 8,
-                                                'radius': 13.858871607640944,
-                                                'x': 586.3601749401209,
-                                                'y': 457.9664495383031},
-                                            {   'color': '#16a085',
-                                                'id': 9,
-                                                'radius': 13.858871607640944,
-                                                'x': 286.53060275648363,
-                                                'y': 319.624522724607}],
-                               'xlim': [0, 833],
-                               'ylim': [0, 833]
-                               }
+        stylized_network = {   'linkAlpha': 0.2,
+            'linkColor': '#758000',
+            'links': [   {'source': 0, 'target': 1, 'weight': 1, 'width': 40},
+                         {'source': 0, 'target': 3, 'weight': 1, 'width': 40},
+                         {'source': 1, 'target': 2, 'weight': 1, 'width': 40},
+                         {'source': 1, 'target': 4, 'weight': 1, 'width': 40}],
+            'nodeStrokeColor': '#ffffff',
+            'nodeStrokeWidth': 4,
+            'nodes': [   {   'color': '#79aa00',
+                             'id': 0,
+                             'radius': 28.577380332470412,
+                             'x': 420.4774227636891,
+                             'x_canvas': 444.34195934582385,
+                             'y': 402.92277557839725,
+                             'y_canvas': 321.45942904878075},
+                         {   'color': '#79aa00',
+                             'id': 1,
+                             'radius': 35,
+                             'x': 419.94297017162165,
+                             'x_canvas': 440.6007912013515,
+                             'y': 426.56813829452074,
+                             'y_canvas': 486.9769680616455},
+                         {   'color': '#79aa00',
+                             'id': 2,
+                             'radius': 20.207259421636905,
+                             'x': 405.5333864027982,
+                             'x_canvas': 339.73370481958773,
+                             'y': 411.01250794520007,
+                             'y_canvas': 378.08755561640055},
+                         {   'color': '#79aa00',
+                             'id': 3,
+                             'radius': 20.207259421636905,
+                             'x': 434.1529311105535,
+                             'x_canvas': 540.0705177738741,
+                             'y': 413.3758620827409,
+                             'y_canvas': 394.6310345791867},
+                         {   'color': '#79aa00',
+                             'id': 4,
+                             'radius': 20.207259421636905,
+                             'x': 403.23992572436083,
+                             'x_canvas': 323.67948007052564,
+                             'y': 429.81017078651104,
+                             'y_canvas': 509.67119550557754}],
+            'xlim': [0, 833],
+            'ylim': [0, 833]
+            }
 
 
         draw_netwulf(stylized_network)
@@ -150,9 +143,50 @@ class Test(unittest.TestCase):
         pl.close()
 
 
+    def test_config_adaption(self):
+        """Test whether config values are properly adapted."""
+        config = {
+            # Input/output
+            'zoom':4,
+            # Physics
+            'node_charge': -70,
+            'node_gravity': 0.5,
+            'link_distance': 15,
+            'link_distance_variation': 2,
+            'node_collision': True,
+            'wiggle_nodes': True,
+            'freeze_nodes': False,
+            # Nodes
+            'node_fill_color': '#79aa00',
+            'node_stroke_color': '#ffffff',
+            'node_label_color': '#888888',
+            'display_node_labels': True,
+            'scale_node_size_by_strength': True,
+            'node_size': 5,
+            'node_stroke_width': 1,
+            'node_size_variation': 0.7,
+            # Links
+            'link_color': '#758000',
+            'link_width': 10,
+            'link_alpha': 0.2,
+            'link_width_variation': 0.7,
+            # Thresholding
+            'display_singleton_nodes': False,
+            'min_link_weight_percentile': 0.1,
+            'max_link_weight_percentile': 0.9,
+        }
+
+        G = _get_test_network()
+        _, newconfig = visualize(G,config=config,is_test=True)
+
+        self.assertDictEqual(config, newconfig)
+
+
+
 if __name__ == "__main__":
 
 
     T = Test()
 
-    T.test_matplotlib()
+    #T.test_matplotlib()
+    T.test_config_adaption()

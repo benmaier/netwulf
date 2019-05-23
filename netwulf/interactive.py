@@ -142,6 +142,7 @@ default_config = {
     'node_charge': -30,
     'node_gravity': 0.1,
     'link_distance': 10,
+    'link_distance_variation': 0,
     'node_collision': False,
     'wiggle_nodes': False,
     'freeze_nodes': False,
@@ -153,16 +154,16 @@ default_config = {
     'scale_node_size_by_strength': False,
     'node_size': 10,
     'node_stroke_width': 0.5,
-    'node_size_unevenness': 0.5,
+    'node_size_variation': 0.5,
     # Links
     'link_color': '#7c7c7c',
     'link_width': 5,
     'link_alpha': 0.5,
-    'link_width_unevenness': 0.5,
+    'link_width_variation': 0.5,
     # Thresholding
     'display_singleton_nodes': True,
     'min_link_weight_percentile': 0,
-    'max_link_weight_percentile': 100
+    'max_link_weight_percentile': 1
 }
 
 
@@ -200,6 +201,7 @@ def visualize(network,
                 'node_charge': -30,
                 'node_gravity': 0.1,
                 'link_distance': 10,
+                'link_distance_variation': 0,
                 'node_collision': False,
                 'wiggle_nodes': False,
                 'freeze_nodes': False,
@@ -211,16 +213,16 @@ def visualize(network,
                 'scale_node_size_by_strength': False,
                 'node_size': 10,
                 'node_stroke_width': 0.5,
-                'node_size_unevenness': 0.5,
+                'node_size_variation': 0.5,
                 # Links
                 'link_color': '#7c7c7c',
                 'link_width': 5,
                 'link_alpha': 0.5,
-                'link_width_unevenness': 0.5,
+                'link_width_variation': 0.5,
                 # Thresholding
                 'display_singleton_nodes': False,
                 'min_link_weight_percentile': 0,
-                'max_link_weight_percentile': 100
+                'max_link_weight_percentile': 1
             }
     plot_in_cell_below : bool, default : True
         When started from a Jupyter notebook, this will show a
