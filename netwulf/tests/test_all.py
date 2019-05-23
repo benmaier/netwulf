@@ -17,7 +17,7 @@ def _get_test_network():
     return G
 
 def _get_test_config():
-    return {'node_size':2,'link_width':2}
+    return {'node_size':2,'link_width':2,'zoom':3}
 
 def _drastically_round_positions(props,nprec=-1):
 
@@ -188,5 +188,5 @@ if __name__ == "__main__":
 
     T = Test()
 
-    #T.test_matplotlib()
-    T.test_config_adaption()
+    T.test_matplotlib()
+    #T.test_config_adaption()
