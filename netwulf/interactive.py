@@ -196,35 +196,35 @@ def visualize(network,
 
             default_config = {
                 # Input/output
-                'zoom': 1.5,
+                'zoom': 1,
                 # Physics
-                'node_charge': -30,
+                'node_charge': -45,
                 'node_gravity': 0.1,
-                'link_distance': 10,
+                'link_distance': 15,
                 'link_distance_variation': 0,
-                'node_collision': False,
+                'node_collision': True,
                 'wiggle_nodes': False,
                 'freeze_nodes': False,
                 # Nodes
-                'node_fill_color': '#16a085',
-                'node_stroke_color': '#000000',
+                'node_fill_color': '#79aaa0',
+                'node_stroke_color': '#555555',
                 'node_label_color': '#000000',
                 'display_node_labels': False,
                 'scale_node_size_by_strength': False,
-                'node_size': 10,
-                'node_stroke_width': 0.5,
+                'node_size': 5,
+                'node_stroke_width': 1,
                 'node_size_variation': 0.5,
                 # Links
                 'link_color': '#7c7c7c',
-                'link_width': 5,
+                'link_width': 2,
                 'link_alpha': 0.5,
                 'link_width_variation': 0.5,
                 # Thresholding
-                'display_singleton_nodes': False,
+                'display_singleton_nodes': True,
                 'min_link_weight_percentile': 0,
                 'max_link_weight_percentile': 1
             }
-    plot_in_cell_below : bool, default : True
+
         When started from a Jupyter notebook, this will show a
         reproduced matplotlib figure of the stylized network
         in a cell below. Only works if ``verbose = False``.
