@@ -18,6 +18,15 @@ without code.
 
 |example|
 
+Paper
+-----
+
+|status|
+
+If you use ``netwulf`` for your scientific work, consider citing us!
+We're currently `under review in
+JOSS <https://github.com/openjournals/joss-reviews/issues/1425>`__.
+
 Install
 -------
 
@@ -88,6 +97,9 @@ If you want to contribute to this project, please make sure to read the
 conduct <https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md>`__
 and the `contributing
 guidelines <https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md>`__.
+We're always collecting ideas of what we want to implement next in the
+`outlook
+notes <ttps://github.com/benmaier/netwulf/blob/master/OUTLOOK.md>`__.
 
 |Contributor Covenant|
 
@@ -139,6 +151,8 @@ until the warnings disappear. Then do
 
 .. |logo| image:: https://github.com/benmaier/netwulf/raw/master/img/logo_small.png
 .. |example| image:: https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif
+.. |status| image:: http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6/status.svg
+   :target: http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6
 .. |Documentation Status| image:: https://readthedocs.org/projects/netwulf/badge/?version=latest
    :target: https://netwulf.readthedocs.io/en/latest/?badge=latest
 .. |visualization example0| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
