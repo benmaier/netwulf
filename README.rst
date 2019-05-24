@@ -97,9 +97,9 @@ If you want to contribute to this project, please make sure to read the
 conduct <https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md>`__
 and the `contributing
 guidelines <https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md>`__.
-We're always collecting ideas of what we want to implement next in the
-`outlook
-notes <ttps://github.com/benmaier/netwulf/blob/master/OUTLOOK.md>`__.
+In case you're wondering about what to contribute, we're always
+collecting ideas of what we want to implement next in the `outlook
+notes <https://github.com/benmaier/netwulf/blob/master/OUTLOOK.md>`__.
 
 |Contributor Covenant|
 

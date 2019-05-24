@@ -66,7 +66,7 @@ This project is licensed under the [MIT License](https://github.com/benmaier/net
 
 ## Contributing
 
-If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md). We're always collecting ideas of what we want to implement next in the [outlook notes](ttps://github.com/benmaier/netwulf/blob/master/OUTLOOK.md).
+If you want to contribute to this project, please make sure to read the [code of conduct](https://github.com/benmaier/netwulf/blob/master/CODE_OF_CONDUCT.md) and the [contributing guidelines](https://github.com/benmaier/netwulf/blob/master/CONTRIBUTING.md). In case you're wondering about what to contribute, we're always collecting ideas of what we want to implement next in the [outlook notes](https://github.com/benmaier/netwulf/blob/master/OUTLOOK.md).
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
 
