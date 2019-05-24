@@ -174,8 +174,10 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
 
 
     # for conversion of inches to points
-    # (important for markersize and linewidths)
-    dpi = fig.dpi
+    # (important for markersize and linewidths).
+    # Apparently matplotlib uses 72 dpi internally for conversions in all figures even for those
+    # which do not follow dpi = 72 which is freaking weird but hey why not.
+    dpi = 72
 
     # set everything square and get the axis size in points
     ax.axis('square')
