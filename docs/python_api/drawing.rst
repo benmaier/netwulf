@@ -27,14 +27,24 @@ the figure will be redrawn in matplotlib and opened.
 
     Reproduced figure
 
-In order to add labels, use ``matplotlib``'s text function.
-Node positions and labels are saved in the stylized network, so
-for the first node this might look like
+In order to add labels, use netwulf's functions 
+:mod:`netwulf.tools.add_edge_label` 
+or
+:mod:`netwulf.tools.add_node_label`.
 
 .. code:: python
 
-    ax.text(
-            network_properties['nodes'][0]['x'],
-            network_properties['nodes'][0]['y'],
-            network_properties['nodes'][0]['id']
-           )
+    add_edge_label(ax, stylized_network, (0,1))
+    add_node_label(ax, stylized_network, 9)
+
+This will add the node id and edge tuple to the figure. You can add an optional label string as 
+
+.. code:: python
+
+    add_edge_label(ax, stylized_network, (0,1), label='this edge')
+    add_node_label(ax, stylized_network, 9, label='this node')
+
+For additional styling options check out the respective functions docstrings at
+:mod:`netwulf.tools.add_edge_label` 
+or
+:mod:`netwulf.tools.add_node_label`.

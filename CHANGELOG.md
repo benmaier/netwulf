@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.2] - 2019-06-17
+### Added
+- function `netwulf.tools.node_pos` to get a node's position on the matplotlib axis
+- function `netwulf.tools.add_node_label` to add a node label to the matplotlib axis
+- function `netwulf.tools.add_edge_label` to add an edge label to the matplotlib axis
+
+### Changed
+- The corresponding docs for node labels was changed to use the new functions.
+- The matplotlib test now contains additional tests for the edge label and node label positioning
+
 ## [v0.1.1] - 2019-05-24
 ### Changed
 - some default settings
@@ -29,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - switched from usage of `os.path` to `pathlib` at the appropriate places
 
-[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.2...HEAD
+[v0.1.1]: https://github.com/benmaier/netwulf/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/benmaier/netwulf/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/benmaier/netwulf/compare/v0.0.18...v0.1.0
 [v0.0.18]: https://github.com/benmaier/netwulf/compare/v0.0.17...v0.0.18

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 import networkx as nx
 
-from netwulf.tools import bind_properties_to_network, get_filtered_network, draw_netwulf
+from netwulf.tools import bind_properties_to_network, get_filtered_network, draw_netwulf, node_pos, add_node_label, add_edge_label
 from netwulf import visualize
 
 def _get_test_network():
@@ -137,7 +137,10 @@ class Test(unittest.TestCase):
             }
 
 
-        draw_netwulf(stylized_network)
+        fig, ax = draw_netwulf(stylized_network)
+
+        add_node_label(ax, stylized_network, 0)
+        add_edge_label(ax, stylized_network, (0,1))
         pl.show(block=False)
         pl.pause(5)
         pl.close()

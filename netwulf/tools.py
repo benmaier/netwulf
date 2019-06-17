@@ -9,6 +9,142 @@ import matplotlib as mpl
 import matplotlib.pyplot as pl
 from matplotlib.collections import LineCollection, EllipseCollection
 
+def node_pos(network_properties,node_id):
+    """
+    Get the node's position in matplotlib data coordinates.
+    
+    Parameters
+    ----------
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+
+    Returns
+    -------
+    x : float
+        The x-position in matplotlib data coordinates
+    y : float
+        The y-position in matplotlib data coordinates
+
+    Example
+    -------
+        >>> props, _ = visualize(G)
+        >>> node_pos(props, 0)
+    """
+
+    height = network_properties['ylim'][1] - network_properties['ylim'][0]
+    node = network_properties['nodes'][node_id]
+
+    return node['x_canvas'], height - node['y_canvas']
+
+def add_node_label(ax,
+                   network_properties,
+                   node_id,
+                   label=None,
+                   dx=0,
+                   dy=0,
+                   ha='center',
+                   va='center',
+                   **kwargs):
+    """
+    Add a label to a node in the drawn matplotlib axis
+
+    Parameters
+    ----------
+    ax : matplotlib.Axis
+        The Axis object which has been used to draw the network
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    node_id : str or int
+        The focal node's id in the `network_properties` dict
+    label : str, default : None
+        The text to write at the node's position
+        If `None`, the value of `node_id` will be put there.
+    dx : float, default : 0.0
+        Label offset in x-direction
+    dy : float, default : 0.0
+        Label offset in y-direction
+    ha : str, default : 'center'
+        Horizontal anchor orientation of the text
+    va : str, default : 'center'
+        Vertical anchor orientation of the text
+    **kwargs : dict
+        Additional styling arguments forwarded to Axis.text
+
+
+    Example
+    -------
+        >>> netw, _ = netwulf.visualize(G)
+        >>> fig, ax = netwulf.draw_netwulf(netw)
+        >>> netwulf.add_node_label(ax,netw,0)
+    """
+
+    pos = node_pos(network_properties, node_id)
+
+    if label is None:
+        label = str(node_id)
+    
+    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,**kwargs)
+
+def add_edge_label(ax,
+                   network_properties,
+                   edge,
+                   label=None,
+                   dscale=0.5,
+                   dx=0,
+                   dy=0,
+                   ha='center',
+                   va='center',
+                   **kwargs):
+    """
+    Add a label to an edge in the drawn matplotlib axis
+
+    Parameters
+    ----------
+    ax : matplotlib.Axis
+        The Axis object which has been used to draw the network
+    edge : 2-tuple of str or int
+        The edge's node ids
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    label : str, default : None
+        The text to write at the node's position
+        If `None`, the tuple of node ids in `edge` will be put there.
+    dscale : float, default : 0.5
+        At which position between the two nodes to put the label
+        (``dscale = 0.0`` refers to the position of node ``edge[0]``
+        and ``dscale = 1.0`` refers to the position of node ``edge[1]``,
+        so use any number between 0.0 and 1.0).
+    dx : float, default : 0.0
+        Additional label offset in x-direction
+    dy : float, default : 0.0
+        Additional label offset in y-direction
+    ha : str, default : 'center'
+        Horizontal anchor orientation of the text
+    va : str, default : 'center'
+        Vertical anchor orientation of the text
+    **kwargs : dict
+        Additional styling arguments forwarded to Axis.text
+
+
+    Example
+    -------
+        >>> netw, _ = netwulf.visualize(G)
+        >>> fig, ax = netwulf.draw_netwulf(netw)
+        >>> netwulf.add_node_label(ax,netw,0)
+    """
+
+    v0 = np.array(node_pos(network_properties, edge[0]))
+    v1 = np.array(node_pos(network_properties, edge[1]))
+    e = (v1-v0)
+
+    if label is None:
+        label = str("("+str(edge[0])+", "+str(edge[1])+")")
+    
+    pos = v0 + dscale * e 
+    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,**kwargs)
 
 def bind_properties_to_network(network,
                                network_properties,
@@ -41,8 +177,8 @@ def bind_properties_to_network(network,
 
     Example
     -------
-        >>> props, _ = visualize(G)
-        >>> bind_properties_to_network(G, props)
+        >>> props, _ = netwulf.visualize(G)
+        >>> netwulf.bind_properties_to_network(G, props)
     """
     # Add individial node attributes
     if bind_node_positions:
@@ -119,15 +255,10 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     """
     Redraw the visualization using matplotlib. Creates
     figure and axes if None provided.
-    In order to add labels, do for instance
-
-    .. code:: python
-
-        ax.text(
-                network_properties['nodes'][0]['x'],
-                network_properties['nodes'][0]['y'],
-                network_properties['nodes'][0]['id']
-               )
+    In order to add labels, check out 
+    :mod:`netwulf.tools.add_node_label`
+    and
+    :mod:`netwulf.tools.add_edge_label`
 
     Parameters
     ----------
