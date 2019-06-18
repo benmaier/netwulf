@@ -105,8 +105,8 @@ Save as PDF
     plt.savefig("myfigure.pdf")
 
 
-Add labels and draw a ghost link
---------------------------------
+Labels and node positions
+-------------------------
 
 .. code:: python
 
@@ -123,7 +123,7 @@ Add labels and draw a ghost link
     # draw links only at first
     fig, ax = wulf.draw_netwulf(network,draw_nodes=False)
 
-    # get positions of two unconnected links to draw a node anyway
+    # get positions of two unconnected nodes to draw a link anyway
     v0 = wulf.node_pos(network, 'c')
     v1 = wulf.node_pos(network, 2)
     ax.plot([v0[0],v1[0]],[v0[1],v1[1]],c='#d95f02')

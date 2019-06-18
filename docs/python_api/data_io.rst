@@ -24,9 +24,6 @@ You can either save/load the stylized network only
     wulf.draw_netwulf(stylized_network, config)
 
 
-.. figure:: img/post_to_python.png
-    :width: 500
-
 Or you can save/load with the respective ``networkx.Graph``-object
 in order to replicate some other features.
 
