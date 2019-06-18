@@ -9,6 +9,41 @@ import matplotlib as mpl
 import matplotlib.pyplot as pl
 from matplotlib.collections import LineCollection, EllipseCollection
 
+def _get_node_index(network_properties,node_id):
+    """
+    Get the node's index position in the node list of the
+    stylized network.
+    
+    Parameters
+    ----------
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    node_id : str or int
+        The node of which to get the position
+
+    Returns
+    -------
+    i : int
+        Index position of the node ``network_properties['nodes']``
+        Returns `None` if node is not found
+
+    Example
+    -------
+        >>> props, _ = visualize(G)
+        >>> i = _get_node_index(props, 0)
+    """
+
+    N = len(network_properties['nodes'])
+    for index, node in enumerate(network_properties['nodes']):
+        if node_id == node['id']:
+            break
+        elif index == N-1:
+            index = None
+
+    return index
+
+
 def node_pos(network_properties,node_id):
     """
     Get the node's position in matplotlib data coordinates.
@@ -18,6 +53,8 @@ def node_pos(network_properties,node_id):
     network_properties : dict
         The network properties which are returned from the
         interactive visualization.
+    node_id : str or int
+        The node of which to get the position
 
     Returns
     -------
@@ -32,8 +69,10 @@ def node_pos(network_properties,node_id):
         >>> node_pos(props, 0)
     """
 
+    index = _get_node_index(network_properties,node_id)
+
     height = network_properties['ylim'][1] - network_properties['ylim'][0]
-    node = network_properties['nodes'][node_id]
+    node = network_properties['nodes'][index]
 
     return node['x_canvas'], height - node['y_canvas']
 
@@ -85,7 +124,8 @@ def add_node_label(ax,
     if label is None:
         label = str(node_id)
     
-    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,**kwargs)
+    zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
+    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,zorder=zorder,**kwargs)
 
 def add_edge_label(ax,
                    network_properties,
@@ -251,7 +291,7 @@ def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
 
     return G
 
-def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
+def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links=True,draw_nodes=True,link_zorder=-1,node_zorder=1000):
     """
     Redraw the visualization using matplotlib. Creates
     figure and axes if None provided.
@@ -273,6 +313,10 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
         the size of the figure in inches (sidelength of a square)
         if None, will be taken as the minimum of the values in 
         ``matplotlib.rcParams['figure.figsize']``.
+    draw_links : bool, default : True
+        Whether the links should be drawn
+    draw_nodes : bool, default : True
+        Whether the nodes should be drawn
     
     Returns
     -------
@@ -326,51 +370,59 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     height = network_properties['ylim'][1] - network_properties['ylim'][0]
     pos = { node['id']: np.array([node['x_canvas'], height - node['y_canvas']]) for node in network_properties['nodes'] }
 
-    lines = []
-    linewidths = []
-    for link in network_properties['links']:
-        u, v = link['source'], link['target']
-        lines.append([ 
-            [pos[u][0], pos[v][0]], 
-            [pos[u][1], pos[v][1]]
-                     ])
-        linewidths.append(link['width']/width*axwidth)
+    if draw_links:
+        zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
 
-    # collapse to line segments
-    lines = [list(zip(x, y)) for x, y in lines]
+        lines = []
+        linewidths = []
+        for link in network_properties['links']:
+            u, v = link['source'], link['target']
+            lines.append([ 
+                [pos[u][0], pos[v][0]], 
+                [pos[u][1], pos[v][1]]
+                         ])
+            linewidths.append(link['width']/width*axwidth)
 
-    # plot Lines
-    alpha = network_properties['linkAlpha']
-    color = network_properties['linkColor']
-    ax.add_collection(LineCollection(lines, 
-                                     color=color,
-                                     alpha=alpha, 
-                                     linewidths=linewidths,
-                                     zorder=-1
+        # collapse to line segments
+        lines = [list(zip(x, y)) for x, y in lines]
+
+        # plot Lines
+        alpha = network_properties['linkAlpha']
+        color = network_properties['linkColor']
+        ax.add_collection(LineCollection(lines, 
+                                         color=color,
+                                         alpha=alpha, 
+                                         linewidths=linewidths,
+                                         zorder=zorder
                                      ))
 
-    # compute node positions and properties
-    XY = []
-    size = []
-    node_colors = []
 
-    for node in network_properties['nodes']:
-        XY.append([node['x_canvas'], height - node['y_canvas']])
-        # size has to be given in points*2
-        size.append( 2*node['radius'] )
-        node_colors.append(node['color'])
+    if draw_nodes:
+        zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
 
-    XY = np.array(XY)
-    size = np.array(size)
-    circles = EllipseCollection(size,size,np.zeros_like(size),
-                                offsets=XY,
-                                units='x',
-                                transOffset=ax.transData,
-                                facecolors=node_colors,
-                                linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
-                                edgecolors=network_properties['nodeStrokeColor'],
+        # compute node positions and properties
+        XY = []
+        size = []
+        node_colors = []
+
+        for node in network_properties['nodes']:
+            XY.append([node['x_canvas'], height - node['y_canvas']])
+            # size has to be given in points*2
+            size.append( 2*node['radius'] )
+            node_colors.append(node['color'])
+
+        XY = np.array(XY)
+        size = np.array(size)
+        circles = EllipseCollection(size,size,np.zeros_like(size),
+                                    offsets=XY,
+                                    units='x',
+                                    transOffset=ax.transData,
+                                    facecolors=node_colors,
+                                    linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
+                                    edgecolors=network_properties['nodeStrokeColor'],
+                                    zorder=zorder
                                 )
-    ax.add_collection(circles)
+        ax.add_collection(circles)
 
     return fig, ax
 

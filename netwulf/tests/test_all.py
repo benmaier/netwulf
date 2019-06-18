@@ -6,6 +6,10 @@ import networkx as nx
 
 from netwulf.tools import bind_properties_to_network, get_filtered_network, draw_netwulf, node_pos, add_node_label, add_edge_label
 from netwulf import visualize
+from netwulf.io import save, load
+
+import pathlib
+import tempfile
 
 def _get_test_network():
     G = nx.Graph()
@@ -184,6 +188,27 @@ class Test(unittest.TestCase):
 
         self.assertDictEqual(config, newconfig)
 
+    def test_io(self):
+        G = _get_test_network()
+        props, config = visualize(G,config=_get_test_config(),is_test=True)        
+
+        fn = ".test.json"
+
+        save(fn,props,config,G=None)
+        props, config, G = load(fn)
+        assert(G is None)
+
+        save(fn,props,config,G)
+        props, config, G = load(fn)
+
+        fig, ax = draw_netwulf(props)
+        pl.show(block=False)
+        pl.pause(2)
+        pl.close()
+
+        # remove test file
+        pathlib.Path(fn).unlink()
+
 
 
 if __name__ == "__main__":
@@ -191,5 +216,6 @@ if __name__ == "__main__":
 
     T = Test()
 
-    T.test_matplotlib()
+    #T.test_matplotlib()
+    T.test_io()
     #T.test_config_adaption()
