@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.3] - 2019-06-18
+### Added
+- module `netwulf.io`, which contains functions to save and load stylized networks
+- appropriate tests for this module's functionality
+- sections in the docs
+- a label and link drawing cookbook example
+
+### Changed
+- `zorder`-behavior in matplotlib drawing (`netwulf.draw_netwulf`)
+
 ## [v0.1.2] - 2019-06-17
 ### Added
 - function `netwulf.tools.node_pos` to get a node's position on the matplotlib axis
@@ -39,8 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - switched from usage of `os.path` to `pathlib` at the appropriate places
 
-[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.2...HEAD
-[v0.1.1]: https://github.com/benmaier/netwulf/compare/v0.1.1...v0.1.2
+[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.3...HEAD
+[v0.1.3]: https://github.com/benmaier/netwulf/compare/v0.1.2...v0.1.3
+[v0.1.2]: https://github.com/benmaier/netwulf/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/benmaier/netwulf/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/benmaier/netwulf/compare/v0.0.18...v0.1.0
 [v0.0.18]: https://github.com/benmaier/netwulf/compare/v0.0.17...v0.0.18

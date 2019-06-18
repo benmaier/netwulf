@@ -161,3 +161,13 @@ The resulting figure should look like this:
 
     matplotlib test 1
 
+Data I/O
+~~~~~~~~
+
+A stylized network is supposed to be saved and loaded by the functions in the module :mod:`netwulf.io`. Start the test like this
+
+.. code:: python
+
+    T.test_io()
+
+The test network will be styled in netwulf, saved, loaded and then redrawn in matplotlib. Hence the figure should look like the netwulf visualization.
