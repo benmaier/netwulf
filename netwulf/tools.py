@@ -371,7 +371,8 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
     pos = { node['id']: np.array([node['x_canvas'], height - node['y_canvas']]) for node in network_properties['nodes'] }
 
     if draw_links:
-        zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
+        #zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
+        zorder = -1 # make sure that links are very much in the background
 
         lines = []
         linewidths = []
