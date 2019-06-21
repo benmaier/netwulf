@@ -335,7 +335,8 @@ def visualize(network,
     if is_jupyter and plot_in_cell_below and not is_keyboard_interrupted:
         if verbose:
             print('recreating layout in matplotlib ...')
-        fig, ax = wulf.draw_netwulf(posted_network_properties)
+        if posted_network_properties is not None:
+            fig, ax = wulf.draw_netwulf(posted_network_properties)
 
     return posted_network_properties, posted_config
 
