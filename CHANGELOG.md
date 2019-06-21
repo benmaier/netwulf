@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- having graph properties with numpy types raised an error when dumping to JSON,
+  so these types are now converted to Python types prior to dumping
+
+### Changed
+- nodes with strength 0 are now rescaled to strength 1 if node size is scaled by strength
 
 ## [v0.1.3] - 2019-06-18
 ### Added
