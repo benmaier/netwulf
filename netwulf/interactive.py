@@ -19,11 +19,18 @@ import shutil
 from io import BytesIO
 import pathlib
 
+import numpy
+
 import networkx as nx
 import netwulf as wulf
 
 netwulf_user_folder = pathlib.Path('~/.netwulf/').expanduser()
 html_source_path = (pathlib.Path(wulf.__path__[0]) / 'js').expanduser()
+
+def _json_default(o):
+    if isinstance(o, numpy.int64): return int(o)
+    elif isinstance(o, numpy.float64): return float(o)
+    raise TypeError
 
 def mkdirp_customdir(directory=None):
     """simulate `mkdir -p` functionality"""
@@ -267,10 +274,10 @@ def visualize(network,
             if 'graph' in network:
                 network.update(network['graph'])
                 del network['graph']
-        json.dump(network, f, iterable_as_array=True)
+        json.dump(network, f, iterable_as_array=True, default=_json_default)
 
     with open(configpath,'w') as f:
-        json.dump(this_config, f)
+        json.dump(this_config, f, default=_json_default)
 
     # change directory to this directory
     if verbose:
