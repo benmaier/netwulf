@@ -269,12 +269,14 @@ def visualize(network,
     configpath = str(web_dir / configname)
 
     with open(filepath,'w') as f:
-        if type(network) in [nx.Graph, nx.DiGraph]:
+        if type(network) in [nx.Graph, nx.DiGraph, nx.MultiDiGraph]:
             network = nx.node_link_data(network)
             if 'graph' in network:
                 network.update(network['graph'])
                 del network['graph']
-        json.dump(network, f, iterable_as_array=True, default=_json_default)
+            json.dump(network, f, iterable_as_array=True, default=_json_default)
+        else:
+            raise TypeError("Netwulf only supports `nx.Graph`, `nx.DiGraph`, and `nx.MultiDiGraph`.")
 
     with open(configpath,'w') as f:
         json.dump(this_config, f, default=_json_default)
