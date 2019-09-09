@@ -6,12 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [v0.1.4] - 2019-09-09
 ### Fixed
 - having graph properties with numpy types raised an error when dumping to JSON,
   so these types are now converted to Python types prior to dumping
 
 ### Changed
 - nodes with strength 0 are now rescaled to strength 1 if node size is scaled by strength
+- when changing node and link properties in a frozen simulation, the simulation is not restarted anymore
+- The server is stopped as soon as the Browser window is closed
 
 ## [v0.1.3] - 2019-06-18
 ### Added
@@ -55,7 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - switched from usage of `os.path` to `pathlib` at the appropriate places
 
-[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.4...HEAD
+[v0.1.4]: https://github.com/benmaier/netwulf/compare/v0.1.3...v0.1.4
 [v0.1.3]: https://github.com/benmaier/netwulf/compare/v0.1.2...v0.1.3
 [v0.1.2]: https://github.com/benmaier/netwulf/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/benmaier/netwulf/compare/v0.1.0...v0.1.1
