@@ -101,6 +101,38 @@ Save as PDF
     
     network, config = wulf.visualize(G, plot_in_cell_below=False)
     
-    fig, ax = plt.subplots(figsize=(10, 10))
-    wulf.draw_netwulf(network, fig, ax)
+    fig, ax = wulf.draw_netwulf(network, figsize=(10,10))
     plt.savefig("myfigure.pdf")
+
+
+Labels and node positions
+-------------------------
+
+.. code:: python
+
+    import networkx as nx
+    import netwulf as wulf
+    import matplotlib.pyplot as plt
+
+    G = nx.Graph()
+    G.add_nodes_from([0,1,2,'a','b','c'])
+    G.add_edges_from([(0,1),('a','b')])
+
+    network, config = wulf.visualize(G,config={'zoom':3})
+
+    # draw links only at first
+    fig, ax = wulf.draw_netwulf(network,draw_nodes=False)
+
+    # get positions of two unconnected nodes to draw a link anyway
+    v0 = wulf.node_pos(network, 'c')
+    v1 = wulf.node_pos(network, 2)
+    ax.plot([v0[0],v1[0]],[v0[1],v1[1]],c='#d95f02')
+
+    # draw nodes now
+    wulf.draw_netwulf(network,fig,ax,draw_links=False)
+
+    # add labels to a node and an edge
+    wulf.add_node_label(ax,network,'c')
+    wulf.add_edge_label(ax,network,('a','b'))
+    
+.. figure:: img/labeled_graph.png

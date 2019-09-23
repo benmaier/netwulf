@@ -18,7 +18,19 @@ with an output looking like this
 
 .. code:: bash
 
-    PLACEHOLDER
+	---------- coverage: platform darwin, python 3.7.3-final-0 -----------
+	Name                        Stmts   Miss  Cover
+	-----------------------------------------------
+	netwulf/__init__.py             4      0   100%
+	netwulf/interactive.py        154     24    84%
+	netwulf/metadata.py             9      0   100%
+	netwulf/tests/__init__.py       1      0   100%
+	netwulf/tests/test_all.py      70      2    97%
+	netwulf/tools.py               92      1    99%
+	-----------------------------------------------
+	TOTAL                         330     27    92%
+	
+	================ 5 passed, 4 warnings in 58.81 seconds ================
 
 If you open a pull request, make sure you ran the tests and copy the test report
 as a comment with your pull request like so
@@ -60,6 +72,23 @@ A browser window will be opened with a visualization looking like this.
     Posting test
 
 It will close automatically.
+
+Config
+~~~~~~~
+
+The config test starts a visualization with a configuration where each entry differs from its default value.
+
+.. code:: python
+
+    T.test_config_adaption()
+
+A browser window will be opened with a visualization looking like this.
+
+.. figure:: img/test_config.png
+
+    Posting test
+
+It will close automatically. The test checks wether the returned configuration is equal to the posted configuration.
 
 Reproducibility
 ~~~~~~~~~~~~~~~
@@ -132,3 +161,13 @@ The resulting figure should look like this:
 
     matplotlib test 1
 
+Data I/O
+~~~~~~~~
+
+A stylized network is supposed to be saved and loaded by the functions in the module :mod:`netwulf.io`. Start the test like this
+
+.. code:: python
+
+    T.test_io()
+
+The test network will be styled in netwulf, saved, loaded and then redrawn in matplotlib. Hence the figure should look like the netwulf visualization.

@@ -18,7 +18,7 @@ affiliations:
    index: 1
  - name : DTU Compute, Technical University of Denmark, DK-2800 Kgs. Lyngby
    index: 2
- - name: Robert Koch-Institute, Nordufer 20, D-13353 Berlin
+ - name: Robert Koch Institute, Nordufer 20, D-13353 Berlin
    index: 3
  - name: Department of Physics, Humboldt-University of Berlin, Newtonstr. 15, D-12489 Berlin
    index: 4
@@ -29,7 +29,7 @@ bibliography: paper.bib
 # Summary
 
 Network visualization is an effective way to illustrate properties of a complex system. It is an important tool for exploring and finding patterns, and is used by researchers and practitioners across many fields and industries.
-Currently, there exist a number of tools for visualizing networks. *Networkx* [@networkx] is a popular Python package for network analysis which provides limited functionality for computing layouts and plotting networks statically. Layout computations are done in Python or using the php-based software *Graphviz* [@graphviz], which is slow. Another Python package for network analysis and visualization is *graph-tool* [@graphtool], which relies on a high number of external C++-libraries for installation/compilation which can be overwhelming for beginners. Furthermore, its visualization functions are non-interactive, as well. *Gephi* [@gephi] and *Cytoscape* [@cytoscape] are dedicated interactive visualization and analysis software programs. They are both Java-based and run desktop clients with a GUI where users save and load networks as separate files. *Webweb* [@webweb] enables interactive visualization for Python and Matlab networks using the d3.js [@d3] force layout. Its main purpose, however, is exploration of network features and exporting one-time visualizations as SVG or HTML.
+Currently, there exist a number of tools for visualizing networks. *Networkx* [@networkx] is a popular Python package for network analysis which provides limited functionality for computing layouts and plotting networks statically. Layout computations are done in Python or using the php-based software *Graphviz* [@graphviz], which is slow. Another Python package for network analysis and visualization is *graph-tool* [@graphtool], which relies on a high number of external C++-libraries for installation/compilation which can be overwhelming for beginners. Furthermore, its visualization functions have limited interactive features. *Gephi* [@gephi] and *Cytoscape* [@cytoscape] are dedicated interactive visualization and analysis software programs. They are both Java-based and run desktop clients with a GUI where users save and load networks as separate files. *Webweb* [@webweb] enables interactive visualization for Python and Matlab networks using the d3.js [@d3] force layout. Its main purpose, however, is exploration of network features and exporting one-time visualizations as SVG or HTML.
 
 For many users, these tools offer the necessary functionality to visualize networks in most desired ways. However, since a growing population of network researchers and practitioners are relying on Python for doing network science [@developersurvey], it is increasingly pressing that a fast and intuitive Python tool for reproducible network visualization exists.
 

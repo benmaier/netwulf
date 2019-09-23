@@ -7,3 +7,4 @@ and Ulf Aslak's d3-web app for network visualization.
 from .metadata import __version__
 from .interactive import *
 from .tools import *
+from .io import *

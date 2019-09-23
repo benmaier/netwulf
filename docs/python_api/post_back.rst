@@ -87,32 +87,33 @@ which was used to generate this figure will resemble
 
     default_config = {
         # Input/output
-        'zoom': 1.5,
+        'zoom': 1,
         # Physics
-        'node_charge': -30,
+        'node_charge': -45,
         'node_gravity': 0.1,
-        'link_distance': 10,
-        'node_collision': False,
+        'link_distance': 15,
+        'link_distance_variation': 0,
+        'node_collision': True,
         'wiggle_nodes': False,
         'freeze_nodes': False,
         # Nodes
-        'node_fill_color': '#16a085',
-        'node_stroke_color': '#000000',
+        'node_fill_color': '#79aaa0',
+        'node_stroke_color': '#555555',
         'node_label_color': '#000000',
         'display_node_labels': False,
         'scale_node_size_by_strength': False,
-        'node_size': 10,
-        'node_stroke_width': 0.5,
-        'node_size_unevenness': 0.5,
+        'node_size': 5,
+        'node_stroke_width': 1,
+        'node_size_variation': 0.5,
         # Links
         'link_color': '#7c7c7c',
-        'link_width': 5,
+        'link_width': 2,
         'link_alpha': 0.5,
-        'link_width_unevenness': 0.5,
+        'link_width_variation': 0.5,
         # Thresholding
-        'display_singleton_nodes': False,
-        'min_link_weight_percentage': 0,
-        'max_link_weight_percentage': 100
+        'display_singleton_nodes': True,
+        'min_link_weight_percentile': 0,
+        'max_link_weight_percentile': 1
     }
 
 If the visualization was started from a Jupyter notebook, a picture of the stylized

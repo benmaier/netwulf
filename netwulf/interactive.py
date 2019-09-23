@@ -19,11 +19,18 @@ import shutil
 from io import BytesIO
 import pathlib
 
+import numpy
+
 import networkx as nx
 import netwulf as wulf
 
 netwulf_user_folder = pathlib.Path('~/.netwulf/').expanduser()
 html_source_path = (pathlib.Path(wulf.__path__[0]) / 'js').expanduser()
+
+def _json_default(o):
+    if isinstance(o, numpy.int64): return int(o)
+    elif isinstance(o, numpy.float64): return float(o)
+    raise TypeError
 
 def mkdirp_customdir(directory=None):
     """simulate `mkdir -p` functionality"""
@@ -137,32 +144,33 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 default_config = {
     # Input/output
-    'zoom': 1.5,
+    'zoom': 1,
     # Physics
-    'node_charge': -30,
+    'node_charge': -45,
     'node_gravity': 0.1,
-    'link_distance': 10,
-    'node_collision': False,
+    'link_distance': 15,
+    'link_distance_variation': 0,
+    'node_collision': True,
     'wiggle_nodes': False,
     'freeze_nodes': False,
     # Nodes
-    'node_fill_color': '#16a085',
-    'node_stroke_color': '#000000',
+    'node_fill_color': '#79aaa0',
+    'node_stroke_color': '#555555',
     'node_label_color': '#000000',
     'display_node_labels': False,
     'scale_node_size_by_strength': False,
-    'node_size': 10,
-    'node_stroke_width': 0.5,
-    'node_size_unevenness': 0.5,
+    'node_size': 5,
+    'node_stroke_width': 1,
+    'node_size_variation': 0.5,
     # Links
     'link_color': '#7c7c7c',
-    'link_width': 5,
+    'link_width': 2,
     'link_alpha': 0.5,
-    'link_width_unevenness': 0.5,
+    'link_width_variation': 0.5,
     # Thresholding
     'display_singleton_nodes': True,
     'min_link_weight_percentile': 0,
-    'max_link_weight_percentile': 100
+    'max_link_weight_percentile': 1
 }
 
 
@@ -195,34 +203,35 @@ def visualize(network,
 
             default_config = {
                 # Input/output
-                'zoom': 1.5,
+                'zoom': 1,
                 # Physics
-                'node_charge': -30,
+                'node_charge': -45,
                 'node_gravity': 0.1,
-                'link_distance': 10,
-                'node_collision': False,
+                'link_distance': 15,
+                'link_distance_variation': 0,
+                'node_collision': True,
                 'wiggle_nodes': False,
                 'freeze_nodes': False,
                 # Nodes
-                'node_fill_color': '#16a085',
-                'node_stroke_color': '#000000',
+                'node_fill_color': '#79aaa0',
+                'node_stroke_color': '#555555',
                 'node_label_color': '#000000',
                 'display_node_labels': False,
                 'scale_node_size_by_strength': False,
-                'node_size': 10,
-                'node_stroke_width': 0.5,
-                'node_size_unevenness': 0.5,
+                'node_size': 5,
+                'node_stroke_width': 1,
+                'node_size_variation': 0.5,
                 # Links
                 'link_color': '#7c7c7c',
-                'link_width': 5,
+                'link_width': 2,
                 'link_alpha': 0.5,
-                'link_width_unevenness': 0.5,
+                'link_width_variation': 0.5,
                 # Thresholding
-                'display_singleton_nodes': False,
+                'display_singleton_nodes': True,
                 'min_link_weight_percentile': 0,
-                'max_link_weight_percentile': 100
+                'max_link_weight_percentile': 1
             }
-    plot_in_cell_below : bool, default : True
+
         When started from a Jupyter notebook, this will show a
         reproduced matplotlib figure of the stylized network
         in a cell below. Only works if ``verbose = False``.
@@ -260,15 +269,17 @@ def visualize(network,
     configpath = str(web_dir / configname)
 
     with open(filepath,'w') as f:
-        if type(network) in [nx.Graph, nx.DiGraph]:
+        if type(network) in [nx.Graph, nx.DiGraph, nx.MultiDiGraph]:
             network = nx.node_link_data(network)
             if 'graph' in network:
                 network.update(network['graph'])
                 del network['graph']
-        json.dump(network, f, iterable_as_array=True)
+            json.dump(network, f, iterable_as_array=True, default=_json_default)
+        else:
+            raise TypeError("Netwulf only supports `nx.Graph`, `nx.DiGraph`, and `nx.MultiDiGraph`.")
 
     with open(configpath,'w') as f:
-        json.dump(this_config, f)
+        json.dump(this_config, f, default=_json_default)
 
     # change directory to this directory
     if verbose:
@@ -326,14 +337,16 @@ def visualize(network,
     if is_jupyter and plot_in_cell_below and not is_keyboard_interrupted:
         if verbose:
             print('recreating layout in matplotlib ...')
-        fig, ax = wulf.draw_netwulf(posted_network_properties)
+        if posted_network_properties is not None:
+            fig, ax = wulf.draw_netwulf(posted_network_properties)
 
     return posted_network_properties, posted_config
 
 
 if __name__ == "__main__":
     # download_d3()
-    G = nx.fast_gnp_random_graph(5,0.3)
-    posted_data = visualize(G,config={'node_size':5,'collision':True,'link_color':'#3b9'},verbose=True)
-    if posted_data is not None:
-        print("received posted data:", posted_data)
+    G = nx.fast_gnp_random_graph(100,2/100.)
+    #G = nx.barabasi_albert_graph(100,1)
+    posted_data = visualize(G,config={'collision':True},verbose=True)
+    #if posted_data is not None:
+    #    print("received posted data:", posted_data)

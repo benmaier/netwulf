@@ -9,6 +9,182 @@ import matplotlib as mpl
 import matplotlib.pyplot as pl
 from matplotlib.collections import LineCollection, EllipseCollection
 
+def _get_node_index(network_properties,node_id):
+    """
+    Get the node's index position in the node list of the
+    stylized network.
+    
+    Parameters
+    ----------
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    node_id : str or int
+        The node of which to get the position
+
+    Returns
+    -------
+    i : int
+        Index position of the node ``network_properties['nodes']``
+        Returns `None` if node is not found
+
+    Example
+    -------
+        >>> props, _ = visualize(G)
+        >>> i = _get_node_index(props, 0)
+    """
+
+    N = len(network_properties['nodes'])
+    for index, node in enumerate(network_properties['nodes']):
+        if node_id == node['id']:
+            break
+        elif index == N-1:
+            index = None
+
+    return index
+
+
+def node_pos(network_properties,node_id):
+    """
+    Get the node's position in matplotlib data coordinates.
+    
+    Parameters
+    ----------
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    node_id : str or int
+        The node of which to get the position
+
+    Returns
+    -------
+    x : float
+        The x-position in matplotlib data coordinates
+    y : float
+        The y-position in matplotlib data coordinates
+
+    Example
+    -------
+        >>> props, _ = visualize(G)
+        >>> node_pos(props, 0)
+    """
+
+    index = _get_node_index(network_properties,node_id)
+
+    height = network_properties['ylim'][1] - network_properties['ylim'][0]
+    node = network_properties['nodes'][index]
+
+    return node['x_canvas'], height - node['y_canvas']
+
+def add_node_label(ax,
+                   network_properties,
+                   node_id,
+                   label=None,
+                   dx=0,
+                   dy=0,
+                   ha='center',
+                   va='center',
+                   **kwargs):
+    """
+    Add a label to a node in the drawn matplotlib axis
+
+    Parameters
+    ----------
+    ax : matplotlib.Axis
+        The Axis object which has been used to draw the network
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    node_id : str or int
+        The focal node's id in the `network_properties` dict
+    label : str, default : None
+        The text to write at the node's position
+        If `None`, the value of `node_id` will be put there.
+    dx : float, default : 0.0
+        Label offset in x-direction
+    dy : float, default : 0.0
+        Label offset in y-direction
+    ha : str, default : 'center'
+        Horizontal anchor orientation of the text
+    va : str, default : 'center'
+        Vertical anchor orientation of the text
+    **kwargs : dict
+        Additional styling arguments forwarded to Axis.text
+
+
+    Example
+    -------
+        >>> netw, _ = netwulf.visualize(G)
+        >>> fig, ax = netwulf.draw_netwulf(netw)
+        >>> netwulf.add_node_label(ax,netw,0)
+    """
+
+    pos = node_pos(network_properties, node_id)
+
+    if label is None:
+        label = str(node_id)
+    
+    zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
+    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,zorder=zorder,**kwargs)
+
+def add_edge_label(ax,
+                   network_properties,
+                   edge,
+                   label=None,
+                   dscale=0.5,
+                   dx=0,
+                   dy=0,
+                   ha='center',
+                   va='center',
+                   **kwargs):
+    """
+    Add a label to an edge in the drawn matplotlib axis
+
+    Parameters
+    ----------
+    ax : matplotlib.Axis
+        The Axis object which has been used to draw the network
+    edge : 2-tuple of str or int
+        The edge's node ids
+    network_properties : dict
+        The network properties which are returned from the
+        interactive visualization.
+    label : str, default : None
+        The text to write at the node's position
+        If `None`, the tuple of node ids in `edge` will be put there.
+    dscale : float, default : 0.5
+        At which position between the two nodes to put the label
+        (``dscale = 0.0`` refers to the position of node ``edge[0]``
+        and ``dscale = 1.0`` refers to the position of node ``edge[1]``,
+        so use any number between 0.0 and 1.0).
+    dx : float, default : 0.0
+        Additional label offset in x-direction
+    dy : float, default : 0.0
+        Additional label offset in y-direction
+    ha : str, default : 'center'
+        Horizontal anchor orientation of the text
+    va : str, default : 'center'
+        Vertical anchor orientation of the text
+    **kwargs : dict
+        Additional styling arguments forwarded to Axis.text
+
+
+    Example
+    -------
+        >>> netw, _ = netwulf.visualize(G)
+        >>> fig, ax = netwulf.draw_netwulf(netw)
+        >>> netwulf.add_node_label(ax,netw,0)
+    """
+
+    v0 = np.array(node_pos(network_properties, edge[0]))
+    v1 = np.array(node_pos(network_properties, edge[1]))
+    e = (v1-v0)
+
+    if label is None:
+        label = str("("+str(edge[0])+", "+str(edge[1])+")")
+    
+    pos = v0 + dscale * e 
+    ax.text(pos[0]+dx,pos[1]+dy,label,ha=ha,va=va,**kwargs)
 
 def bind_properties_to_network(network,
                                network_properties,
@@ -41,8 +217,8 @@ def bind_properties_to_network(network,
 
     Example
     -------
-        >>> props, _ = visualize(G)
-        >>> bind_properties_to_network(G, props)
+        >>> props, _ = netwulf.visualize(G)
+        >>> netwulf.bind_properties_to_network(G, props)
     """
     # Add individial node attributes
     if bind_node_positions:
@@ -115,19 +291,14 @@ def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
 
     return G
 
-def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
+def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links=True,draw_nodes=True,link_zorder=-1,node_zorder=1000):
     """
     Redraw the visualization using matplotlib. Creates
     figure and axes if None provided.
-    In order to add labels, do for instance
-
-    .. code:: python
-
-        ax.text(
-                network_properties['nodes'][0]['x'],
-                network_properties['nodes'][0]['y'],
-                network_properties['nodes'][0]['id']
-               )
+    In order to add labels, check out 
+    :mod:`netwulf.tools.add_node_label`
+    and
+    :mod:`netwulf.tools.add_edge_label`
 
     Parameters
     ----------
@@ -142,6 +313,10 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
         the size of the figure in inches (sidelength of a square)
         if None, will be taken as the minimum of the values in 
         ``matplotlib.rcParams['figure.figsize']``.
+    draw_links : bool, default : True
+        Whether the links should be drawn
+    draw_nodes : bool, default : True
+        Whether the nodes should be drawn
     
     Returns
     -------
@@ -174,8 +349,10 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
 
 
     # for conversion of inches to points
-    # (important for markersize and linewidths)
-    dpi = fig.dpi
+    # (important for markersize and linewidths).
+    # Apparently matplotlib uses 72 dpi internally for conversions in all figures even for those
+    # which do not follow dpi = 72 which is freaking weird but hey why not.
+    dpi = 72
 
     # set everything square and get the axis size in points
     ax.axis('square')
@@ -193,51 +370,60 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None):
     height = network_properties['ylim'][1] - network_properties['ylim'][0]
     pos = { node['id']: np.array([node['x_canvas'], height - node['y_canvas']]) for node in network_properties['nodes'] }
 
-    lines = []
-    linewidths = []
-    for link in network_properties['links']:
-        u, v = link['source'], link['target']
-        lines.append([ 
-            [pos[u][0], pos[v][0]], 
-            [pos[u][1], pos[v][1]]
-                     ])
-        linewidths.append(link['width']/width*axwidth)
+    if draw_links:
+        #zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
+        zorder = -1 # make sure that links are very much in the background
 
-    # collapse to line segments
-    lines = [list(zip(x, y)) for x, y in lines]
+        lines = []
+        linewidths = []
+        for link in network_properties['links']:
+            u, v = link['source'], link['target']
+            lines.append([ 
+                [pos[u][0], pos[v][0]], 
+                [pos[u][1], pos[v][1]]
+                         ])
+            linewidths.append(link['width']/width*axwidth)
 
-    # plot Lines
-    alpha = network_properties['linkAlpha']
-    color = network_properties['linkColor']
-    ax.add_collection(LineCollection(lines, 
-                                     color=color,
-                                     alpha=alpha, 
-                                     linewidths=linewidths,
-                                     zorder=-1
+        # collapse to line segments
+        lines = [list(zip(x, y)) for x, y in lines]
+
+        # plot Lines
+        alpha = network_properties['linkAlpha']
+        color = network_properties['linkColor']
+        ax.add_collection(LineCollection(lines, 
+                                         color=color,
+                                         alpha=alpha, 
+                                         linewidths=linewidths,
+                                         zorder=zorder
                                      ))
 
-    # compute node positions and properties
-    XY = []
-    size = []
-    node_colors = []
 
-    for node in network_properties['nodes']:
-        XY.append([node['x_canvas'], height - node['y_canvas']])
-        # size has to be given in points*2
-        size.append( 2*node['radius'] )
-        node_colors.append(node['color'])
+    if draw_nodes:
+        zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
 
-    XY = np.array(XY)
-    size = np.array(size)
-    circles = EllipseCollection(size,size,np.zeros_like(size),
-                                offsets=XY,
-                                units='x',
-                                transOffset=ax.transData,
-                                facecolors=node_colors,
-                                linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
-                                edgecolors=network_properties['nodeStrokeColor'],
+        # compute node positions and properties
+        XY = []
+        size = []
+        node_colors = []
+
+        for node in network_properties['nodes']:
+            XY.append([node['x_canvas'], height - node['y_canvas']])
+            # size has to be given in points*2
+            size.append( 2*node['radius'] )
+            node_colors.append(node['color'])
+
+        XY = np.array(XY)
+        size = np.array(size)
+        circles = EllipseCollection(size,size,np.zeros_like(size),
+                                    offsets=XY,
+                                    units='x',
+                                    transOffset=ax.transData,
+                                    facecolors=node_colors,
+                                    linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
+                                    edgecolors=network_properties['nodeStrokeColor'],
+                                    zorder=zorder
                                 )
-    ax.add_collection(circles)
+        ax.add_collection(circles)
 
     return fig, ax
 

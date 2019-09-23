@@ -19,6 +19,7 @@ Netwulf - Interactive Network Visualization
    python_api/post_back
    python_api/drawing
    python_api/network_manipulation
+   python_api/data_io
 
 .. toctree::
    :maxdepth: 2
@@ -45,4 +46,5 @@ Netwulf - Interactive Network Visualization
 
    reference/interactive
    reference/tools
+   reference/io
 
