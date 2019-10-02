@@ -11,9 +11,9 @@ The package is build around the philosophy that network manipulation and preproc
 
 ## Paper
 
-[![status](http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6/status.svg)](http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01425/status.svg)](https://doi.org/10.21105/joss.01425)
 
-If you use `netwulf` for your scientific work, consider citing us! We're currently [under review in JOSS](https://github.com/openjournals/joss-reviews/issues/1425).
+If you use `netwulf` for your scientific work, consider citing us! We're [published in JOSS](https://doi.org/10.21105/joss.01425).
 
 ## Install
 
