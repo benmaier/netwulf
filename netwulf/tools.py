@@ -376,6 +376,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
 
         lines = []
         linewidths = []
+        linecolors = []
         for link in network_properties['links']:
             u, v = link['source'], link['target']
             lines.append([ 
@@ -383,20 +384,23 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
                 [pos[u][1], pos[v][1]]
                          ])
             linewidths.append(link['width']/width*axwidth)
+            if 'color' in link.keys():
+                linecolors.append(link['color'])
+            else:
+                linecolors.append(network_properties['linkColor'])
 
         # collapse to line segments
         lines = [list(zip(x, y)) for x, y in lines]
 
         # plot Lines
         alpha = network_properties['linkAlpha']
-        color = network_properties['linkColor']
+    
         ax.add_collection(LineCollection(lines, 
-                                         color=color,
+                                         colors=linecolors,
                                          alpha=alpha, 
                                          linewidths=linewidths,
                                          zorder=zorder
                                      ))
-
 
     if draw_nodes:
         zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
