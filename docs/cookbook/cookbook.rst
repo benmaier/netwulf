@@ -6,7 +6,7 @@ Given a *networkx.Graph* object, you can launch netwulf like so:
 .. code:: python
 
 	import networkx as nx
-	import netwulf as wulf
+	import netwulf as nw
 
 	G = nx.barabasi_albert_graph(100, 2)
 
@@ -39,7 +39,7 @@ Example:
 
     import numpy as np
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
 
     # Create a network
     G = nx.random_partition_graph([10, 10, 10], .25, .01)
@@ -61,7 +61,7 @@ Example:
     for n1, n2, data in G.edges(data=True):
         data['weight'] = np.random.random()
 
-    wulf.visualize(G)
+    nw.visualize(G)
 
 
 .. figure:: img/random_partition_graph.png
@@ -94,14 +94,14 @@ Save as PDF
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
     import matplotlib.pyplot as plt
     
     G = nx.barabasi_albert_graph(100, 2)
     
-    network, config = wulf.visualize(G, plot_in_cell_below=False)
+    network, config = nw.visualize(G, plot_in_cell_below=False)
     
-    fig, ax = wulf.draw_netwulf(network, figsize=(10,10))
+    fig, ax = nw.draw_netwulf(network, figsize=(10,10))
     plt.savefig("myfigure.pdf")
 
 
@@ -111,28 +111,28 @@ Labels and node positions
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
     import matplotlib.pyplot as plt
 
     G = nx.Graph()
     G.add_nodes_from([0,1,2,'a','b','c'])
     G.add_edges_from([(0,1),('a','b')])
 
-    network, config = wulf.visualize(G,config={'zoom':3})
+    network, config = nw.visualize(G,config={'zoom':3})
 
     # draw links only at first
-    fig, ax = wulf.draw_netwulf(network,draw_nodes=False)
+    fig, ax = nw.draw_netwulf(network,draw_nodes=False)
 
     # get positions of two unconnected nodes to draw a link anyway
-    v0 = wulf.node_pos(network, 'c')
-    v1 = wulf.node_pos(network, 2)
+    v0 = nw.node_pos(network, 'c')
+    v1 = nw.node_pos(network, 2)
     ax.plot([v0[0],v1[0]],[v0[1],v1[1]],c='#d95f02')
 
     # draw nodes now
-    wulf.draw_netwulf(network,fig,ax,draw_links=False)
+    nw.draw_netwulf(network,fig,ax,draw_links=False)
 
     # add labels to a node and an edge
-    wulf.add_node_label(ax,network,'c')
-    wulf.add_edge_label(ax,network,('a','b'))
+    nw.add_node_label(ax,network,'c')
+    nw.add_edge_label(ax,network,('a','b'))
     
 .. figure:: img/labeled_graph.png

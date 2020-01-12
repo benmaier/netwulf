@@ -12,11 +12,11 @@ Start a visualization like this
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
 
     G = nx.barabasi_albert_graph(100,2)
 
-    stylized_network, config = wulf.visualize(G)
+    stylized_network, config = nw.visualize(G)
 
 
 A visualization window is opened and the network can be stylized.
@@ -128,4 +128,4 @@ again with, passing the produced configuration.
 
 .. code:: python
 
-    wulf.visualize(G, config=config)
+    nw.visualize(G, config=config)
