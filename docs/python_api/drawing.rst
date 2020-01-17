@@ -8,14 +8,14 @@ the function :mod:`netwulf.tools.draw_netwulf`.
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
 
     G = nx.barabasi_albert_graph(100,1)
 
-    stylized_network, config = wulf.visualize(G)
+    stylized_network, config = nw.visualize(G)
 
     import matplotlib.pyplot as plt
-    fig, ax = wulf.draw_netwulf(stylized_network)
+    fig, ax = nw.draw_netwulf(stylized_network)
     plt.show()
 
 

@@ -14,7 +14,7 @@ will be grouped and colored in the visualization. Here's an example
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
 
     import numpy as np
 
@@ -26,8 +26,8 @@ will be grouped and colored in the visualization. Here's an example
         G[u][v]['bar'] = np.random.rand()
 
     # filter the Graph to visualize one where the weight is determined by 'foo'
-    new_G = wulf.get_filtered_network(G,edge_weight_key='foo')
-    wulf.visualize(new_G)
+    new_G = nw.get_filtered_network(G,edge_weight_key='foo')
+    nw.visualize(new_G)
 
     # assign node attributes according to some generic grouping 
     grp = {u: 'ABCDE'[u%5]  for u in G.nodes() }
@@ -35,8 +35,8 @@ will be grouped and colored in the visualization. Here's an example
 
     # filter the Graph to visualize one where the weight is determined by 'bar'
     # and the node group (coloring) is determined by the node attribute 'wum'
-    new_G = wulf.get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
-    wulf.visualize(new_G)
+    new_G = nw.get_filtered_network(G,edge_weight_key='bar',node_group_key='wum')
+    nw.visualize(new_G)
 
 Binding positions
 ~~~~~~~~~~~~~~~~~
@@ -47,7 +47,7 @@ where you left off last time, you can bind the positions to the network
 
 .. code:: python
 
-    wulf.bind_positions_to_network(G, stylized_network)
+    nw.bind_positions_to_network(G, stylized_network)
 
 There's no return value and the positions are directly written to the Graph-object ``G``.
 

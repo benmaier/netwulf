@@ -9,19 +9,19 @@ Start a visualization like this
 .. code:: python
 
     import networkx as nx
-    import netwulf as wulf
+    import netwulf as nw
 
     G = nx.barabasi_albert_graph(100,2)
 
-    stylized_network, config = wulf.visualize(G)
+    stylized_network, config = nw.visualize(G)
 
 You can either save/load the stylized network only
 
 .. code:: python
 
-    wulf.save("BA.json", stylized_network, config)
-    stylized_network, config, _ = wulf.load("BA.json")
-    wulf.draw_netwulf(stylized_network, config)
+    nw.save("BA.json", stylized_network, config)
+    stylized_network, config, _ = nw.load("BA.json")
+    nw.draw_netwulf(stylized_network, config)
 
 
 Or you can save/load with the respective ``networkx.Graph``-object
@@ -29,6 +29,6 @@ in order to replicate some other features.
 
 .. code:: python
 
-    wulf.save("BA.json", stylized_network, config, G)
-    stylized_network, config, G = wulf.load("BA.json")
+    nw.save("BA.json", stylized_network, config, G)
+    stylized_network, config, G = nw.load("BA.json")
 
