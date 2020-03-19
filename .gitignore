@@ -17,6 +17,7 @@ a.out
 /build/
 /tmp/
 /dist/
+/tests/
 
 /jupyter_notebooks/.ipynb_checkpoints/
 
@@ -32,3 +33,6 @@ __pycache__
 
 .coverage
 .pytest_cache
+
+/node_modules/
+/public/build/
