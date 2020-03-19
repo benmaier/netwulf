@@ -8,7 +8,7 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import { select, selectAll, mouse } from 'd3-selection';
 import { drag } from 'd3-drag';
 import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
-import {event as currentEvent} from 'd3-selection';
+import { event as currentEvent } from 'd3-selection';
 
 let d3 = {
     zoom, zoomIdentity, scaleLinear, scaleOrdinal, schemeCategory10, select,
@@ -33,7 +33,18 @@ let Network = class Network {
         // DEBUG
         this.nodeRadius = 10;
 
-        // Retina rendering
+        // Scale context if retina display
+        this.renderRetina();
+
+        // Transformations (dragging, panning, zooming)
+        this.transformations();
+
+        // Node titles
+        this.nodeTitles();
+
+    }
+
+    renderRetina() {
         this.devicePixelRatio = window.devicePixelRatio || 1;
         d3.select(this.canvas)
             .attr("width", this.width * this.devicePixelRatio)
@@ -41,8 +52,9 @@ let Network = class Network {
             .style("width", this.width + "px")
             .style("height", this.height + "px").node()
         this.context.scale(this.devicePixelRatio, this.devicePixelRatio)
+    }
 
-        // Transformations (dragging, panning, zooming)
+    transformations() {
         this.transform = d3.zoomIdentity;
         d3.select(this.canvas)
         .call(d3.drag()
@@ -55,8 +67,9 @@ let Network = class Network {
             .scaleExtent([1 / 10, 8])
             .on('zoom', this.toArrowFunc(this.zoomed))
         );
-
-        // Node titles
+    }
+    
+    nodeTitles() {
         d3.select(this.context.canvas)
             .on("mousemove", () => {
                 const mouse = d3.mouse(this.context.canvas);
@@ -66,7 +79,6 @@ let Network = class Network {
                 else
                     this.context.canvas.title = '';
         });
-
     }
 
     simulate() {

@@ -18,14 +18,27 @@
     let height = window.innerHeight;
 
     // Links and nodes
+    let network;
     $: links = graph.links.map(d => Object.create(d));
     $: nodes = graph.nodes.map(d => Object.create(d));
 
     // Launch visualization
     onMount(() => {
-        let network = new Network(canvas, width, height, nodes, links);
+        network = new Network(canvas, width, height, nodes, links);
         network.simulate();
     });
+
+    async function resize() {
+        await sleep(10)
+        network.width = width;
+        network.height = height;
+        network.renderRetina();
+        network.simulate(); 
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 </script>
 
@@ -48,7 +61,7 @@
 <!-- HTML -->
 <!-- ---- -->
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height}/>
+<svelte:window bind:innerWidth={width} bind:innerHeight={height} on:resize={resize}/>
 <div class='container'>
     <canvas bind:this={canvas} width={width} height={height}/>
 </div>

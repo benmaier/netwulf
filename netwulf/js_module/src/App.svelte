@@ -1,19 +1,24 @@
 <script>
 	import Explorer from './NetworkExplorer.svelte';
-	import data from './data.js';
+	import { json } from 'd3';
+	
+	let this_url = new URL(window.location.href);
+	let this_data_path = this_url.searchParams.get("data");
+
+	let data;
+	// let promise = json(this_data_path).then(function(graph) {
+	let promise = json('tmp.json').then(function(graph) {
+		data = graph;
+	});
 </script>
 
+
 <style>
-	.chart {
-		width: 100%;
-		max-width: 640px;
-		height: 100%;
-		min-height: 280px;
-		max-height: 480px;
-		margin: 0 auto;
-	}
 </style>
 
-<main class="chart">
+
+{#await promise}
+	<p>...loading data</p>
+{:then value}
 	<Explorer graph={data}/>
-</main>
+{/await}
