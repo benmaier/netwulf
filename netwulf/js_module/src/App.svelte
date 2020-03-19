@@ -1,15 +1,25 @@
 <script>
-	import Explorer from './NetworkExplorer.svelte';
+	import Network from './Network.svelte';
 	import { json } from 'd3';
 	
 	let this_url = new URL(window.location.href);
-	let this_data_path = this_url.searchParams.get("data");
+	let data_path = this_url.searchParams.get("data");
+	let config_path = this_url.searchParams.get("config");
 
-	let data;
-	// let promise = json(this_data_path).then(function(graph) {
-	let promise = json('tmp.json').then(function(graph) {
-		data = graph;
+	// let data, promise;
+	window.data = undefined;
+	window.config = undefined;
+
+	// let promise_data = json(data_path).then(function(d) {
+	let promise_data = json('tmp.json').then(function(d) {
+		data = d;
 	});
+	// let promise_config = json(config_path).then(function(d) {
+	let promise_config = json('config_tmp.json').then(function(d) {
+		config = d;
+	});
+
+	let promise = Promise.all([promise_data, promise_config]);
 </script>
 
 
@@ -20,5 +30,5 @@
 {#await promise}
 	<p>...loading data</p>
 {:then value}
-	<Explorer graph={data}/>
+	<Network graph={data} config={config}/>
 {/await}

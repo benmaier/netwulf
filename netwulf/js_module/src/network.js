@@ -1,3 +1,5 @@
+// Exports
+// -------
 export default Network;
 
 // Imports
@@ -7,13 +9,15 @@ import { zoom, zoomIdentity } from 'd3-zoom';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 import { select, selectAll, mouse } from 'd3-selection';
 import { drag } from 'd3-drag';
-import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
+import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY} from 'd3-force';
 import { event as currentEvent } from 'd3-selection';
-
 let d3 = {
     zoom, zoomIdentity, scaleLinear, scaleOrdinal, schemeCategory10, select,
-    selectAll, mouse, drag,  forceSimulation, forceLink, forceManyBody, forceCenter
+    selectAll, mouse, drag,  forceSimulation, forceLink, forceManyBody, forceCenter,
+    forceX, forceY
 };
+
+import { toArrowFuncString } from './utils.js'
 
 
 // Network class
@@ -30,21 +34,18 @@ let Network = class Network {
         this.nodes = nodes;
         this.links = links;
 
-        // DEBUG
-        this.nodeRadius = 10;
-
         // Scale context if retina display
-        this.renderRetina();
+        this.addRetinaRendering();
 
         // Transformations (dragging, panning, zooming)
-        this.transformations();
+        this.addTransformations();
 
         // Node titles
-        this.nodeTitles();
+        this.addNodeTitles();
 
     }
 
-    renderRetina() {
+    addRetinaRendering() {
         this.devicePixelRatio = window.devicePixelRatio || 1;
         d3.select(this.canvas)
             .attr("width", this.width * this.devicePixelRatio)
@@ -54,39 +55,40 @@ let Network = class Network {
         this.context.scale(this.devicePixelRatio, this.devicePixelRatio)
     }
 
-    transformations() {
+    addTransformations() {
         this.transform = d3.zoomIdentity;
         d3.select(this.canvas)
         .call(d3.drag()
             .container(this.canvas)
-            .subject(this.toArrowFunc(this.dragsubject))
-            .on("start", this.toArrowFunc(this.dragstarted))
-            .on("drag", this.toArrowFunc(this.dragged))
-            .on("end", this.toArrowFunc(this.dragended)))
+            .subject(eval(toArrowFuncString(this.dragsubject)))
+            .on("start", eval(toArrowFuncString(this.dragstarted)))
+            .on("drag", eval(toArrowFuncString(this.dragged)))
+            .on("end", eval(toArrowFuncString(this.dragended))))
         .call(d3.zoom()
             .scaleExtent([1 / 10, 8])
-            .on('zoom', this.toArrowFunc(this.zoomed))
+            .on('zoom', eval(toArrowFuncString(this.zoomed)))
         );
     }
-    
-    nodeTitles() {
+
+    addNodeTitles() {
         d3.select(this.context.canvas)
             .on("mousemove", () => {
                 const mouse = d3.mouse(this.context.canvas);
-                const d = this.simulation.find(this.transform.invertX(mouse[0]), this.transform.invertY(mouse[1]), this.nodeRadius);
-                if (d) 
-                    this.context.canvas.title = d.id;
-                else
-                    this.context.canvas.title = '';
+                const d = this.simulation.find(this.transform.invertX(mouse[0]), this.transform.invertY(mouse[1]), config['node_size']);
+                if (d) { this.context.canvas.title = d.id } 
+                else   { this.context.canvas.title = '' };
         });
     }
 
     simulate() {
         this.simulation = d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.links).id(d => d.id))
-            .force("charge", d3.forceManyBody())
+            .force("link", d3.forceLink(this.links).id(d => d.id).distance(config['link_distance']))
+            .force("charge", d3.forceManyBody().strength(config['node_charge']))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2))
-            .on("tick", this.toArrowFunc(this.simulationUpdate));
+            .force("x", d3.forceX(this.width / 2)).force("y", d3.forceY(this.height / 2))
+            .on("tick", eval(toArrowFuncString(this.simulationUpdate)));
+        this.simulation.force("x").strength(config['node_gravity']);
+        this.simulation.force("y").strength(config['node_gravity']);
     }
 
     zoomed() {
@@ -95,7 +97,7 @@ let Network = class Network {
     }
 
     dragsubject() {
-        const node = this.simulation.find(this.transform.invertX(currentEvent.x), this.transform.invertY(currentEvent.y), this.nodeRadius);
+        const node = this.simulation.find(this.transform.invertX(currentEvent.x), this.transform.invertY(currentEvent.y), config['node_size']);
         if (node) {
             node.x = this.transform.applyX(node.x);
             node.y = this.transform.applyY(node.y);
@@ -126,35 +128,28 @@ let Network = class Network {
         this.context.translate(this.transform.x, this.transform.y);
         this.context.scale(this.transform.k, this.transform.k);
 
+        this.context.globalAlpha = config['link_alpha'];
+        this.context.strokeStyle = config['link_color'];
+        this.context.globalCompositeOperation = "destination-over";
         this.links.forEach(d => {
             this.context.beginPath();
             this.context.moveTo(d.source.x, d.source.y);
             this.context.lineTo(d.target.x, d.target.y);
-            this.context.globalAlpha = 0.6;
-            this.context.strokeStyle = "#999";
-            this.context.lineWidth = Math.sqrt(d.value);
+            this.context.lineWidth = d.weight * config['link_width'];
             this.context.stroke();
-            this.context.globalAlpha = 1;
         });
         
+        this.context.strokeStyle = config['node_stroke_color'];
+        this.context.lineWidth = config['node_stroke_width'] < 1e-3 ? 1e-9 : config['node_stroke_width'];
+        this.context.globalCompositeOperation = "source-over";
+        this.context.globalAlpha = 1;
         this.nodes.forEach((d, i) => {
             this.context.beginPath();
-            this.context.arc(d.x, d.y, this.nodeRadius, 0, 2*Math.PI);
-            this.context.strokeStyle = "#fff";
-            this.context.lineWidth = 1.5;
+            this.context.arc(d.x, d.y, d.size * config['node_size'], 0, 2*Math.PI);
             this.context.stroke();
-            this.context.fillStyle = '#000000'
+            this.context.fillStyle = d.color || config['node_fill_color'];
             this.context.fill();
         });
         this.context.restore();
-    }
-
-    toArrowFunc(func) {
-        // Takes any function and formats it as a arrow function expression, like `() => { ... }`
-        // It is necessary to use this function to reformat all function that function as listeners
-        // in `on` method calls for d3 objects. Reason: d3 invokes the listener within the `this`
-        // context of the simulation, and class methods are in the class context so cannot  be passed.
-        let func_as_string = '() => {' + func.toString().split('\n').splice(1).join('\n');
-        return eval(func_as_string);
     }
 }

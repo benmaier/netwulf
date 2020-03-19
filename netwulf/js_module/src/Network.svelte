@@ -6,9 +6,20 @@
     // Load network
     import { onMount } from 'svelte';
     import Network from './network.js'
+    import { scaleNodes, scaleLinks, recolorNodes, recolorLinks, inferMode } from './preprocessing.js'
 
     // Data
     export let graph;
+    export let config;
+
+    console.log(config)
+
+    // Preprocess data
+    scaleNodes(graph);
+    scaleLinks(graph);
+    recolorNodes(graph);
+    recolorLinks(graph);
+    inferMode(graph);
 
     // Canvas and parameters
     let canvas;
@@ -28,11 +39,12 @@
         network.simulate();
     });
 
+    // Handle resizing
     async function resize() {
-        await sleep(10)
+        await sleep(1000)
         network.width = width;
         network.height = height;
-        network.renderRetina();
+        network.addRetinaRendering();
         network.simulate(); 
     }
 
