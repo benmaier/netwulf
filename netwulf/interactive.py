@@ -25,7 +25,7 @@ import networkx as nx
 import netwulf as wulf
 
 netwulf_user_folder = pathlib.Path('~/.netwulf/').expanduser()
-html_source_path = (pathlib.Path(wulf.__path__[0]) / 'js').expanduser()
+html_source_path = (pathlib.Path(wulf.__path__[0]) / 'js_module/public').expanduser()
 
 def _json_default(o):
     if isinstance(o, numpy.int64): return int(o)
@@ -347,6 +347,6 @@ if __name__ == "__main__":
     # download_d3()
     G = nx.fast_gnp_random_graph(100,2/100.)
     #G = nx.barabasi_albert_graph(100,1)
-    posted_data = visualize(G,config={'collision':True},verbose=True)
+    posted_data = visualize(G, config={'collision':True},verbose=True)
     #if posted_data is not None:
     #    print("received posted data:", posted_data)
