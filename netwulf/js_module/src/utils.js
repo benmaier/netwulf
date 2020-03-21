@@ -5,3 +5,22 @@ export function toArrowFuncString(func) {
     // context of the simulation, and class methods are in the class context so cannot  be passed.
     return '() => {' + func.toString().split('\n').splice(1).join('\n');
 }
+
+export function valIfValid(v, alt) {
+    // Use this instead of (v || alt) which won't work when v is 0
+    if (typeof(v) == "number") return v;
+    if (typeof(v) == "string") return v;
+    return alt;
+}
+
+export class DefaultDict {
+    constructor(defaultInit) {
+        return new Proxy({}, {
+            get: (target, name) => name in target ?
+                target[name] :
+                (target[name] = typeof defaultInit === 'function' ?
+                    new defaultInit().valueOf() :
+                    defaultInit)
+        })
+    }
+}

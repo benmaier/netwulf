@@ -145,7 +145,11 @@ let Network = class Network {
         this.context.globalAlpha = 1;
         this.nodes.forEach((d, i) => {
             this.context.beginPath();
-            this.context.arc(d.x, d.y, d.size * config['node_size'], 0, 2*Math.PI);
+            this.context.arc(
+                d.x, d.y,
+                (config['scale_node_size_by_strength'] ? d.degree_normed : d.size) * config['node_size'],
+                0, 2*Math.PI
+            );
             this.context.stroke();
             this.context.fillStyle = d.color || config['node_fill_color'];
             this.context.fill();

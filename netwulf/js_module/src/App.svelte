@@ -11,7 +11,7 @@
 	window.config = undefined;
 
 	// let promise_data = json(data_path).then(function(d) {
-	let promise_data = json('tmp.json').then(function(d) {
+	let promise_data = json('tmp0.json').then(function(d) {
 		data = d;
 	});
 	// let promise_config = json(config_path).then(function(d) {
@@ -24,6 +24,15 @@
 
 
 <style>
+    .swal-text {
+        background-color: #FEFAE3;
+        padding: 17px;
+        border: 1px solid #F0E1A1;
+        display: block;
+        margin: 22px;
+        text-align: left;
+        color: #61534e;
+    }
 </style>
 
 

@@ -6,20 +6,18 @@
     // Load network
     import { onMount } from 'svelte';
     import Network from './network.js'
-    import { scaleNodes, scaleLinks, recolorNodes, recolorLinks, inferMode } from './preprocessing.js'
+    import { validateData, scaleLinks, scaleNodes, recolorNodes, initialNodePositions } from './preprocessing.js'
 
     // Data
     export let graph;
     export let config;
 
-    console.log(config)
-
     // Preprocess data
-    scaleNodes(graph);
+    let isValid = validateData(graph);
     scaleLinks(graph);
+    scaleNodes(graph);
     recolorNodes(graph);
-    recolorLinks(graph);
-    inferMode(graph);
+    initialNodePositions(graph, config, width, height);
 
     // Canvas and parameters
     let canvas;
@@ -28,16 +26,20 @@
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    // Links and nodes
-    let network;
-    $: links = graph.links.map(d => Object.create(d));
-    $: nodes = graph.nodes.map(d => Object.create(d));
+    // Network prototype, links and nodes
+    let network, links, nodes;
 
-    // Launch visualization
-    onMount(() => {
-        network = new Network(canvas, width, height, nodes, links);
-        network.simulate();
-    });
+    if (isValid) {
+
+        $: links = graph.links.map(d => Object.create(d));
+        $: nodes = graph.nodes.map(d => Object.create(d));
+
+        // Launch visualization
+        onMount(() => {
+            network = new Network(canvas, width, height, nodes, links);
+            network.simulate();
+        });
+    }
 
     // Handle resizing
     async function resize() {
@@ -45,7 +47,7 @@
         network.width = width;
         network.height = height;
         network.addRetinaRendering();
-        network.simulate(); 
+        network.simulation.restart();
     }
 
     function sleep(ms) {
