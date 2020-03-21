@@ -17,7 +17,7 @@
     scaleLinks(graph);
     scaleNodes(graph);
     recolorNodes(graph);
-    initialNodePositions(graph, config, width, height);
+    initialNodePositions(graph, config);
 
     // Canvas and parameters
     let canvas;
