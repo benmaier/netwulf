@@ -10,6 +10,8 @@
 		network.canvas = canvas;
 		network.startVisualization();
         network.simulate();
+        if (config['freeze_nodes'])
+			network.simulation.alpha(0).restart();
     });
 </script>
 
@@ -21,6 +23,10 @@
         right: 0;
         bottom: 0;
         left: 0;
+        z-index: 0
+    }
+    #canvas {
+    	position: absolute;
     }
 </style>
 

@@ -142,12 +142,14 @@
 		if (v) config['freeze_nodes'] = !v;
 	}
 
+	let lastAlpha = 1;
 	function freezeChanged(v) {
 		if (v) {
-			config['wiggle_nodes'] = !v
-			network.simulation.alpha(0);
+			lastAlpha = network.simulation.alpha();
+			config['wiggle_nodes'] = false;
+			network.simulation.alphaTarget(0).alpha(0);
 		} else {
-			network.simulation.alpha(0.3).alphaTarget(0).restart();
+			network.simulation.alpha(lastAlpha).alphaTarget(0).restart();
 		}
 	}
 

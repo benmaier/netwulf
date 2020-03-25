@@ -7,6 +7,7 @@
 <style>
 	.flex {
 		display: flex;
+		z-index: 1;
 	}
 
 	.header {
@@ -18,20 +19,11 @@
 		border-bottom-width: 2px;
 	}
 
-	.config {
-		justify-content: space-between;
-		background-color: #dddddd;
-		padding: 0.5rem;
-		align-items: center;
-		color: #718096;
-		border-bottom-width: 2px;
-	}
-
 </style>
 
-<header class="flex header">
+<div class="flex header">
 	<nav class="flex">
 		<Logo/>	
 	</nav>
 	<Menu/>
-</header>
+</div>

@@ -57,6 +57,6 @@
 
 <Canvas {network} {canvas} {width} {height}/>
 
-<Navbar/>
-
 <Controls {network} {groupColors} {linkWeightOrder}/>
+
+<Navbar/>
