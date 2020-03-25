@@ -1,22 +1,17 @@
 <style>
-	.hidden {
+	.post-to-python {
 		display: none;
-	}
-	.text-gray-500 {
 		color: #a0aec0;
-	}
-	.uppercase {
 		text-transform: uppercase;
-	}
-	.font-bold {
 		font-weight: 700;
-	}
-	.sm\:block {
 		display: block;
+	}
+	.hovered:hover {
+	  	color: #4a5568;
+	  	text-decoration: none;
 	}
 </style>
 
-<!-- <nav class="hidden text-gray-500 uppercase font-bold sm:block">
-  	<a href="/about" class="hover:text-gray-700 hover:no-underline">About</a>
-	<a href="/contact" class="hover:text-gray-700 hover:no-underline">Contact</a>
-</nav> -->
+<nav>
+  	<a href="/about" class="post-to-python hovered">Post to Python</a>
+</nav>

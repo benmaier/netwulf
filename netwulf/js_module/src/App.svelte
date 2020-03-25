@@ -1,5 +1,4 @@
 <script>
-	import Navbar from './Navbar.svelte'
 	import Network from './Network.svelte';
 	import { json } from 'd3';
 	
@@ -34,5 +33,4 @@
 	<p>...loading data</p>
 {:then value}
 	<Network/>
-	<Navbar/>
 {/await}

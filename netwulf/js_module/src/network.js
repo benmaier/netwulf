@@ -28,12 +28,16 @@ let Network = class Network {
 	constructor(canvas, width, height, nodes, links, groupColors) {
 		// Class variables
 		this.canvas = canvas;
-		this.context = canvas.getContext('2d');
 		this.width = width;
 		this.height = height;
 		this.nodes = nodes;
 		this.links = links;
 		this.groupColors = groupColors;
+	}
+
+	startVisualization() {
+		// Create context for canvas drawing
+		this.createContext();
 
 		// Scale context if retina display
 		this.addRetinaRendering();
@@ -43,7 +47,10 @@ let Network = class Network {
 
 		// Node titles
 		this.addNodeTitles();
+	}
 
+	createContext() {
+		this.context = this.canvas.getContext('2d');
 	}
 
 	addRetinaRendering() {
@@ -96,7 +103,6 @@ let Network = class Network {
 	reset() {
 		this.simulation.nodes(this.nodes);
 		this.simulation.force("link").links(this.links);
-		// simulation.on("tick", eval(toArrowFuncString(this.simulationUpdate)));
 	}
 
 	zoomed() {

@@ -5,7 +5,9 @@
 
     // Load network
     import { onMount } from 'svelte';
+    import Canvas from './Canvas.svelte';
     import Controls from './Controls.svelte';
+    import Navbar from './Navbar.svelte';
     import Network from './network.js';
     import { validateData, scaleLinks, scaleNodes, recolorNodes, initialNodePositions } from './preprocessing.js';
     import { sleep } from './utils.js'
@@ -32,11 +34,8 @@
         $: links = data.links.map(d => Object.create(d));
         $: nodes = data.nodes.map(d => Object.create(d));
 
-        // Launch visualization
-        onMount(() => {
-            network = new Network(canvas, width, height, nodes, links, groupColors);
-            network.simulate();
-        });
+        // Crate network prototype
+        network = new Network(canvas, width, height, nodes, links, groupColors);
     }
 
     // Handle resizing
@@ -51,28 +50,13 @@
 </script>
 
 
-<!-- STYLE -->
-<!-- ----- -->
-
-<style>
-    .container {
-        position: absolute;
-        margin: auto;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-</style>
-
-
 <!-- HTML -->
 <!-- ---- -->
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} on:resize={resize}/>
 
-<div class='container'>
-    <canvas bind:this={canvas} width={width} height={height}/>
-</div>
+<Canvas {network} {canvas} {width} {height}/>
+
+<Navbar/>
 
 <Controls {network} {groupColors} {linkWeightOrder}/>
