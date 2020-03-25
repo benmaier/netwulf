@@ -5,22 +5,20 @@
 
     // Load network
     import { onMount } from 'svelte';
-    import Network from './network.js'
-    import { validateData, scaleLinks, scaleNodes, recolorNodes, initialNodePositions } from './preprocessing.js'
-
-    // Data
-    export let graph;
-    export let config;
+    import Controls from './Controls.svelte';
+    import Network from './network.js';
+    import { validateData, scaleLinks, scaleNodes, recolorNodes, initialNodePositions } from './preprocessing.js';
+    import { sleep } from './utils.js'
 
     // Preprocess data
-    let isValid = validateData(graph);
-    scaleLinks(graph);
-    scaleNodes(graph);
-    recolorNodes(graph);
-    initialNodePositions(graph, config);
+    let isValid = validateData(data);
+    let linkWeightOrder = scaleLinks(data);
+    scaleNodes(data);
+    let groupColors = recolorNodes(data);
+    initialNodePositions(data, config);
 
     // Canvas and parameters
-    let canvas;
+    let canvas; 
  
     // Layout
     let width = window.innerWidth;
@@ -31,12 +29,12 @@
 
     if (isValid) {
 
-        $: links = graph.links.map(d => Object.create(d));
-        $: nodes = graph.nodes.map(d => Object.create(d));
+        $: links = data.links.map(d => Object.create(d));
+        $: nodes = data.nodes.map(d => Object.create(d));
 
         // Launch visualization
         onMount(() => {
-            network = new Network(canvas, width, height, nodes, links);
+            network = new Network(canvas, width, height, nodes, links, groupColors);
             network.simulate();
         });
     }
@@ -48,10 +46,6 @@
         network.height = height;
         network.addRetinaRendering();
         network.simulation.restart();
-    }
-
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 </script>
@@ -76,6 +70,9 @@
 <!-- ---- -->
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} on:resize={resize}/>
+
 <div class='container'>
     <canvas bind:this={canvas} width={width} height={height}/>
 </div>
+
+<Controls {network} {groupColors} {linkWeightOrder}/>

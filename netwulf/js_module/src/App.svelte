@@ -1,4 +1,5 @@
 <script>
+	import Navbar from './Navbar.svelte'
 	import Network from './Network.svelte';
 	import { json } from 'd3';
 	
@@ -22,22 +23,16 @@
 	let promise = Promise.all([promise_data, promise_config]);
 </script>
 
-
 <style>
-    .swal-text {
-        background-color: #FEFAE3;
-        padding: 17px;
-        border: 1px solid #F0E1A1;
-        display: block;
-        margin: 22px;
-        text-align: left;
-        color: #61534e;
-    }
+	:global(body) {
+		padding: 0;
+	}
 </style>
 
 
 {#await promise}
 	<p>...loading data</p>
 {:then value}
-	<Network graph={data} config={config}/>
+	<Network/>
+	<Navbar/>
 {/await}

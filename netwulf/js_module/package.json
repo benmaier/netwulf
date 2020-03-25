@@ -17,9 +17,12 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "sweetalert2": "^9.10.3",
     "chroma-js": "^2.1.0",
     "d3": "^5.15.0",
-    "sirv-cli": "^0.4.4"
+    "dat.gui": "^0.7.6",
+    "lodash": "^4.17.15",
+    "sirv-cli": "^0.4.4",
+    "sweetalert2": "^9.10.3",
+    "tailwindcss": "^1.2.0"
   }
 }
