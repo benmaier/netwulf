@@ -5,12 +5,15 @@
 	import * as dat from 'dat.gui';
 	import * as _ from 'lodash';
 
+	// Component data
 	export let network;
 	export let groupColors;
 	export let linkWeightOrder;
 
+	// Div that dat.gui controls elements binds to
 	let configDiv;
 
+	// Default config for reference and restoration
 	const configInit = _.default.cloneDeep(config)
 
 	// Hack to enable titles (https://stackoverflow.com/a/29563786/3986879)
@@ -38,6 +41,7 @@
 		}
 	});
 
+	// Control titles to appear on hover
 	let title1_1 = "Charge: Each node has negative charge and thus repel one another (like electrons). The more negative this charge is, the greater the repulsion"
 	let title1_2 = "Gravity: Push the nodes more or less towards the center of the canvas"
 	let title1_3 = "Link distance: The optimal link distance that the force layout algorithm will try to achieve for each link"
@@ -59,7 +63,9 @@
 	let title4_1 = "Singleton nodes: Whether or not to show nodes with zero degree"
 	let title4_2 = "Min. link percentile: Lower percentile threshold on link weight"
 
+	// Create controls on mount
 	onMount(() => {
+
 		let gui = new dat.GUI({ autoPlace: false });
 		configDiv.appendChild(gui.domElement);
 		gui.closed = false;
@@ -91,6 +97,7 @@
 		let f4 = gui.addFolder('Thresholding'); f4.open();
 		f4.add(config, 'display_singleton_nodes', true).name('Singleton nodes').onChange(function(v) { singletonNodesChanged(v) }).title(title4_1);
 		f4.add(config, 'min_link_weight_percentile', 0, 1.0).name('Min. link percentile').step(0.01).onChange(function(v) { minLinkChanged(v) }).listen().title(title4_2);
+
 	})
 
 	
@@ -257,7 +264,8 @@
 		network.simulation.alpha(1).restart();
 	}
 
-	function simulationSoftRestart(){
+	// Handle restart (respecting frozen state)
+	function simulationSoftRestart() {
 		if (!config['freeze_nodes']){
 			network.simulation.restart();
 		} else {
@@ -267,14 +275,14 @@
 </script>
 
 <style>
-	.topcorner{
+	.topleftcorner{
 		position: absolute;
 		top: 60px;
 		left: 15px;
 	}
 </style>
 
-<div class="topcorner" bind:this={configDiv}>
+<div class="topleftcorner" bind:this={configDiv}>
 </div>
 
 
