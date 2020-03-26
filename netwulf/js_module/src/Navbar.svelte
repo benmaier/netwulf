@@ -7,23 +7,24 @@
 <style>
 	.flex {
 		display: flex;
-		z-index: 1;
 	}
 
 	.header {
 		justify-content: space-between;
-		background-color: #000;
+		background-color: #000000;
 		padding: 0.5rem;
+		padding-bottom: 0.3rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
 		align-items: center;
 		color: #718096;
 		border-bottom-width: 2px;
+		z-index: 1
 	}
 
 </style>
 
-<div class="flex header">
-	<nav class="flex">
-		<Logo/>	
-	</nav>
+<header class="flex header">
+	<Logo/>	
 	<Menu/>
-</div>
+</header>

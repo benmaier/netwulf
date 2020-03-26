@@ -279,7 +279,7 @@
 <style>
 	.topleftcorner{
 		position: absolute;
-		top: 60px;
+		top: 70px;
 		left: 15px;
 	}
 </style>
