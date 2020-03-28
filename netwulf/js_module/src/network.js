@@ -135,7 +135,7 @@ let Network = class Network {
 
 	dragended() {
 		if (!currentEvent.active && !config['freeze_nodes'])
-			this.simulation.alphaTarget(0);
+			this.simulation.alpha(0.3).alphaTarget(0);
 		currentEvent.subject.fx = null;
 		currentEvent.subject.fy = null;
 	}

@@ -149,7 +149,8 @@
 			config['wiggle_nodes'] = false;
 			network.simulation.alphaTarget(0).alpha(0);
 		} else {
-			network.simulation.alpha(lastAlpha).alphaTarget(0).restart();
+			let alpha = Math.max(0.05, lastAlpha)
+			network.simulation.alpha(alpha).alphaTarget(0).restart();
 		}
 	}
 
