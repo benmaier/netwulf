@@ -7,6 +7,7 @@
 <style>
 	.flex {
 		display: flex;
+		z-index: 1
 	}
 
 	.header {
@@ -19,9 +20,8 @@
 		align-items: center;
 		color: #718096;
 		border-bottom-width: 2px;
-		z-index: 1
+		z-index: 1;
 	}
-
 </style>
 
 <header class="flex header">

@@ -14,7 +14,6 @@
 	}
 	.inline-flex {
 		display: inline-flex;
-		z-index: 1;
 	}
 	.btn-dark {
 		color: #fff;
@@ -26,6 +25,7 @@
 		font-size: 1.0rem;
 		line-height: 1.5;
 		border-radius: 0.3rem;
+		z-index: 1;
 	}
 	.btn-dark {
 		color: #fff;
@@ -39,11 +39,11 @@
 	}
 </style>
 
-<div class="inline-flex">
+<nav class="inline-flex">
 	<button type="button" class="btn btn-dark">
 		<a href="/about">Post to Python</a>
 	</button>
 	<button type="button" class="btn btn-dark">
 		<svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
 	</button>
-</div>
+</nav>
