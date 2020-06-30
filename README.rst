@@ -21,18 +21,17 @@ without code.
 Paper
 -----
 
-|status|
+|DOI|
 
 If you use ``netwulf`` for your scientific work, consider citing us!
-We're currently `under review in
-JOSS <https://github.com/openjournals/joss-reviews/issues/1425>`__.
+We're `published in JOSS <https://doi.org/10.21105/joss.01425>`__.
 
 Install
 -------
 
 .. code:: bash
 
-    pip install netwulf
+   pip install netwulf
 
 ``netwulf`` was developed and tested for
 
@@ -69,11 +68,11 @@ Create a network and look at it
 
 .. code:: python
 
-    import networkx as nx
-    from netwulf import visualize
+   import networkx as nx
+   from netwulf import visualize
 
-    G = nx.barabasi_albert_graph(100,m=1)
-    visualize(G)
+   G = nx.barabasi_albert_graph(100,m=1)
+   visualize(G)
 
 |visualization example0|
 
@@ -110,8 +109,8 @@ Clone and install this repository as
 
 .. code:: bash
 
-    git clone --recurse-submodules -j8 git@github.com:benmaier/netwulf.git
-    make
+   git clone --recurse-submodules -j8 git@github.com:benmaier/netwulf.git
+   make
 
 Note that ``make`` per default lets ``pip`` install a development
 version of the repository.
@@ -123,36 +122,36 @@ repository is updated, change to ``/netwulf/js/``, then do
 
 .. code:: bash
 
-    git fetch upstream
-    git merge upstream/master
-    git commit -m "merged"
-    git push
+   git fetch upstream
+   git merge upstream/master
+   git commit -m "merged"
+   git push
 
 If you want to upload to PyPI, first convert the new ``README.md`` to
 ``README.rst``
 
 .. code:: bash
 
-    make readme
+   make readme
 
 It will give you warnings about bad ``.rst``-syntax. Fix those errors in
 ``README.rst``. Then wrap the whole thing
 
 .. code:: bash
 
-    make pypi
+   make pypi
 
 It will probably give you more warnings about ``.rst``-syntax. Fix those
 until the warnings disappear. Then do
 
 .. code:: bash
 
-    make upload
+   make upload
 
 .. |logo| image:: https://github.com/benmaier/netwulf/raw/master/img/logo_small.png
 .. |example| image:: https://github.com/benmaier/netwulf/raw/master/img/simple_example.gif
-.. |status| image:: http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6/status.svg
-   :target: http://joss.theoj.org/papers/3a22c963a45dbddc8501a4b5ef4b2bf6
+.. |DOI| image:: https://joss.theoj.org/papers/10.21105/joss.01425/status.svg
+   :target: https://doi.org/10.21105/joss.01425
 .. |Documentation Status| image:: https://readthedocs.org/projects/netwulf/badge/?version=latest
    :target: https://netwulf.readthedocs.io/en/latest/?badge=latest
 .. |visualization example0| image:: https://github.com/benmaier/netwulf/raw/master/img/BA_1.png
