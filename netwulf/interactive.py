@@ -136,6 +136,7 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             img = received_data['image'].split(',')[1]
             self.server.posted_image_base64 = base64.decodebytes(img.encode())
 
+
     def log_message(self, format, *args):
         if self.server.verbose:
             print(self.address_string(), self.log_date_time_string(), *args)
@@ -275,8 +276,10 @@ def visualize(network,
                 network.update(network['graph'])
                 del network['graph']
             json.dump(network, f, iterable_as_array=True, default=_json_default)
+        elif type(network) == dict:
+            json.dump(network, f, iterable_as_array=True, default=_json_default)
         else:
-            raise TypeError("Netwulf only supports `nx.Graph`, `nx.DiGraph`, and `nx.MultiDiGraph`.")
+            raise TypeError("Netwulf only supports `nx.Graph`, `nx.DiGraph`, `nx.MultiDiGraph`, or `dict`.")
 
     with open(configpath,'w') as f:
         json.dump(this_config, f, default=_json_default)
