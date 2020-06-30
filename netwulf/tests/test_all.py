@@ -209,6 +209,11 @@ class Test(unittest.TestCase):
         # remove test file
         pathlib.Path(fn).unlink()
 
+    def test_dict(self):
+
+        props, config = visualize({'nodes':[{'id':0},{'id':1},{'id':2},{'id':3}],'links':[{'source':0, 'target':1}]},is_test=True)
+        assert(props is not None)
+
 
 
 if __name__ == "__main__":
@@ -217,5 +222,6 @@ if __name__ == "__main__":
     T = Test()
 
     #T.test_matplotlib()
-    T.test_io()
+    #T.test_io()
+    T.test_dict()
     #T.test_config_adaption()

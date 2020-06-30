@@ -285,9 +285,17 @@ def get_filtered_network(network,edge_weight_key=None,node_group_key=None):
         groups = { node[1][node_group_key] for node in network.nodes(data=True) }
         groups_enum = {v: k for k,v in enumerate(groups)}
         for u in network.nodes():
-            grp = G.node[u].pop(node_group_key)
-            keep_value = groups_enum[grp]
-            G.node[u]['group'] = keep_value
+            try:
+                # networkx v < 2.4
+                grp = G.node[u].pop(node_group_key)
+                keep_value = groups_enum[grp]
+                G.node[u]['group'] = keep_value
+            except AttributeError as e:
+                # networkx v >= 2.4
+                grp = G.nodes[u].pop(node_group_key)
+                keep_value = groups_enum[grp]
+                G.nodes[u]['group'] = keep_value
+
 
     return G
 

@@ -6,8 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.1.5] - 2019-09-09
+### Added
+- test for calling with dictionary
+
 ### Changed
 - each link can now be colored individually in the python draw backend
+
+### Fixed
+- providing a link-node dictionary to the visualization function does not raise an error anymore
+- `G.node` gives an error since networkx 2.4 and we catch it now
 
 
 ## [v0.1.4] - 2019-09-09
@@ -62,7 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - switched from usage of `os.path` to `pathlib` at the appropriate places
 
-[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/benmaier/netwulf/compare/v0.1.5...HEAD
+[v0.1.5]: https://github.com/benmaier/netwulf/compare/v0.1.4...v0.1.5
 [v0.1.4]: https://github.com/benmaier/netwulf/compare/v0.1.3...v0.1.4
 [v0.1.3]: https://github.com/benmaier/netwulf/compare/v0.1.2...v0.1.3
 [v0.1.2]: https://github.com/benmaier/netwulf/compare/v0.1.1...v0.1.2
