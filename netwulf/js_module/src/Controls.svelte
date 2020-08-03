@@ -129,7 +129,7 @@
 
 	function collisionChanged(v) {
 		network.simulation.force("collide").radius(function(d) {
-			return config['node_collision'] * getRadius(d, config)
+			return config['node_collision'] * getRadius(d)
 		});
 		if (!config['freeze_nodes'])
 			network.simulation.alpha(1)
@@ -175,7 +175,7 @@
 
 	function nodeSizeChanged(v) {
 		if (config['node_collision']) {
-			network.simulation.force("collide").radius(function(d) { return getRadius(d, config) })
+			network.simulation.force("collide").radius(function(d) { return getRadius(d) })
 			if (!config['freeze_nodes'])
 				network.simulation.alpha(1);
 		}

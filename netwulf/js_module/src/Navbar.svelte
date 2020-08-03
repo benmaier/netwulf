@@ -2,6 +2,8 @@
 	import Logo from './Logo.svelte';
 	import Menu from './Menu.svelte';
 
+	export let network;
+
 </script>
 
 <style>
@@ -26,5 +28,5 @@
 
 <header class="flex header">
 	<Logo/>	
-	<Menu/>
+	<Menu {network}/>
 </header>

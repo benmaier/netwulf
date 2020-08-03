@@ -13,6 +13,7 @@
         if (config['freeze_nodes'])
 			network.simulation.alpha(0).restart();
     });
+
 </script>
 
 <style>

@@ -221,9 +221,6 @@ export function recolorNodes(data) {
 			let color = chroma.random().hex();
 			groupColors[group] = {'reference': color, 'active': color};
 		}
-		// data.nodes.forEach(d => {
-		// 	d['color'] = groupColors[d.group]['reference'];
-		// })
 	} else if (nodeColors.size > 0) {
 		// If nodes are colored, 'group' is ignored
 		for (let color of nodeColors) {

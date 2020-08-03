@@ -27,13 +27,13 @@ export class DefaultDict {
 	}
 }
 
-export function getRadius(d, config) {
+export function getRadius(d) {
 	let nodeSize = config['scale_node_size_by_strength'] ? d['degree_normed'] : d['size'];
 	nodeSize = nodeSize ** config['node_size_variation'];
 	return nodeSize * config['node_size'];
 }
 
-export function getNodeColor(d, config, groupColors) {
+export function getNodeColor(d, groupColors) {
 	if (_.default.isEmpty(groupColors)) {
 		return config['node_fill_color'];
 	} else {

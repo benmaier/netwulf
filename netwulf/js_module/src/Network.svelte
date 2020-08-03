@@ -59,4 +59,4 @@
 
 <Controls {network} {groupColors} {linkWeightOrder}/>
 
-<Navbar/>
+<Navbar {network}/>

@@ -167,18 +167,18 @@ let Network = class Network {
 			this.context.beginPath();
 			this.context.arc(
 				d.x, d.y,
-				getRadius(d, config),
+				getRadius(d),
 				0, 2*Math.PI
 			);
 			this.context.stroke();
-			this.context.fillStyle = getNodeColor(d, config, this.groupColors);
+			this.context.fillStyle = getNodeColor(d, this.groupColors);
 			this.context.fill();
 		});
 
 		// Draw text
 		if (config['display_node_labels']) {
 			this.nodes.forEach(d => {
-				this.context.font = clip(getRadius(d, config) * 2, 10, 20) + "px Helvetica"
+				this.context.font = clip(getRadius(d) * 2, 10, 20) + "px Helvetica"
 				this.context.fillStyle = config['node_label_color']
 				this.context.fillText(d.id, d.x, d.y)
 			});
