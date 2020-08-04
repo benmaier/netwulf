@@ -10,12 +10,12 @@
 	window.data = undefined;
 	window.config = undefined;
 
-	// let promise_data = json(data_path).then(function(d) {
-	let promise_data = json('tmp0.json').then(function(d) {
+	let promise_data = json(data_path).then(function(d) {
+	// let promise_data = json('tmp0.json').then(function(d) {  // DEBUG
 		data = d;
 	});
-	// let promise_config = json(config_path).then(function(d) {
-	let promise_config = json('config_tmp.json').then(function(d) {
+	let promise_config = json(config_path).then(function(d) {
+	// let promise_config = json('config_tmp.json').then(function(d) {  // DEBUG
 		config = d;
 	});
 

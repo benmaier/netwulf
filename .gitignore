@@ -12,6 +12,7 @@ a.out
 *.pyc
 *.swp
 *.pdf
+*.ai
 
 /*.egg-info/
 /build/

@@ -65,6 +65,9 @@ let Network = class Network {
 
 	addTransformations() {
 		this.transform = d3.zoomIdentity;
+		this.transform.k = config['zoom'];
+		this.transform.x = config['xpan'];
+		this.transform.y = config['ypan'];
 		d3.select(this.canvas)
 		.call(d3.drag()
 			.container(this.canvas)

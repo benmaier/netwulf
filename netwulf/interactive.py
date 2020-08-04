@@ -143,8 +143,10 @@ class NetwulfHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
 default_config = {
-    # Input/output
+    # Transform
     'zoom': 1,
+    'xpan': 0,
+    'ypan': 0,
     # Physics
     'node_charge': -45,
     'node_gravity': 0.1,
@@ -175,10 +177,10 @@ default_config = {
 
 
 def visualize(network,
-              port=9853,
-              verbose=False,
               config=None,
               plot_in_cell_below=True,
+              port=9853,
+              verbose=False,
               is_test=False,
               ):
     """
@@ -190,10 +192,6 @@ def visualize(network,
     ----------
     network : networkx.Graph or networkx.DiGraph or node-link dictionary
         The network to visualize
-    port : int, default : 9853
-        The port at which to run the server locally.
-    verbose : bool, default : False
-        Be chatty.
     config : dict, default : None,
         In the default configuration, each key-value-pair will
         be overwritten with the key-value-pair provided in `config`.
@@ -202,8 +200,10 @@ def visualize(network,
         .. code:: python
 
             default_config = {
-                # Input/output
+                # Transform
                 'zoom': 1,
+                'xpan': 0,
+                'ypan': 0,
                 # Physics
                 'node_charge': -45,
                 'node_gravity': 0.1,
@@ -235,6 +235,10 @@ def visualize(network,
         When started from a Jupyter notebook, this will show a
         reproduced matplotlib figure of the stylized network
         in a cell below. Only works if ``verbose = False``.
+    port : int, default : 9853
+        The port at which to run the server locally.
+    verbose : bool, default : False
+        Be chatty.
     is_test : bool, default : False
         If ``True``, the interactive environment will post
         its visualization to Python automatically after 5 seconds.
@@ -269,14 +273,15 @@ def visualize(network,
     configpath = str(web_dir / configname)
 
     with open(filepath,'w') as f:
-        if type(network) in [nx.Graph, nx.DiGraph, nx.MultiDiGraph]:
-            network = nx.node_link_data(network)
-            if 'graph' in network:
-                network.update(network['graph'])
-                del network['graph']
+        if type(network) in [nx.Graph, nx.DiGraph, nx.MultiDiGraph, dict]:
+            if type(network) is not dict:
+                network = nx.node_link_data(network)
+                if 'graph' in network:
+                    network.update(network['graph'])
+                    del network['graph']
             json.dump(network, f, iterable_as_array=True, default=_json_default)
         else:
-            raise TypeError("Netwulf only supports `nx.Graph`, `nx.DiGraph`, and `nx.MultiDiGraph`.")
+            raise TypeError("Netwulf only supports `dict`, `nx.Graph`, `nx.DiGraph`, and `nx.MultiDiGraph`.")
 
     with open(configpath,'w') as f:
         json.dump(this_config, f, default=_json_default)

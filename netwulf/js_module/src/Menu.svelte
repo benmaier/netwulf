@@ -2,7 +2,8 @@
 	import { postData } from './post_json.js'
 
 	export let network;
-	function handlePostToPython() {
+
+	function handlePostToPythonClick() {
 		postData(network);
 	}
 </script>
@@ -49,7 +50,7 @@
 </style>
 
 <nav class="inline-flex">
-	<button on:click={handlePostToPython} type="button" class="btn btn-dark">
+	<button on:click={handlePostToPythonClick} type="button" class="btn btn-dark">
 		Post to Python
 	</button>
 	<button type="button" class="btn btn-dark">

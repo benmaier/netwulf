@@ -11,6 +11,7 @@
     import Network from './network.js';
     import { validateData, scaleLinks, scaleNodes, recolorNodes, initialNodePositions } from './preprocessing.js';
     import { sleep } from './utils.js'
+    import { postData } from './post_json.js'
 
     // Preprocess data
     let isValid = validateData(data);
@@ -36,7 +37,10 @@
 
         // Crate network prototype
         network = new Network(canvas, width, height, nodes, links, groupColors);
+        window.tmp = network;
     }
+
+
 
     // Handle resizing
     async function resize() {
@@ -47,13 +51,32 @@
         network.simulation.restart();
     }
 
+    // Handle keydown events
+    let alertActive = false;
+    function handleKeydown() {
+        if (event.key == 'Enter') {
+            if (!alertActive)
+                postData(network);
+            alertActive = !alertActive;
+        }
+
+        if (event.key == 'Escape')
+            alertActive = false;
+
+        if (event.key == 'c') {
+            let checkbox = document.getElementById('cropImageCheckbox');
+            if (checkbox !== null)
+                checkbox.checked = !checkbox.checked;
+        }
+    }
+
 </script>
 
 
 <!-- HTML -->
 <!-- ---- -->
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} on:resize={resize}/>
+<svelte:window bind:innerWidth={width} bind:innerHeight={height} on:resize={resize}  on:keydown={handleKeydown}/>
 
 <Canvas {network} {canvas} {width} {height}/>
 

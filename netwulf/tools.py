@@ -395,12 +395,15 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
         # plot Lines
         alpha = network_properties['linkAlpha']
     
-        ax.add_collection(LineCollection(lines, 
-                                         colors=linecolors,
-                                         alpha=alpha, 
-                                         linewidths=linewidths,
-                                         zorder=zorder
-                                     ))
+        ax.add_collection(
+            LineCollection(
+                lines, 
+                colors=linecolors,
+                alpha=alpha, 
+                linewidths=linewidths,
+                zorder=zorder
+            )
+        )
 
     if draw_nodes:
         zorder = max( _c.get_zorder() for _c in ax.get_children()) + 1
@@ -418,15 +421,28 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
 
         XY = np.array(XY)
         size = np.array(size)
-        circles = EllipseCollection(size,size,np.zeros_like(size),
-                                    offsets=XY,
-                                    units='x',
-                                    transOffset=ax.transData,
-                                    facecolors=node_colors,
-                                    linewidths=network_properties['nodeStrokeWidth']/width*axwidth,
-                                    edgecolors=network_properties['nodeStrokeColor'],
-                                    zorder=zorder
-                                )
+
+        strokes = EllipseCollection(
+            size, size, np.zeros_like(size),
+            offsets=XY,
+            units='x',
+            transOffset=ax.transData,
+            facecolors="none",
+            linewidths=network_properties['nodeStrokeWidth'] / width * axwidth,
+            edgecolors=network_properties['nodeStrokeColor'],
+            zorder=zorder
+        )
+    
+        circles = EllipseCollection(
+            size, size, np.zeros_like(size),
+            offsets=XY,
+            units='x',
+            transOffset=ax.transData,
+            facecolors=node_colors,
+            zorder=zorder+1
+        )
+        
+        ax.add_collection(strokes)
         ax.add_collection(circles)
 
     return fig, ax

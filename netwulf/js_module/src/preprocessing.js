@@ -100,7 +100,7 @@ export function validateData(data) {
 		// Check that 'group' attribute does not hold a color
 		if (nodeAC['group'] == data.nodes.length) {
 			for (let d of data.nodes) {
-				if (chroma.valid(d.group)) {
+				if (chroma.valid(d.group.toString())) {
 					warnings.push(`
 						• &nbsp Found nodes where 'group' attribute holds a valid color. User defined colors for
 						this attribute are not reflected in the visualization, because the 'group' value is
