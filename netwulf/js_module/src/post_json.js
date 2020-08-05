@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 
 // Send an HTTP request to the server with POSTed json-data
 // This is adapted from https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
-let fitImage;
 function post_json(network_data, config_data, canvas, callback) {
 	let xhr = new XMLHttpRequest();
 	let url = window.location.href;
@@ -20,8 +19,7 @@ function post_json(network_data, config_data, canvas, callback) {
 	let joint_data = {
 		'network': network_data,
 		'config': config_data,
-		'image': img,
-		'fit_image': fitImage
+		'image': img
 	};
 	let data_str = JSON.stringify(joint_data);
 	xhr.send(data_str);
@@ -41,18 +39,35 @@ function post_stop() {
 	xhr.send();
 }
 
-// window.addEventListener("beforeunload", post_window_closed_stop);  // DEBUG
+// Using the `rDown` variable to check if unload event is reload or not.
+// It is a hack that will fail if the user actually clicks the reload button
+// or for reasons that beta users will probably uncover. See this SO answer:
+// https://stackoverflow.com/questions/568977/identifying-between-refresh-and-close-browser-actions/63272006#63272006
+let rDown = false;
+window.addEventListener("keydown", event => {
+	if (event.key == 'r')
+		rDown = true;
+})
+window.addEventListener("keyup", event => {
+	if (event.key == 'r')
+		rDown = false;
+})
+
+window.addEventListener("beforeunload", post_window_closed_stop);
 function post_window_closed_stop() {
-	let xhr = new XMLHttpRequest();
-	let url = window.location.href;
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let response = xhr.responseText;
-		}
-	};
-	xhr.send();
+	console.log(rDown)
+	if (!rDown) {
+		let xhr = new XMLHttpRequest();
+		let url = window.location.href;
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				let response = xhr.responseText;
+			}
+		};
+		xhr.send();
+	}
 }
 
 // Get a JSON object containing all the drawn properties for replication
@@ -108,6 +123,7 @@ function get_xlim_ylim(network) {
 
 // Post data back to Python
 export function postData(network) {
+	alertActive = true;
 	// POST data
 	let timerInterval, stop;
 	Swal.fire({
@@ -136,9 +152,7 @@ export function postData(network) {
 			clearInterval(timerInterval)
 		}
 	}).then(result => {
-
 		if (result.value || result.dismiss == Swal.DismissReason.timer) {
-
 			let scaling;
 			let checkbox = document.getElementById('fitImageCheckbox');
 			if (checkbox.checked) {
@@ -166,7 +180,16 @@ export function postData(network) {
 			config_data['xpan'] = scaling.x;
 			config_data['ypan'] = scaling.y;
 
+			// POST data
 			post_json(network_data, config_data, network.canvas, post_stop);
 		}
+		alertActive = false;
 	});
+}
+
+export function downloadImg(network) {
+	let link = document.createElement('a');
+	link.download = 'Untitled.png';
+	link.href = network.canvas.toDataURL("image/png")
+	link.click();
 }

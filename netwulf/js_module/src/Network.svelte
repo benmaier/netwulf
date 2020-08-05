@@ -52,18 +52,15 @@
     }
 
     // Handle keydown events
-    let alertActive = false;
+    window.alertActive = false;
     async function handleKeydown() {
+        console.log(event)
         if (event.key == 'Enter') {
             if (!alertActive) {
-                await sleep(100);  // sleep here is necessary hack to avoid immediate POST
+                await sleep(100);  // sleep is a necessary hack to avoid immediate POST
                 postData(network);
             }
-            alertActive = !alertActive;
         }
-
-        if (event.key == 'Escape')
-            alertActive = false;
 
         if (event.key == 'f') {
             let checkbox = document.getElementById('fitImageCheckbox');
