@@ -62,7 +62,7 @@
             }
         }
 
-        if (event.key == 'f') {
+        if (event.key == 'c') {
             let checkbox = document.getElementById('fitImageCheckbox');
             if (checkbox !== null)
                 checkbox.checked = !checkbox.checked;

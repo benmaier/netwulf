@@ -20,7 +20,7 @@ a.out
 /dist/
 /tests/
 
-/jupyter_notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints/
 
 /py_only_docs/
 /docs/_build/

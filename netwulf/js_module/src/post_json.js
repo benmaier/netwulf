@@ -136,7 +136,7 @@ export function postData(network) {
 		confirmButtonText: 'OK <span style="position:relative;bottom:1px"><kbd>[enter]</kbd></span>',
 		cancelButtonColor: '#d33',
 		cancelButtonText: 'Cancel <span style="position:relative;bottom:1px"><kbd>[esc]</kbd></span>',
-		footer: '<input type="checkbox" id="fitImageCheckbox"><span style="position:relative;left:4px;bottom:3px">Fit image<kbd>[f]</kbd></span>',
+		footer: '<input type="checkbox" id="fitImageCheckbox"><span style="position:relative;left:4px;bottom:3px">Crop to fit<kbd>[c]</kbd></span>',
 		stopKeydownPropagation: false,
 		onBeforeOpen: () => {
 			timerInterval = setInterval(() => {
