@@ -324,7 +324,9 @@ def visualize(network,
 
     posted_network_properties = server.posted_network_properties
     posted_config = server.posted_config
-    # posted_fit_image = server.posted_fit_image
+
+    if [posted_network_properties, posted_config] == [None, None]:
+        raise Exception('Server closed and nothing returned.')
 
     if verbose:
         print('changing directory back to', cwd)
