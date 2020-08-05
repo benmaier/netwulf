@@ -112,7 +112,7 @@ export function validateData(data) {
 		}
 
 		// Check nodes and links for unrecognized attributes and clear if any exists
-		let recognizedNodeAttributes = ['id', 'size', 'color', 'group']
+		let recognizedNodeAttributes = ['id', 'size', 'color', 'group', 'x', 'y', 'x_canvas', 'y_canvas']
 		let unrecognizedNodeAttributes = Object.keys(nodeAC).filter(k => !recognizedNodeAttributes.includes(k))
 		if (unrecognizedNodeAttributes.length > 0) {
 			warnings.push("• &nbsp Found unrecognized attribute(s) <em>" + unrecognizedNodeAttributes.join(", ") + "</em> on nodes.")
@@ -121,7 +121,7 @@ export function validateData(data) {
 			});
 		}
 
-		let recognizedLinkAttributes = ['source', 'target', 'color', 'weight']
+		let recognizedLinkAttributes = ['source', 'target', 'color', 'weight', 'width']
 		let unrecognizedLinkAttributes = Object.keys(linkAC).filter(k => !recognizedLinkAttributes.includes(k))
 		if (unrecognizedLinkAttributes.length > 0) {
 			warnings.push("• &nbsp Found unrecognized attribute(s) <em>" + unrecognizedLinkAttributes.join(", ") + "</em> on links.")

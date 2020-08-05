@@ -111,6 +111,7 @@ let Network = class Network {
 	zoomed() {
 		this.transform = currentEvent.transform;
 		this.simulationUpdate();
+		// console.log(this.transform.k, this.transform.x, this.transform.y)
 	}
 
 	dragsubject() {

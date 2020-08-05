@@ -53,18 +53,20 @@
 
     // Handle keydown events
     let alertActive = false;
-    function handleKeydown() {
+    async function handleKeydown() {
         if (event.key == 'Enter') {
-            if (!alertActive)
+            if (!alertActive) {
+                await sleep(100);  // sleep here is necessary hack to avoid immediate POST
                 postData(network);
+            }
             alertActive = !alertActive;
         }
 
         if (event.key == 'Escape')
             alertActive = false;
 
-        if (event.key == 'c') {
-            let checkbox = document.getElementById('cropImageCheckbox');
+        if (event.key == 'f') {
+            let checkbox = document.getElementById('fitImageCheckbox');
             if (checkbox !== null)
                 checkbox.checked = !checkbox.checked;
         }

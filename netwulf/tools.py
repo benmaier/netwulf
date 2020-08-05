@@ -190,7 +190,7 @@ def bind_properties_to_network(network,
                                network_properties,
                                bind_node_positions=True,
                                bind_node_color=True,
-                               bind_node_radius=True,
+                               bind_node_size=True,
                                bind_node_stroke_color=True,
                                bind_node_stroke_width=True,
                                bind_link_width=True,
@@ -208,7 +208,7 @@ def bind_properties_to_network(network,
         interactive visualization.
     bind_node_positions : bool (default: True)
     bind_node_color : bool (default: True)
-    bind_node_radius : bool (default: True)
+    bind_node_size : bool (default: True)
     bind_node_stroke_color : bool (default: True)
     bind_node_stroke_width : bool (default: True)
     bind_link_width : bool (default: True)
@@ -230,9 +230,9 @@ def bind_properties_to_network(network,
     if bind_node_color:
         color = { node['id']: node['color'] for node in network_properties['nodes'] }
         nx.set_node_attributes(network, color, 'color')
-    if bind_node_radius:
-        radius = { node['id']: node['radius'] for node in network_properties['nodes'] }
-        nx.set_node_attributes(network, radius, 'radius')
+    if bind_node_size:
+        size = { node['id']: node['size'] for node in network_properties['nodes'] }
+        nx.set_node_attributes(network, size, 'size')
 
     # Add individual link attributes
     if bind_link_width:
@@ -416,7 +416,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
         for node in network_properties['nodes']:
             XY.append([node['x_canvas'], height - node['y_canvas']])
             # size has to be given in points*2
-            size.append( 2*node['radius'] )
+            size.append( 2*node['size'] )
             node_colors.append(node['color'])
 
         XY = np.array(XY)

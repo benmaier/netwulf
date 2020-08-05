@@ -1,8 +1,9 @@
-import { getRadius, getNodeColor } from './utils.js'
+import { getRadius, getNodeColor, sleep } from './utils.js'
 import Swal from 'sweetalert2';
 
 // Send an HTTP request to the server with POSTed json-data
 // This is adapted from https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
+let fitImage;
 function post_json(network_data, config_data, canvas, callback) {
 	let xhr = new XMLHttpRequest();
 	let url = window.location.href;
@@ -16,7 +17,12 @@ function post_json(network_data, config_data, canvas, callback) {
 				callback();
 		}
 	};
-	let joint_data = {'network': network_data, 'config': config_data, 'image':img};
+	let joint_data = {
+		'network': network_data,
+		'config': config_data,
+		'image': img,
+		'fit_image': fitImage
+	};
 	let data_str = JSON.stringify(joint_data);
 	xhr.send(data_str);
 }
@@ -35,7 +41,7 @@ function post_stop() {
 	xhr.send();
 }
 
-window.addEventListener("beforeunload", post_window_closed_stop);
+// window.addEventListener("beforeunload", post_window_closed_stop);  // DEBUG
 function post_window_closed_stop() {
 	let xhr = new XMLHttpRequest();
 	let url = window.location.href;
@@ -50,10 +56,11 @@ function post_window_closed_stop() {
 }
 
 // Get a JSON object containing all the drawn properties for replication
-function get_network_properties(network) {
-	let k = network.transform.k;
-	let x = network.transform.x;
-	let y = network.transform.y;
+function get_network_properties(network, scaling) {
+	
+	// unpack canvas scaling variables
+	let {k, x, y} = scaling;
+
 	// save all those things we wish to draw to a dict;
 	let network_properties = {};
 	network_properties.xlim = [ 0, network.width ];
@@ -64,7 +71,7 @@ function get_network_properties(network) {
 	network_properties.nodeStrokeWidth = config['node_stroke_width'] * k;
 	network_properties.links = [];
 	network_properties.nodes = [];
-	network.links.forEach(function(d){
+	network.links.forEach(d => {
 		network_properties.links.push({
 		source: d.source.id,
 		target: d.target.id,
@@ -72,69 +79,94 @@ function get_network_properties(network) {
 		weight: d.weight
 		});
 	});
-	network.nodes.forEach(function(d){
+	network.nodes.forEach(d => {
 		network_properties.nodes.push({
-		id: d.id,
-		x: d.x,
-		y: d.y,
-		x_canvas: d.x * k + x,
-		y_canvas: d.y * k + y, 
-		radius: getRadius(d) * k, 
-		color: getNodeColor(d, network.groupColors)
+			id: d.id,
+			x: d.x,
+			y: d.y,
+			y_canvas: d.y * k + y,
+			x_canvas: d.x * k + x,
+			size: getRadius(d) * k,
+			color: getNodeColor(d, network.groupColors)
 		});
 	});
 	return network_properties;
 }
 
+function get_xlim_ylim(network) {
+	let xlim = [Infinity, -Infinity],
+		ylim = [Infinity, -Infinity];
+	network.nodes.forEach(n => {
+		let size = getRadius(n) + config.node_stroke_width;
+		xlim[0] = n.x - size < xlim[0] ? n.x - size : xlim[0];  // left
+		xlim[1] = n.x + size > xlim[1] ? n.x + size : xlim[1];  // right
+		ylim[0] = n.y - size < ylim[0] ? n.y - size : ylim[0];  // bottom
+		ylim[1] = n.y + size > ylim[1] ? n.y + size : ylim[1];  // top
+	})
+	return [xlim, ylim]
+}
+
 // Post data back to Python
 export function postData(network) {
-	
-	// Get network properties (returned val 0)
-	let network_data = get_network_properties(network);
-
-	// Get config (returned val 1)
-	let config_data = {};
-	for (let prop in config){
-		config_data[prop] = config[prop];
-	}
-	config_data['zoom'] = network.transform.k;
-	config_data['xpan'] = network.transform.x;
-	config_data['ypan'] = network.transform.y;
-
 	// POST data
-	let timerInterval, cropImage = false;
-	post_json(network_data, config_data, network.canvas, () => {
-		Swal.fire({
-			title: "Success!",
-			html: "Posting to Python in <b></b> seconds.",
-			timer: 3000,
-			timerProgressBar: true,
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: 'OK <span style="position:relative;bottom:1px"><kbd>[enter]</kbd></span>',
-			cancelButtonColor: '#d33',
-			cancelButtonText: 'Cancel <span style="position:relative;bottom:1px"><kbd>[esc]</kbd></span>',
-			footer: '<input type="checkbox" id="cropImageCheckbox"><span style="position:relative;left:4px;bottom:3px">Crop image <kbd>[c]</kbd></span>',
-			stopKeydownPropagation: false,
-			onBeforeOpen: () => {
-				timerInterval = setInterval(() => {
-					const content = Swal.getContent();
-					if (content) {
-						const b = content.querySelector('b');
-						if (b)
-							b.textContent = Math.ceil(Swal.getTimerLeft()/1000);
-					}
-				}, 100);
-			},
-			onClose: () => {
-				clearInterval(timerInterval)
+	let timerInterval, stop;
+	Swal.fire({
+		title: "Success!",
+		html: "Posting to Python in <b></b> seconds.",
+		timer: 3000,
+		timerProgressBar: true,
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		confirmButtonText: 'OK <span style="position:relative;bottom:1px"><kbd>[enter]</kbd></span>',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancel <span style="position:relative;bottom:1px"><kbd>[esc]</kbd></span>',
+		footer: '<input type="checkbox" id="fitImageCheckbox"><span style="position:relative;left:4px;bottom:3px">Fit image<kbd>[f]</kbd></span>',
+		stopKeydownPropagation: false,
+		onBeforeOpen: () => {
+			timerInterval = setInterval(() => {
+				const content = Swal.getContent();
+				if (content) {
+					const b = content.querySelector('b');
+					if (b)
+						b.textContent = Math.ceil(Swal.getTimerLeft()/1000);
+				}
+			}, 100);
+		},
+		onClose: () => {
+			clearInterval(timerInterval)
+		}
+	}).then(result => {
+
+		if (result.value || result.dismiss == Swal.DismissReason.timer) {
+
+			let scaling;
+			let checkbox = document.getElementById('fitImageCheckbox');
+			if (checkbox.checked) {
+				let [xlim, ylim] = get_xlim_ylim(network);
+				scaling = {
+					'k': 1,
+					'x': -xlim[0],
+					'y': -ylim[0]
+				};
+				network.width = xlim[1] - xlim[0];
+				network.height = ylim[1] - ylim[0];
+			} else {
+				scaling = network.transform;
 			}
-		}).then(result => {
-			let checkbox = document.getElementById('cropImageCheckbox');
-			cropImage = checkbox.checked;
-			if (result.value || result.dismiss == Swal.DismissReason.timer) {
-				post_stop();
+
+			// Get network properties (returned val 0)
+			let network_data = get_network_properties(network, scaling);
+
+			// Get config (returned val 1)
+			let config_data = {};
+			for (let prop in config){
+				config_data[prop] = config[prop];
 			}
-		});
+			config_data['zoom'] = scaling.k;
+			config_data['xpan'] = scaling.x;
+			config_data['ypan'] = scaling.y;
+
+			post_json(network_data, config_data, network.canvas, post_stop);
+		}
 	});
 }

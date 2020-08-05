@@ -28,16 +28,12 @@ def _drastically_round_positions(props,nprec=-1):
     for i, n in enumerate(props['nodes']):
         props['nodes'][i]['x'] = np.around(props['nodes'][i]['x'],nprec)
         props['nodes'][i]['y'] = np.around(props['nodes'][i]['y'],nprec)
-        props['nodes'][i]['x_canvas'] = np.around(props['nodes'][i]['x_canvas'],nprec)
-        props['nodes'][i]['y_canvas'] = np.around(props['nodes'][i]['y_canvas'],nprec)
 
 def _assert_positions_within_one_percent(props1,props2):
 
     for i, n in enumerate(props1['nodes']):
         assert(np.isclose(props1['nodes'][i]['x'], props2['nodes'][i]['x'],rtol=1e-2))
-        assert(np.isclose(props1['nodes'][i]['y'], props2['nodes'][i]['y'],rtol=1e-2))
-        assert(np.isclose(props1['nodes'][i]['x_canvas'], props2['nodes'][i]['x_canvas'],rtol=1e-2))
-        assert(np.isclose(props1['nodes'][i]['y_canvas'], props2['nodes'][i]['y_canvas'],rtol=1e-2))
+        assert(np.isclose(props1['nodes'][i]['y'], props2['nodes'][i]['y'],rtol=1e-2))))
 
 
 class Test(unittest.TestCase):
@@ -101,41 +97,31 @@ class Test(unittest.TestCase):
                          {'source': 1, 'target': 4, 'weight': 1, 'width': 40}],
             'nodeStrokeColor': '#ffffff',
             'nodeStrokeWidth': 4,
-            'nodes': [   {   'color': '#79aa00',
-                             'id': 0,
-                             'radius': 28.577380332470412,
-                             'x': 420.4774227636891,
-                             'x_canvas': 444.34195934582385,
-                             'y': 402.92277557839725,
-                             'y_canvas': 321.45942904878075},
-                         {   'color': '#79aa00',
-                             'id': 1,
-                             'radius': 35,
-                             'x': 419.94297017162165,
-                             'x_canvas': 440.6007912013515,
-                             'y': 426.56813829452074,
-                             'y_canvas': 486.9769680616455},
-                         {   'color': '#79aa00',
-                             'id': 2,
-                             'radius': 20.207259421636905,
-                             'x': 405.5333864027982,
-                             'x_canvas': 339.73370481958773,
-                             'y': 411.01250794520007,
-                             'y_canvas': 378.08755561640055},
-                         {   'color': '#79aa00',
-                             'id': 3,
-                             'radius': 20.207259421636905,
-                             'x': 434.1529311105535,
-                             'x_canvas': 540.0705177738741,
-                             'y': 413.3758620827409,
-                             'y_canvas': 394.6310345791867},
-                         {   'color': '#79aa00',
-                             'id': 4,
-                             'radius': 20.207259421636905,
-                             'x': 403.23992572436083,
-                             'x_canvas': 323.67948007052564,
-                             'y': 429.81017078651104,
-                             'y_canvas': 509.67119550557754}],
+            'nodes': [   {'color': '#79aa00',
+                          'id': 0,
+                          'size': 28.577380332470412,
+                          'x': 420.4774227636891,
+                          'y': 402.92277557839725},
+                         {'color': '#79aa00',
+                          'id': 1,
+                          'size': 35,
+                          'x': 419.94297017162165,
+                          'y': 426.56813829452074},
+                         {'color': '#79aa00',
+                          'id': 2,
+                          'size': 20.207259421636905,
+                          'x': 405.5333864027982,
+                          'y': 411.01250794520007},
+                         {'color': '#79aa00',
+                          'id': 3,
+                          'size': 20.207259421636905,
+                          'x': 434.1529311105535,
+                          'y': 413.3758620827409},
+                         {'color': '#79aa00',
+                          'id': 4,
+                          'size': 20.207259421636905,
+                          'x': 403.23992572436083,
+                          'y': 429.81017078651104}],
             'xlim': [0, 833],
             'ylim': [0, 833]
             }
@@ -153,8 +139,10 @@ class Test(unittest.TestCase):
     def test_config_adaption(self):
         """Test whether config values are properly adapted."""
         config = {
-            # Input/output
-            'zoom':4,
+            # Transform
+            'zoom': 4,
+            'xpan': 0,
+            'ypan': 0,
             # Physics
             'node_charge': -70,
             'node_gravity': 0.5,
