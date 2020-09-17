@@ -6,7 +6,7 @@ import numpy as np
 import networkx as nx
 
 import matplotlib as mpl
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection, EllipseCollection
 
 def _get_node_index(network_properties,node_id):
@@ -333,7 +333,7 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
         else:
             size = figsize
 
-        fig = pl.figure(figsize=(size,size))
+        fig = plt.figure(figsize=(size,size))
         ax = fig.add_axes([0, 0, 1, 1])
         # Customize the axis
         # remove top and right spines
@@ -362,8 +362,6 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
     ax.set_ylim(network_properties['ylim'])
     bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
     axwidth, axheight = bbox.width*dpi, bbox.height*dpi
-
-
 
     # filter out node positions for links
     width = network_properties['xlim'][1] - network_properties['xlim'][0]
@@ -422,28 +420,15 @@ def draw_netwulf(network_properties, fig=None, ax=None, figsize=None, draw_links
         XY = np.array(XY)
         size = np.array(size)
 
-        strokes = EllipseCollection(
-            size, size, np.zeros_like(size),
-            offsets=XY,
-            units='x',
-            transOffset=ax.transData,
-            facecolors="none",
-            linewidths=network_properties['nodeStrokeWidth'] / width * axwidth,
-            edgecolors=network_properties['nodeStrokeColor'],
-            zorder=zorder
-        )
-    
-        circles = EllipseCollection(
-            size, size, np.zeros_like(size),
-            offsets=XY,
-            units='x',
-            transOffset=ax.transData,
-            facecolors=node_colors,
-            zorder=zorder+1
-        )
-        
-        ax.add_collection(strokes)
-        ax.add_collection(circles)
+        for xy, r, c in zip(XY, size, node_colors):
+            circle = mpl.patches.Ellipse(xy, r, r, facecolor=c)
+            stroke = mpl.patches.Ellipse(
+                xy, r, r, facecolor=None,
+                edgecolor=network_properties['nodeStrokeColor'],
+                linewidth=network_properties['nodeStrokeWidth'] / width * axwidth
+            )
+            ax.add_artist(stroke)
+            ax.add_artist(circle)
 
     return fig, ax
 
