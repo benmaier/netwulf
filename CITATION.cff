@@ -1,0 +1,44 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Netwulf
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Ulf
+    family-names: Aslak
+    email: ulfaslak@gmail.com
+  - given-names: Benjamin Frank
+    family-names: Maier
+    email: benjaminfrankmaier@gmail.com
+identifiers:
+  - type: doi
+    value: 
+repository-code: 'https://github.com/benmaier/netwulf'
+abstract: >-
+  Netwulf is a light-weight Python library that provides a simple API for interactively visualizing a network and returning the computed layout and style. It is build around the philosophy
+that network manipulation and preprocessing should be done programmatically, but that the
+efficient generation of a visually appealing network is best done interactively, without code.
+Therefore, it offers no analysis functionality and only few exploration features, but instead
+focuses almost entirely on fast and intuitive layout manipulation and node/link styling.
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Aslak"
+    given-names: "Ulf"
+    orcid: "https://orcid.org/0000-0003-4704-3609"
+  - family-names: "Benjamin Frank"
+    given-names: "Maier"
+    orcid: "https://orcid.org/0000-0001-7414-8823"
+  journal: "Journal of Open Source Software"
+  title: "Netwulf: Interactive visualization of networks in Python"
+  volume: 4
+  issue: 42
+  year: 2019
+  start: 1425
+  doi: "10.21105/joss.01425"
+  url: "https://doi.org/10.21105/joss.01425"
+  publisher: "The Open Journal"
