@@ -16,11 +16,12 @@ identifiers:
     value: 
 repository-code: 'https://github.com/benmaier/netwulf'
 abstract: >-
-  Netwulf is a light-weight Python library that provides a simple API for interactively visualizing a network and returning the computed layout and style. It is build around the philosophy
-that network manipulation and preprocessing should be done programmatically, but that the
-efficient generation of a visually appealing network is best done interactively, without code.
-Therefore, it offers no analysis functionality and only few exploration features, but instead
-focuses almost entirely on fast and intuitive layout manipulation and node/link styling.
+  Netwulf is a light-weight Python library that provides a simple API for interactively visualizing
+  a network and returning the computed layout and style. It is build around the philosophy
+  that network manipulation and preprocessing should be done programmatically, but that the
+  efficient generation of a visually appealing network is best done interactively, without code.
+  Therefore, it offers no analysis functionality and only few exploration features, but instead
+  focuses almost entirely on fast and intuitive layout manipulation and node/link styling.
 preferred-citation:
   type: article
   authors:
