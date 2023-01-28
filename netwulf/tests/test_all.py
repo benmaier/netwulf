@@ -58,7 +58,7 @@ class Test(unittest.TestCase):
         newprops, newconfig = visualize(G, config=config,is_test=True)
 
         # test if node positions are close within 1% and subsequently 
-        # round all positional values to the 2nd positon (e.g. 451 => 450)
+        # round all positional values to the 2nd position (e.g. 451 => 450)
         _assert_positions_within_one_percent(props,newprops)
         _drastically_round_positions(props)
         _drastically_round_positions(newprops)
@@ -66,7 +66,7 @@ class Test(unittest.TestCase):
         # the second visualization should have frozen the nodes
         assert(newconfig['freeze_nodes'])
 
-        # change it so the dictionary-equal-assertion doesnt fail
+        # change it so the dictionary-equal-assertion doesn't fail
         newconfig['freeze_nodes'] = False
 
         self.assertDictEqual(props, newprops)
