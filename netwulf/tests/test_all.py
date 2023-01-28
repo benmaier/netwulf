@@ -45,7 +45,7 @@ class Test(unittest.TestCase):
     maxDiff = None
 
     def test_posting(self):
-        """Test whether results are sucessfully posted to Python."""
+        """Test whether results are successfully posted to Python."""
         G = _get_test_network()
         visualize(G,is_test=True,config=_get_test_config())
 
