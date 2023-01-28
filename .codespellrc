@@ -1,3 +1,3 @@
 [codespell]
-skip = .git
+skip = .git,js
 # ignore-words-list = 
