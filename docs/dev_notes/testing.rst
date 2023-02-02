@@ -88,7 +88,7 @@ A browser window will be opened with a visualization looking like this.
 
     Posting test
 
-It will close automatically. The test checks wether the returned configuration is equal to the posted configuration.
+It will close automatically. The test checks whether the returned configuration is equal to the posted configuration.
 
 Reproducibility
 ~~~~~~~~~~~~~~~

@@ -220,7 +220,7 @@ def bind_properties_to_network(network,
         >>> props, _ = netwulf.visualize(G)
         >>> netwulf.bind_properties_to_network(G, props)
     """
-    # Add individial node attributes
+    # Add individual node attributes
     if bind_node_positions:
         x = { node['id']: node['x'] for node in network_properties['nodes'] }
         y = { node['id']: node['y'] for node in network_properties['nodes'] }

@@ -22,7 +22,7 @@ Other physics parameters are:
 
 * *Link distance variation*. Shortens the optimal distance of strong links. This is mostly useful in sparse networks as the link strengths in dense networks are small. Works well when link distance is large.
 * *Collision*: Implemented with `d3.forceCollide <https://github.com/d3/d3-force#forceCollide>`_ with default strength (0.7) and makes overlapping nodes more unlikely.
-* *Wiggle*: Sets the simulation *alphaTarget* to 1, causing nodes to move more freely. Useful for "wiggling" nodes out of place if the layout seems stuck in a local minumum.
+* *Wiggle*: Sets the simulation *alphaTarget* to 1, causing nodes to move more freely. Useful for "wiggling" nodes out of place if the layout seems stuck in a local minimum.
 * *Freeze*: Stops the force simulation. The simulation is restarted when this is untoggled. When the network nodes have initial positions (given as node-attributes "x" and "y"), "Freeze" is enabled at launch, so that the initial positions are respected.
 
 
